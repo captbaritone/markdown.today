@@ -8,18 +8,15 @@ import {List, ListItem} from 'material-ui/List';
 import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import {CardActions} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import { push } from 'react-router-redux';
 import marked from 'marked';
 import format from 'date-fns/format';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const TITLE_DATE_FORMAT = 'dddd, MMMM Do, YYYY';
 
@@ -43,29 +40,37 @@ class Home extends Component {
     return (
         <div>
             <AppBar title="Markdown Journal" />
-            <List>
-                <Subheader>Today</Subheader>
-                {this.props.entries.map(entry => ([
+            {!this.props.entries ?
+                <div style={{width: '100%', textAlign: 'center', marginTop: '300px' }}>
+                    <CircularProgress size={80} thickness={5} />
+                </div>
+            :
+                <div>
+                    <List>
+                        <Subheader>Today</Subheader>
+                        {this.props.entries.map(entry => ([
 
-                    <ListItem
-                        leftAvatar={<Avatar icon={<EditorInsertChart />} />}
-                        primaryText={format(entry.date, TITLE_DATE_FORMAT)}
-                        rightIconButton={
-                            <IconMenu iconButtonElement={iconButtonElement}>
-                                <MenuItem onClick={this.props.editEntry(entry.id)}>Edit</MenuItem>
-                                <MenuItem onClick={this.props.deleteEntry(entry.id)}>Delete</MenuItem>
-                            </IconMenu>
-                        }
-                        secondaryText={<div dangerouslySetInnerHTML={{__html: marked(entry.markdown)}} />}
-                        secondaryTextLines={2}
-                        onClick={this.props.viewEntry(entry.id)}
-                    />,
-                    <Divider inset={true} />
-                ]))}
-            </List>
-            <FloatingActionButton style={style} onClick={this.props.addEntry}>
-                <ContentAdd />
-            </FloatingActionButton>
+                            <ListItem
+                                leftAvatar={<Avatar icon={<EditorInsertChart />} />}
+                                primaryText={format(entry.date, TITLE_DATE_FORMAT)}
+                                rightIconButton={
+                                    <IconMenu iconButtonElement={iconButtonElement}>
+                                        <MenuItem onClick={this.props.editEntry(entry.id)}>Edit</MenuItem>
+                                        <MenuItem onClick={this.props.deleteEntry(entry.id)}>Delete</MenuItem>
+                                    </IconMenu>
+                                }
+                                secondaryText={<div dangerouslySetInnerHTML={{__html: marked(entry.markdown)}} />}
+                                secondaryTextLines={2}
+                                onClick={this.props.viewEntry(entry.id)}
+                            />,
+                            <Divider inset={true} />
+                        ]))}
+                    </List>
+                    <FloatingActionButton style={style} onClick={this.props.addEntry}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </div>
+            }
         </div>
     );
   }
@@ -73,7 +78,7 @@ class Home extends Component {
 
 const mapStateToProps = (state) => ({
     // TODO, order these?
-    entries: Object.keys(state.journal).map(id => state.journal[id]).sort((a, b) => {
+    entries: state.journal && Object.keys(state.journal).map(id => state.journal[id]).sort((a, b) => {
         if (a.date === b.date) {
             return 0;
         }

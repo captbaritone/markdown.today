@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import {Card, CardHeader, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Toggle from 'material-ui/Toggle';
-import Divider from 'material-ui/Divider';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {Card, CardText} from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import KeyboardArrowLeft from 'material-ui/svg-icons/image/navigate-before';
 import { push } from 'react-router-redux';
 import {getEntryById} from './utils';
 import marked from 'marked';
-
-const style = {
-    marginRight: 20,
-    float: 'right'
-};
 
 class Entry extends Component {
   render() {

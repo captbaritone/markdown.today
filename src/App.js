@@ -13,6 +13,9 @@ import {entriesFromMarkdown} from './utils';
 import './App.css';
 import getTime from 'date-fns/get_time'
 
+
+var Dropbox = require('dropbox');
+/*
 const md = `## 2016-06-20
 
 Today I had a great time:
@@ -28,18 +31,20 @@ I even heared this great quote:
 
 Today was meh. Not much happened. I _think_ it was okay.
 `;
+*/
 
-const entryObj = entriesFromMarkdown(md);
-const reducer = (previousState = entryObj, action) => {
+const reducer = (previousState = null, action) => {
     switch (action.type) {
+        case 'SET_FROM_MD':
+            return entriesFromMarkdown(action.md);
         case 'EDIT_ENTRY':
             return Object.assign({}, previousState, {
                 [action.id]: Object.assign({}, previousState[action.id], {markdown: action.markdown})
             });
         case 'DELETE_ENTRY':
-            return Object.assign({}, previousState, {
-                [action.id]: undefined
-            });
+            const newState = Object.assign({}, previousState);
+            delete newState[action.id];
+            return newState;
         case 'ADD_ENTRY':
             const newId = Math.max.apply(null, Object.keys(previousState)) + 1;
             const newEntry = {
