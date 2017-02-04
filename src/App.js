@@ -4,6 +4,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "react-router-redux";
+import { SET_FROM_MD } from "./actionTypes";
 
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -43,7 +44,7 @@ dbx.filesDownload({path: '/Apps/markdown-journal/journal.md'})
     .then(function(response) {
         var myReader = new FileReader(); 
         myReader.addEventListener("loadend", function(e){
-            store.dispatch({type: 'SET_FROM_MD', md: e.srcElement.result});
+            store.dispatch({type: SET_FROM_MD, md: e.srcElement.result});
         });
         myReader.readAsText(response.fileBlob);
     })
@@ -51,7 +52,7 @@ dbx.filesDownload({path: '/Apps/markdown-journal/journal.md'})
         console.log(error);
     });
 */
-store.dispatch({ type: "SET_FROM_MD", md });
+store.dispatch({ type: SET_FROM_MD, md });
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

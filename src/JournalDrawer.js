@@ -5,6 +5,7 @@ import Subheader from "material-ui/Subheader";
 import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
 import { downloadMarkdown } from "./actionCreators";
+import { TOGGLE_DRAWER } from "./actionTypes";
 
 const JournalDrawer = props => (
   <Drawer open={props.showDrawer}>
@@ -18,7 +19,7 @@ const JournalDrawer = props => (
 const mapStateToProps = state => ({ showDrawer: state.view.showDrawer });
 
 const mapDispatchToProps = dispatch => ({
-  toggleDrawer: () => dispatch({ type: "TOGGLE_DRAWER" }),
+  toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
   download: () => dispatch(downloadMarkdown())
 });
 

@@ -6,6 +6,7 @@ import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import { getEntryById, formatTimestamp } from "./utils";
 import { push } from "react-router-redux";
+import { EDIT_ENTRY } from "./actionTypes";
 
 class EditEntry extends Component {
   render() {
@@ -45,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleChange: e =>
     dispatch({
-      type: "EDIT_ENTRY",
+      type: EDIT_ENTRY,
       id: ownProps.routeParams.id,
       markdown: e.target.value
     }),

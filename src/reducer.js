@@ -2,22 +2,28 @@ import { routerReducer } from "react-router-redux";
 import { entriesFromMarkdown } from "./utils";
 import getTime from "date-fns/get_time";
 import { combineReducers } from "redux";
+import {
+  SET_FROM_MD,
+  EDIT_ENTRY,
+  DELETE_ENTRY,
+  ADD_ENTRY
+} from "./actionTypes";
 
 const reducer = (previousState = null, action) => {
   switch (action.type) {
-    case "SET_FROM_MD":
+    case SET_FROM_MD:
       return entriesFromMarkdown(action.md);
-    case "EDIT_ENTRY":
+    case EDIT_ENTRY:
       return Object.assign({}, previousState, {
         [action.id]: Object.assign({}, previousState[action.id], {
           markdown: action.markdown
         })
       });
-    case "DELETE_ENTRY":
+    case DELETE_ENTRY:
       const newState = Object.assign({}, previousState);
       delete newState[action.id];
       return newState;
-    case "ADD_ENTRY":
+    case ADD_ENTRY:
       const newId = Math.max.apply(null, Object.keys(previousState)) + 1;
       const newEntry = { id: newId, date: getTime(new Date()), markdown: "" };
       // FIXME

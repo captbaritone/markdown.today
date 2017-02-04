@@ -11,6 +11,7 @@ import IconMenu from "material-ui/IconMenu";
 import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
 import marked from "marked";
 import { formatTimestamp } from "./utils";
+import { DELETE_ENTRY } from "./actionTypes";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
@@ -49,6 +50,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   viewEntry: id => () => dispatch(push(`entry/${id}`)),
   editEntry: id => () => dispatch(push(`entry/${id}/edit`)),
-  deleteEntry: id => () => dispatch({ type: "DELETE_ENTRY", id })
+  deleteEntry: id => () => dispatch({ type: DELETE_ENTRY, id })
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EntryListItem);

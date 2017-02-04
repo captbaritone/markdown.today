@@ -9,6 +9,7 @@ import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
 import { getJournalAsArray } from "./acessors";
 import EntryListItem from "./EntryListItem";
+import { TOGGLE_DRAWER } from "./actionTypes";
 
 const style = { marginRight: 20, float: "right" };
 
@@ -52,7 +53,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addEntry: () => dispatch({ type: "ADD_ENTRY" }),
-  toggleDrawer: () => dispatch({ type: "TOGGLE_DRAWER" })
+  toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
