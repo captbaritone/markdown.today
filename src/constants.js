@@ -1,0 +1,1 @@
+export const TITLE_DATE_FORMAT = 'dddd, MMMM Do, YYYY';

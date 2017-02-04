@@ -1,96 +1,58 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
-import {List, ListItem} from 'material-ui/List';
-import AppBar from 'material-ui/AppBar';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import {grey400} from 'material-ui/styles/colors';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
-import { push } from 'react-router-redux';
-import marked from 'marked';
-import format from 'date-fns/format';
-import CircularProgress from 'material-ui/CircularProgress';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
+import Subheader from "material-ui/Subheader";
+import { List } from "material-ui/List";
+import AppBar from "material-ui/AppBar";
+import Divider from "material-ui/Divider";
+import CircularProgress from "material-ui/CircularProgress";
+import { getJournalAsArray } from "./acessors";
+import EntryListItem from "./EntryListItem";
 
-const TITLE_DATE_FORMAT = 'dddd, MMMM Do, YYYY';
-
-const iconButtonElement = (
-      <IconButton
-        touch={true}
-        tooltip="more"
-        tooltipPosition="bottom-left"
-      >
-        <MoreVertIcon color={grey400} />
-      </IconButton>
-);
-
-const style = {
-    marginRight: 20,
-    float: 'right'
-};
+const style = { marginRight: 20, float: "right" };
 
 class Home extends Component {
   render() {
     return (
-        <div>
-            <AppBar title="Markdown Journal" />
-            {!this.props.entries ?
-                <div style={{width: '100%', textAlign: 'center', marginTop: '300px' }}>
-                    <CircularProgress size={80} thickness={5} />
-                </div>
-            :
-                <div>
-                    <List>
-                        <Subheader>Today</Subheader>
-                        {this.props.entries.map(entry => ([
-
-                            <ListItem
-                                leftAvatar={<Avatar icon={<EditorInsertChart />} />}
-                                primaryText={format(entry.date, TITLE_DATE_FORMAT)}
-                                rightIconButton={
-                                    <IconMenu iconButtonElement={iconButtonElement}>
-                                        <MenuItem onClick={this.props.editEntry(entry.id)}>Edit</MenuItem>
-                                        <MenuItem onClick={this.props.deleteEntry(entry.id)}>Delete</MenuItem>
-                                    </IconMenu>
-                                }
-                                secondaryText={<div dangerouslySetInnerHTML={{__html: marked(entry.markdown)}} />}
-                                secondaryTextLines={2}
-                                onClick={this.props.viewEntry(entry.id)}
-                            />,
-                            <Divider inset={true} />
-                        ]))}
-                    </List>
-                    <FloatingActionButton style={style} onClick={this.props.addEntry}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </div>
-            }
-        </div>
+      <div>
+        <AppBar
+          title="Markdown Journal"
+          onLeftIconButtonTouchTap={this.props.toggleDrawer}
+        />
+        {
+          !this.props.entries
+            ? <div
+              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
+            >
+              <CircularProgress size={80} thickness={5} />
+            </div>
+            : <div>
+              <List>
+                <Subheader>Today</Subheader>
+                {this.props.entries.map(entry => [
+                  <EntryListItem id={entry.id} />,
+                  <Divider inset={true} />
+                ])}
+              </List>
+              <FloatingActionButton style={style} onClick={this.props.addEntry}>
+                <ContentAdd />
+              </FloatingActionButton>
+            </div>
+        }
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-    // TODO, order these?
-    entries: state.journal && Object.keys(state.journal).map(id => state.journal[id]).sort((a, b) => {
-        if (a.date === b.date) {
-            return 0;
-        }
-        return a.date > b.date ? -1 : 1;
-    })
+const mapStateToProps = state => ({
+  entries: getJournalAsArray(state),
+  showDrawer: state.view.showDrawer
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    viewEntry: (id) => () => dispatch(push(`entry/${id}`)),
-    editEntry: (id) => () => dispatch(push(`entry/${id}/edit`)),
-    deleteEntry: (id) => () => dispatch({type: 'DELETE_ENTRY', id}),
-    addEntry: () => dispatch({type: 'ADD_ENTRY'})
+const mapDispatchToProps = dispatch => ({
+  addEntry: () => dispatch({ type: "ADD_ENTRY" }),
+  toggleDrawer: () => dispatch({ type: "TOGGLE_DRAWER" })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
