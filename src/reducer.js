@@ -2,6 +2,7 @@ import { routerReducer } from "react-router-redux";
 import { entriesFromMarkdown } from "./utils";
 import getTime from "date-fns/get_time";
 import { combineReducers } from "redux";
+import { max, keys } from "lodash";
 import {
   SET_FROM_MD,
   EDIT_ENTRY,
@@ -9,7 +10,18 @@ import {
   ADD_ENTRY
 } from "./actionTypes";
 
-const reducer = (previousState = null, action) => {
+const defaultDropboxSate = { authToken: null };
+
+const dropboxReducer = (state = defaultDropboxSate, action) => {
+  switch (action.type) {
+    case "SET_AUTH_TOKEN":
+      return Object.assign({}, state, { authToken: action.token });
+    default:
+      return state;
+  }
+};
+
+const journalReducer = (previousState = null, action) => {
   switch (action.type) {
     case SET_FROM_MD:
       return entriesFromMarkdown(action.md);
@@ -24,7 +36,7 @@ const reducer = (previousState = null, action) => {
       delete newState[action.id];
       return newState;
     case ADD_ENTRY:
-      const newId = Math.max.apply(null, Object.keys(previousState)) + 1;
+      const newId = max(keys(previousState)) + 1;
       const newEntry = { id: newId, date: getTime(new Date()), markdown: "" };
       // FIXME
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
@@ -47,7 +59,8 @@ const viewReducer = (previousState = defaultViewState, action) => {
 };
 
 export default combineReducers({
-  journal: reducer,
+  journal: journalReducer,
   view: viewReducer,
+  dropbox: dropboxReducer,
   routing: routerReducer
 });

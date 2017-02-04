@@ -1,5 +1,5 @@
 import * as TYPES from "./actionTypes";
-import forEach from "lodash/forEach";
+import { forEach } from "lodash";
 
 describe("actionTypes", () => {
   it("have unique values", () => {

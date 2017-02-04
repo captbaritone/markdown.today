@@ -1,8 +1,8 @@
-import { sortByDate, formatTimestamp } from "./utils";
+import { formatTimestamp } from "./utils";
+import { map, sortBy, reverse } from "lodash";
 
 export const getJournalAsArray = state => {
-  return state.journal &&
-    Object.keys(state.journal).map(id => state.journal[id]).sort(sortByDate);
+  return state.journal && reverse(sortBy(map(state.journal), "date"));
 };
 
 const primaryHeading = str => {
@@ -15,7 +15,7 @@ export const getMarkdown = state => {
   return getJournalAsArray(state).reduce((acc, entry) => {
     return [
       ...acc,
-      secondaryHeading(formatTimestamp(entry.date)),
+      secondaryHeading(new Date(entry.date).toISOString()),
       entry.markdown
     ];
   }, [ primaryHeading("My Journal") ]).join("\n\n");

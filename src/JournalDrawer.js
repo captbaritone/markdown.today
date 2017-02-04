@@ -4,7 +4,8 @@ import Drawer from "material-ui/Drawer";
 import Subheader from "material-ui/Subheader";
 import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
-import { downloadMarkdown } from "./actionCreators";
+import FileCloudUpload from "material-ui/svg-icons/file/cloud-upload";
+import { downloadMarkdown, uploadToDropbox } from "./actionCreators";
 import { TOGGLE_DRAWER } from "./actionTypes";
 
 const JournalDrawer = props => (
@@ -13,6 +14,9 @@ const JournalDrawer = props => (
     <MenuItem leftIcon={<Download />} onClick={props.download}>
       Download (.md)
     </MenuItem>
+    <MenuItem leftIcon={<FileCloudUpload />} onClick={props.upload}>
+      Save to Dropbox
+    </MenuItem>
   </Drawer>
 );
 
@@ -20,7 +24,8 @@ const mapStateToProps = state => ({ showDrawer: state.view.showDrawer });
 
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
-  download: () => dispatch(downloadMarkdown())
+  download: () => dispatch(downloadMarkdown()),
+  upload: () => dispatch(uploadToDropbox())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JournalDrawer);

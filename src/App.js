@@ -4,7 +4,6 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "react-router-redux";
-import { SET_FROM_MD } from "./actionTypes";
 
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -14,8 +13,9 @@ import EditEntry from "./EditEntry.js";
 import "./App.css";
 import reducer from "./reducer";
 import JournalDrawer from "./JournalDrawer";
+import Login from "./Login";
+import Auth from "./Auth";
 
-//import Dropbox from "dropbox";
 const md = `## 2016-06-20
 
 Today I had a great time:
@@ -23,9 +23,7 @@ Today I had a great time:
 * I Wrote an app
 * Had fun
 
-I even heared this great quote:
-
-> I heard a great quote.
+I even heared this great quoteo I heard a great quote.
 
 ## 2016-03-11
 
@@ -37,23 +35,6 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(thunk, routerMiddleware(browserHistory))
 );
-
-/*
-var dbx = new Dropbox({ accessToken: 'dz6E5r3zLiMAAAAAAADZ0Oq9c-mU7H_UQITuvC-I_2RKLgpFpbXeslZbXl5wFoRE' });
-dbx.filesDownload({path: '/Apps/markdown-journal/journal.md'})
-    .then(function(response) {
-        var myReader = new FileReader(); 
-        myReader.addEventListener("loadend", function(e){
-            store.dispatch({type: SET_FROM_MD, md: e.srcElement.result});
-        });
-        myReader.readAsText(response.fileBlob);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-*/
-store.dispatch({ type: SET_FROM_MD, md });
-
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -63,7 +44,8 @@ const Routes = props => (
     <Route path="/" component={Home} />
     <Route path="/entry/:id" component={Entry} />
     <Route path="/entry/:id/edit" component={EditEntry} />
-    {}
+    <Route path="/login/" component={Login} />
+    <Route path="/auth/" component={Auth} />
   </Router>
 );
 
