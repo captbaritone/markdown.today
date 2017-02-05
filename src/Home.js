@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
-import Subheader from "material-ui/Subheader";
 import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
@@ -10,6 +9,7 @@ import CircularProgress from "material-ui/CircularProgress";
 import { getJournalAsArray } from "./acessors";
 import EntryListItem from "./EntryListItem";
 import { TOGGLE_DRAWER } from "./actionTypes";
+import LinearProgress from "material-ui/LinearProgress";
 
 const style = { marginRight: 20, float: "right" };
 
@@ -22,6 +22,15 @@ class Home extends Component {
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
         />
         {
+          this.props.uploading &&
+            (
+              <LinearProgress
+                mode="indeterminate"
+                style={{ position: "absolute" }}
+              />
+            )
+        }
+        {
           !this.props.entries
             ? <div
               style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
@@ -30,7 +39,6 @@ class Home extends Component {
             </div>
             : <div>
               <List>
-                <Subheader>Today</Subheader>
                 {this.props.entries.map(entry => [
                   <EntryListItem id={entry.id} />,
                   <Divider inset={true} />
@@ -48,10 +56,14 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   entries: getJournalAsArray(state),
-  showDrawer: state.view.showDrawer
+  showDrawer: state.view.showDrawer,
+  uploading: state.dropbox.uploading
 });
 
 const mapDispatchToProps = dispatch => ({
+  // TODO: Move to constant
+  // TODO: Move to action creator
+  // TODO: Schedule a Dropbox update
   addEntry: () => dispatch({ type: "ADD_ENTRY" }),
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER })
 });

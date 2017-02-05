@@ -1,3 +1,4 @@
+import { REHYDRATE } from "redux-persist/constants";
 import { routerReducer } from "react-router-redux";
 import { entriesFromMarkdown } from "./utils";
 import getTime from "date-fns/get_time";
@@ -10,18 +11,26 @@ import {
   ADD_ENTRY
 } from "./actionTypes";
 
-const defaultDropboxSate = { authToken: null };
+const defaultDropboxSate = { authToken: null, uploading: true };
 
 const dropboxReducer = (state = defaultDropboxSate, action) => {
   switch (action.type) {
     case "SET_AUTH_TOKEN":
       return Object.assign({}, state, { authToken: action.token });
+    case "STARTING_DROPBOX_UPLOAD":
+      return Object.assign({}, state, { uploading: true });
+    case "DROPBOX_UPLOAD_COMPLETE":
+      return Object.assign({}, state, { uploading: false });
+    case REHYDRATE:
+      return Object.assign({}, state, action.payload.dropbox);
     default:
       return state;
   }
 };
 
 const journalReducer = (previousState = null, action) => {
+  // TODO: Handle Journal title, and open the door to other meta-data like `path`
+  // First step might be ensuring all entry access is done via an accessor
   switch (action.type) {
     case SET_FROM_MD:
       return entriesFromMarkdown(action.md);

@@ -1,8 +1,7 @@
-import { formatTimestamp } from "./utils";
-import { map, sortBy, reverse } from "lodash";
+import { map, sortBy } from "lodash";
 
 export const getJournalAsArray = state => {
-  return state.journal && reverse(sortBy(map(state.journal), "date"));
+  return state.journal && sortBy(map(state.journal), "date");
 };
 
 const primaryHeading = str => {

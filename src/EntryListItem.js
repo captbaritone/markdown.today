@@ -50,6 +50,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   viewEntry: id => () => dispatch(push(`entry/${id}`)),
   editEntry: id => () => dispatch(push(`entry/${id}/edit`)),
+  // TODO: Move this to action creator, and save to dropbox.
   deleteEntry: id => () => dispatch({ type: DELETE_ENTRY, id })
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EntryListItem);

@@ -53,3 +53,12 @@ export const getAsDataURI = text => {
   const base64 = window.btoa(text);
   return `data:text/text;base64,${base64}`;
 };
+
+export const downloadURI = (uri, name) => {
+  // TODO: Test in Firefox/IE
+  const link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+};

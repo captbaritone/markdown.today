@@ -8,6 +8,7 @@ import FileCloudUpload from "material-ui/svg-icons/file/cloud-upload";
 import { downloadMarkdown, uploadToDropbox } from "./actionCreators";
 import { TOGGLE_DRAWER } from "./actionTypes";
 
+// TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (
   <Drawer open={props.showDrawer}>
     <Subheader onClick={props.toggleDrawer}>MD Journal</Subheader>
@@ -25,7 +26,10 @@ const mapStateToProps = state => ({ showDrawer: state.view.showDrawer });
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
   download: () => dispatch(downloadMarkdown()),
-  upload: () => dispatch(uploadToDropbox())
+  upload: () => {
+    dispatch(uploadToDropbox());
+    dispatch({ type: TOGGLE_DRAWER });
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JournalDrawer);
