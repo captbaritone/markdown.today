@@ -15,25 +15,22 @@ import reducer from "./reducer";
 import JournalDrawer from "./JournalDrawer";
 import Login from "./Login";
 import Auth from "./Auth";
-import { push } from "react-router-redux";
 import { downloadJournal } from "./actionCreators";
-import { persistStore, autoRehydrate } from "redux-persist";
+import persistState from "redux-localstorage";
 
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   // TODO: Consider raven-for-redux middleware
   compose(
-    applyMiddleware(thunk, routerMiddleware(browserHistory)),
-    autoRehydrate()
+    persistState("dropbox"),
+    applyMiddleware(thunk, routerMiddleware(browserHistory))
   )
 );
 
-persistStore(store, { whitelist: [ "dropbox" ] }, () => {
-  // FIXME: Users should be able to arrive at pages other than / without being redirected.
-  store.dispatch(downloadJournal());
-  store.dispatch(push("/"));
-});
+// TODO: Consider storing this in local storage
+store.dispatch(downloadJournal());
+
 function requireAuth(nextState, replace) {
   const state = store.getState();
   if (!state.dropbox.authToken) {

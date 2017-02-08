@@ -59,14 +59,15 @@ const actuallyDownloadJournal = () => {
       });
   };
 };
+const DEFAULT_JOURNAL = "## Journal";
 export const createJournalOnDropbox = () => {
   return (dispatch, getState) => {
     const dropbox = getDropboxClient(getState());
+    // TODO: Initialize the journal with an entry for today/now.
     dropbox
-      .filesUpload({ contents: "## Journal", path: JOURNAL_PATH })
+      .filesUpload({ contents: DEFAULT_JOURNAL, path: JOURNAL_PATH })
       .then(file => {
-        // TODO: Dispatch an action that populates the Journal from the data we already have
-        dispatch(actuallyDownloadJournal());
+        dispatch({ type: SET_FROM_MD, md: DEFAULT_JOURNAL });
       })
       .catch(() => {
         // TODO: Handle errors
@@ -108,6 +109,7 @@ const _uploadToDropbox = (dispatch, getState) => {
       path: JOURNAL_PATH,
       contents: md,
       // Don't notify the user every time.
+      // TODO: This doesn't seem to work.
       mute: true,
       mode: { ".tag": "overwrite" }
     })

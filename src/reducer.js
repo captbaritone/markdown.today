@@ -1,4 +1,3 @@
-import { REHYDRATE } from "redux-persist/constants";
 import { routerReducer } from "react-router-redux";
 import { entriesFromMarkdown } from "./utils";
 import getTime from "date-fns/get_time";
@@ -25,13 +24,6 @@ const dropboxReducer = (state = defaultDropboxSate, action) => {
       return Object.assign({}, state, { uploading: true });
     case "DROPBOX_UPLOAD_COMPLETE":
       return Object.assign({}, state, { uploading: false });
-    case REHYDRATE:
-      debugger;
-      if (state.authToken) {
-        // We don't want to clobber an existing authtoken
-        return state;
-      }
-      return Object.assign({}, state, action.payload.dropbox);
     default:
       return state;
   }
