@@ -9,6 +9,7 @@ import CircularProgress from "material-ui/CircularProgress";
 import { getJournalAsArray } from "./acessors";
 import EntryListItem from "./EntryListItem";
 import { TOGGLE_DRAWER } from "./actionTypes";
+import { addEntry } from "./actionCreators";
 import LinearProgress from "material-ui/LinearProgress";
 
 const style = { marginRight: 20, float: "right" };
@@ -21,23 +22,18 @@ class Home extends Component {
           title="Markdown Journal"
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
         />
-        {
-          this.props.uploading &&
-            (
-              <LinearProgress
-                mode="indeterminate"
-                style={{ position: "absolute" }}
-              />
-            )
-        }
-        {
-          !this.props.entries
-            ? <div
+        {this.props.uploading &&
+          <LinearProgress
+            mode="indeterminate"
+            style={{ position: "absolute" }}
+          />}
+        {!this.props.entries
+          ? <div
               style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
             >
               <CircularProgress size={80} thickness={5} />
             </div>
-            : <div>
+          : <div>
               <List>
                 {this.props.entries.map(entry => [
                   <EntryListItem id={entry.id} />,
@@ -47,8 +43,7 @@ class Home extends Component {
               <FloatingActionButton style={style} onClick={this.props.addEntry}>
                 <ContentAdd />
               </FloatingActionButton>
-            </div>
-        }
+            </div>}
       </div>
     );
   }
@@ -61,10 +56,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // TODO: Move to constant
+  addEntry: () => dispatch(addEntry()),
   // TODO: Move to action creator
-  // TODO: Schedule a Dropbox update
-  addEntry: () => dispatch({ type: "ADD_ENTRY" }),
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER })
 });
 

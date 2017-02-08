@@ -1,18 +1,24 @@
 import Dropbox from "dropbox";
 import { getAsDataURI } from "./utils";
 import { getMarkdown } from "./acessors";
-import { SET_FROM_MD } from "./actionTypes";
+import {
+  SET_FROM_MD,
+  DELETE_ENTRY,
+  EDIT_ENTRY,
+  ADD_ENTRY,
+  SET_DRAWER_VISIBILITY
+} from "./actionTypes";
+import { DROPBOX_CLIENT_ID } from "./constants";
 import { debounce } from "lodash";
 import { downloadURI } from "./utils";
 
-const CLIENT_ID = "pc9cssrvvmgo4bp";
 const AUTH_REDIRECT_URL = "http://localhost:3000/auth/";
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
 
 export const authenticateToDropbox = () => {
   return () => {
-    const dropbox = new Dropbox({ clientId: CLIENT_ID });
+    const dropbox = new Dropbox({ clientId: DROPBOX_CLIENT_ID });
     window.location = dropbox.getAuthenticationUrl(AUTH_REDIRECT_URL);
     return;
   };
@@ -24,7 +30,7 @@ const getDropboxClient = state => {
   }
   // TODO: Ensure this does not make an API call
   const dropbox = new Dropbox({
-    clientId: CLIENT_ID,
+    clientId: DROPBOX_CLIENT_ID,
     accessToken: state.dropbox.authToken
   });
   return dropbox;
@@ -118,3 +124,32 @@ export const uploadToDropbox = () => _uploadToDropbox;
 const _debouncedUploadToDropbox = debounce(_uploadToDropbox, 5000);
 
 export const debouncedUploadToDropbox = () => _debouncedUploadToDropbox;
+
+export const deleteEntry = id => {
+  return (dispatch, getProps) => {
+    dispatch({ type: DELETE_ENTRY, id });
+    dispatch(uploadToDropbox());
+  };
+};
+
+export const updateEntry = (id, markdown) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: EDIT_ENTRY,
+      id,
+      markdown
+    });
+    dispatch(debouncedUploadToDropbox());
+  };
+};
+
+export const addEntry = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: ADD_ENTRY });
+    dispatch(debouncedUploadToDropbox());
+  };
+};
+
+export const setDrawerVisibility = visible => {
+  return { type: SET_DRAWER_VISIBILITY, value: visible };
+};

@@ -11,7 +11,7 @@ import IconMenu from "material-ui/IconMenu";
 import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
 import marked from "marked";
 import { formatTimestamp } from "./utils";
-import { DELETE_ENTRY } from "./actionTypes";
+import { deleteEntry } from "./actionCreators";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
@@ -26,10 +26,10 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
     rightIconButton={
       (
         <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem onClick={editEntry(entry.id)}>
+          <MenuItem onTouchTap={editEntry(entry.id)}>
             Edit
           </MenuItem>
-          <MenuItem onClick={deleteEntry(entry.id)}>
+          <MenuItem onTouchTap={deleteEntry(entry.id)}>
             Delete
           </MenuItem>
         </IconMenu>
@@ -50,7 +50,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   viewEntry: id => () => dispatch(push(`entry/${id}`)),
   editEntry: id => () => dispatch(push(`entry/${id}/edit`)),
-  // TODO: Move this to action creator, and save to dropbox.
-  deleteEntry: id => () => dispatch({ type: DELETE_ENTRY, id })
+  deleteEntry: id => () => dispatch(deleteEntry(id))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EntryListItem);

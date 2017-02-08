@@ -6,8 +6,7 @@ import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import { getEntryById, formatTimestamp } from "./utils";
 import { push } from "react-router-redux";
-import { EDIT_ENTRY } from "./actionTypes";
-import { debouncedUploadToDropbox } from "./actionCreators";
+import { updateEntry } from "./actionCreators";
 
 class EditEntry extends Component {
   render() {
@@ -45,15 +44,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  // TODO: Move to action creator, schedule debounced Dropbox update
-  handleChange: e => {
-    dispatch({
-      type: EDIT_ENTRY,
-      id: ownProps.routeParams.id,
-      markdown: e.target.value
-    });
-    dispatch(debouncedUploadToDropbox());
-  },
+  handleChange: e =>
+    dispatch(updateEntry(ownProps.routeParams.id, e.target.value)),
   goHome: () => dispatch(push("/"))
 });
 
