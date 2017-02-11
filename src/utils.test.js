@@ -19,6 +19,16 @@ describe("entriesFromMarkdown", () => {
       entriesFromMarkdown(md)
     ).toEqual({ "1": { date: 1488355200000, id: 1, markdown: "" } });
   });
+  it("can parse a journal with a title", () => {
+    const md = `# My Journal
+
+## 2017-02-11T02:05:17.338Z
+
+Hello!`;
+    expect(
+      entriesFromMarkdown(md)
+    ).toEqual({ "1": { date: 1486778717338, id: 1, markdown: "Hello!" } });
+  });
 });
 
 describe("isISODatetime", () => {

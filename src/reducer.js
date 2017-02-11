@@ -50,6 +50,8 @@ const journalReducer = (previousState = null, action) => {
       const newEntry = { id: newId, date: getTime(new Date()), markdown: "" };
       // FIXME
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
+    case "LOGOUT":
+      return {};
     default:
       return previousState;
   }

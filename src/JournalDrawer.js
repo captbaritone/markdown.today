@@ -4,12 +4,14 @@ import Drawer from "material-ui/Drawer";
 import Subheader from "material-ui/Subheader";
 import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
+import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
 import FileCloudUpload from "material-ui/svg-icons/file/cloud-upload";
 import {
   downloadMarkdown,
   uploadToDropbox,
   setDrawerVisibility
 } from "./actionCreators";
+import {isLoggedIn} from './acessors';
 import { TOGGLE_DRAWER } from "./actionTypes";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
@@ -26,13 +28,16 @@ const JournalDrawer = props => (
     <MenuItem leftIcon={<FileCloudUpload />} onClick={props.upload}>
       Save to Dropbox
     </MenuItem>
-    <MenuItem leftIcon={<FileCloudUpload />} onClick={props.logout}>
+    <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
       Logout
     </MenuItem>
   </Drawer>
 );
 
-const mapStateToProps = state => ({ showDrawer: state.view.showDrawer });
+const mapStateToProps = state => ({
+ showDrawer: state.view.showDrawer,
+ isLogedIn: isLoggedIn(state)
+ });
 
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),

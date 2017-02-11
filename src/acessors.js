@@ -19,3 +19,7 @@ export const getMarkdown = state => {
     ];
   }, [ primaryHeading("My Journal") ]).join("\n\n");
 };
+
+export const isLoggedIn = state => {
+    return !!state.dropbox.authToken;
+}
