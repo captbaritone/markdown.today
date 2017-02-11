@@ -40,9 +40,8 @@ export const entriesFromMarkdown = md => {
     []
   );
 
-  const trimmedEntries = entries.map(
-    entry => Object.assign({}, entry, { markdown: entry.markdown.trim() })
-  );
+  const trimmedEntries = entries.map(entry =>
+    Object.assign({}, entry, { markdown: entry.markdown.trim() }));
 
   return keyBy(trimmedEntries, "id");
 };
