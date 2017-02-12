@@ -10,9 +10,9 @@ import {
   downloadMarkdown,
   uploadToDropbox,
   setDrawerVisibility
-} from "./actionCreators";
-import {isLoggedIn} from './acessors';
-import { TOGGLE_DRAWER } from "./actionTypes";
+} from "../actionCreators";
+import { isLoggedIn } from "../accessors";
+import { TOGGLE_DRAWER } from "../actionTypes";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (
@@ -35,9 +35,9 @@ const JournalDrawer = props => (
 );
 
 const mapStateToProps = state => ({
- showDrawer: state.view.showDrawer,
- isLogedIn: isLoggedIn(state)
- });
+  showDrawer: state.view.showDrawer,
+  isLogedIn: isLoggedIn(state)
+});
 
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),

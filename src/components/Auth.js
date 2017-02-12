@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import { parse } from "qs";
-import { downloadJournal } from "./actionCreators";
+import { downloadJournal } from "../actionCreators";
 
 class Auth extends React.Component {
   componentWillMount() {

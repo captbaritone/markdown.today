@@ -6,10 +6,10 @@ import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
-import { getJournalAsArray } from "./acessors";
+import { getJournalAsArray } from "../accessors";
 import EntryListItem from "./EntryListItem";
-import { TOGGLE_DRAWER } from "./actionTypes";
-import { addEntry } from "./actionCreators";
+import { TOGGLE_DRAWER } from "../actionTypes";
+import { addEntry } from "../actionCreators";
 import LinearProgress from "material-ui/LinearProgress";
 
 const style = { marginRight: 20, float: "right" };

@@ -7,31 +7,33 @@ import { routerMiddleware } from "react-router-redux";
 
 import { compose, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import Home from "./Home.js";
-import Entry from "./Entry.js";
-import EditEntry from "./EditEntry.js";
+import Home from "./components/Home.js";
+import Entry from "./components/Entry.js";
+import EditEntry from "./components/EditEntry.js";
 import "./App.css";
-import reducer from "./reducer";
-import JournalDrawer from "./JournalDrawer";
-import Login from "./Login";
-import Auth from "./Auth";
+import reducer from "./reducers";
+import JournalDrawer from "./components/JournalDrawer";
+import Login from "./components/Login";
+import Auth from "./components/Auth";
 import { downloadJournal } from "./actionCreators";
 import persistState from "redux-localstorage";
 
-const slicer = (paths) => {
-    return (state) => {
-        return Object.assign({}, {dropbox: {
-            authToken: state.dropbox.authToken
-        }});
-    }
-}
+const slicer = paths => {
+  return state => {
+    return Object.assign({}, {
+      dropbox: {
+        authToken: state.dropbox.authToken
+      }
+    });
+  };
+};
 
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   // TODO: Consider raven-for-redux middleware
   compose(
-    persistState("dropbox", {slicer}),
+    persistState("dropbox", { slicer }),
     applyMiddleware(thunk, routerMiddleware(browserHistory))
   )
 );

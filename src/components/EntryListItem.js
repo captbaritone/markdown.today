@@ -10,8 +10,8 @@ import { ListItem } from "material-ui/List";
 import IconMenu from "material-ui/IconMenu";
 import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
 import marked from "marked";
-import { formatTimestamp } from "./utils";
-import { deleteEntry } from "./actionCreators";
+import { formatTimestamp } from "../utils";
+import { deleteEntry } from "../actionCreators";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">

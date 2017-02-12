@@ -4,9 +4,9 @@ import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
-import { getEntryById, formatTimestamp } from "./utils";
+import { getEntryById, formatTimestamp } from "../utils";
 import { push } from "react-router-redux";
-import { updateEntry } from "./actionCreators";
+import { updateEntry } from "../actionCreators";
 
 class EditEntry extends Component {
   render() {

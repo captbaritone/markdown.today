@@ -1,12 +1,14 @@
 import Dropbox from "dropbox";
 import { getAsDataURI } from "./utils";
-import { getMarkdown } from "./acessors";
+import { getMarkdown } from "./accessors";
 import {
   SET_FROM_MD,
   DELETE_ENTRY,
   EDIT_ENTRY,
   ADD_ENTRY,
-  SET_DRAWER_VISIBILITY
+  SET_DRAWER_VISIBILITY,
+  DROPBOX_UPLOAD_COMPLETE,
+  STARTING_DROPBOX_UPLOAD
 } from "./actionTypes";
 import { DROPBOX_CLIENT_ID } from "./constants";
 import { debounce } from "lodash";
@@ -101,7 +103,7 @@ export const downloadMarkdown = () => {
 };
 
 const _uploadToDropbox = (dispatch, getState) => {
-  dispatch({ type: "STARTING_DROPBOX_UPLOAD" });
+  dispatch({ type: STARTING_DROPBOX_UPLOAD });
   const dropbox = getDropboxClient(getState());
   const md = getMarkdown(getState());
   dropbox
@@ -114,7 +116,7 @@ const _uploadToDropbox = (dispatch, getState) => {
       mode: { ".tag": "overwrite" }
     })
     .then(result => {
-      dispatch({ type: "DROPBOX_UPLOAD_COMPLETE" });
+      dispatch({ type: DROPBOX_UPLOAD_COMPLETE });
     })
     .catch(error => {
       // TODO: Handle the error case
