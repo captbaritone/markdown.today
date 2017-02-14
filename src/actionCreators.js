@@ -10,11 +10,10 @@ import {
   DROPBOX_UPLOAD_COMPLETE,
   STARTING_DROPBOX_UPLOAD
 } from "./actionTypes";
-import { DROPBOX_CLIENT_ID } from "./constants";
+import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "./constants";
 import { debounce } from "lodash";
 import { downloadURI } from "./utils";
 
-const AUTH_REDIRECT_URL = "http://localhost:3000/auth/";
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
 

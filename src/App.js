@@ -1,4 +1,4 @@
-import { Router, Route, hashHistory } from "react-router";
+import { Router, Route, browserHistory } from "react-router";
 import React, { Component } from "react";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -34,7 +34,7 @@ const store = createStore(
   // TODO: Consider raven-for-redux middleware
   compose(
     persistState("dropbox", { slicer }),
-    applyMiddleware(thunk, routerMiddleware(hashHistory))
+    applyMiddleware(thunk, routerMiddleware(browserHistory))
   )
 );
 
@@ -54,7 +54,7 @@ function requireAuth(nextState, replace) {
 injectTapEventPlugin();
 
 const Routes = props => (
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     <Route path="/" component={Home} onEnter={requireAuth} />
     <Route path="/entry/:id" component={Entry} onEnter={requireAuth} />
     <Route path="/entry/:id/edit" component={EditEntry} onEnter={requireAuth} />
