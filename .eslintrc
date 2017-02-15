@@ -1,1 +1,3 @@
-node_modules/react-scripts/.eslintrc
+{
+    "extends": "react-app"
+}
