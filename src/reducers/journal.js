@@ -1,6 +1,7 @@
-import { entriesFromMarkdown } from "../utils";
 import getTime from "date-fns/get_time";
 import { max, keys } from "lodash";
+
+import { entriesFromMarkdown } from "../utils";
 import {
   SET_FROM_MD,
   EDIT_ENTRY,

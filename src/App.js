@@ -4,9 +4,10 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "react-router-redux";
-
 import { compose, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import persistState from "redux-localstorage";
+
 import Home from "./components/Home.js";
 import Entry from "./components/Entry.js";
 import EditEntry from "./components/EditEntry.js";
@@ -16,13 +17,13 @@ import JournalDrawer from "./components/JournalDrawer";
 import Login from "./components/Login";
 import Auth from "./components/Auth";
 import { downloadJournal } from "./actionCreators";
-import persistState from "redux-localstorage";
+import { getJournal, getAuthToken } from "./accessors";
 
 const slicer = paths => {
   return state => {
     return Object.assign({}, {
       dropbox: {
-        authToken: state.dropbox.authToken
+        authToken: getAuthToken(state)
       }
     });
   };
@@ -38,14 +39,14 @@ const store = createStore(
   )
 );
 
-// TODO: Consider storing this in local storage
-store.dispatch(downloadJournal());
-
 function requireAuth(nextState, replace) {
   const state = store.getState();
-  if (!state.dropbox.authToken) {
+  if (!getAuthToken(state)) {
     // TODO: Stash redirect URL
     replace({ pathname: "/login/" });
+  } else if (!getJournal(state)) {
+    // TODO: Consider storing this in local storage?
+    store.dispatch(downloadJournal());
   }
 }
 

@@ -1,7 +1,11 @@
 import { map, sortBy } from "lodash";
 
+export const getAuthToken = state => state.dropbox.authToken;
+
+export const getJournal = state => state.journal;
+
 export const getJournalAsArray = state => {
-  return state.journal && sortBy(map(state.journal), "date");
+  return getJournal(state) && sortBy(map(getJournal(state)), "date").reverse();
 };
 
 const primaryHeading = str => {
@@ -11,15 +15,20 @@ const secondaryHeading = str => {
   return `## ${str}`;
 };
 export const getMarkdown = state => {
-  return getJournalAsArray(state).reduce((acc, entry) => {
-    return [
-      ...acc,
-      secondaryHeading(new Date(entry.date).toISOString()),
-      entry.markdown
-    ];
-  }, [ primaryHeading("My Journal") ]).join("\n\n");
+  return getJournalAsArray(state)
+    .reduce(
+      (acc, entry) => {
+        return [
+          ...acc,
+          secondaryHeading(new Date(entry.date).toISOString()),
+          entry.markdown
+        ];
+      },
+      [primaryHeading("My Journal")]
+    )
+    .join("\n\n");
 };
 
 export const isLoggedIn = state => {
-    return !!state.dropbox.authToken;
-}
+  return !!state.dropbox.authToken;
+};

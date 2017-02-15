@@ -9,7 +9,8 @@ import FileCloudUpload from "material-ui/svg-icons/file/cloud-upload";
 import {
   downloadMarkdown,
   uploadToDropbox,
-  setDrawerVisibility
+  setDrawerVisibility,
+  logout
 } from "../actionCreators";
 import { isLoggedIn } from "../accessors";
 import { TOGGLE_DRAWER } from "../actionTypes";
@@ -35,6 +36,7 @@ const JournalDrawer = props => (
 );
 
 const mapStateToProps = state => ({
+  // TODO: Move to actionCreators
   showDrawer: state.view.showDrawer,
   isLogedIn: isLoggedIn(state)
 });
@@ -46,10 +48,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(uploadToDropbox());
     dispatch(setDrawerVisibility(false));
   },
-  logout: () => {
-    dispatch({ type: "LOGOUT" });
-    dispatch(setDrawerVisibility(false));
-  },
+  logout: () => dispatch(logout()),
   setDrawerVisibility: value => dispatch(setDrawerVisibility(value))
 });
 

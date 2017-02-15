@@ -1,6 +1,9 @@
 import Dropbox from "dropbox";
+import { push } from "react-router-redux";
+import { debounce } from "lodash";
+
 import { getAsDataURI } from "./utils";
-import { getMarkdown } from "./accessors";
+import { getMarkdown, getAuthToken } from "./accessors";
 import {
   SET_FROM_MD,
   DELETE_ENTRY,
@@ -8,10 +11,10 @@ import {
   ADD_ENTRY,
   SET_DRAWER_VISIBILITY,
   DROPBOX_UPLOAD_COMPLETE,
-  STARTING_DROPBOX_UPLOAD
+  STARTING_DROPBOX_UPLOAD,
+  LOGOUT
 } from "./actionTypes";
 import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "./constants";
-import { debounce } from "lodash";
 import { downloadURI } from "./utils";
 
 const JOURNAL_FILENAME = "journal.md";
@@ -25,14 +28,14 @@ export const authenticateToDropbox = () => {
   };
 };
 const getDropboxClient = state => {
-  if (!state.dropbox.authToken) {
+  if (!getAuthToken(state)) {
     // TODO: Consider redirect to login page
     authenticateToDropbox();
   }
   // TODO: Ensure this does not make an API call
   const dropbox = new Dropbox({
     clientId: DROPBOX_CLIENT_ID,
-    accessToken: state.dropbox.authToken
+    accessToken: getAuthToken(state)
   });
   return dropbox;
 };
@@ -155,4 +158,12 @@ export const addEntry = () => {
 
 export const setDrawerVisibility = visible => {
   return { type: SET_DRAWER_VISIBILITY, value: visible };
+};
+
+export const logout = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: LOGOUT });
+    dispatch(setDrawerVisibility(false));
+    dispatch(push("/login/"));
+  };
 };

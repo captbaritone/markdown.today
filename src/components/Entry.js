@@ -5,8 +5,8 @@ import { Card, CardText } from "material-ui/Card";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import { push } from "react-router-redux";
-import { getEntryById, formatTimestamp } from "../utils";
 import marked from "marked";
+import { getEntryById, formatTimestamp } from "../utils";
 
 class Entry extends Component {
   render() {
