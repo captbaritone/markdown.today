@@ -29,6 +29,4 @@ export const getMarkdown = state => {
     .join("\n\n");
 };
 
-export const isLoggedIn = state => {
-  return !!state.dropbox.authToken;
-};
+export const isLoggedIn = state => !!getAuthToken(state);
