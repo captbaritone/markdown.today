@@ -29,4 +29,4 @@ export const getMarkdown = state => {
     .join("\n\n");
 };
 
-export const isLoggedIn = state => !!getAuthToken(state);
+export const isLoggedIn = state => !!getAuthToken(state) || state.dropbox.mock;

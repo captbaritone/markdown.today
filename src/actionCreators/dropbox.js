@@ -12,9 +12,17 @@ import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "../constants";
 const DEFAULT_JOURNAL = "## Journal";
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
+const MOCK_JOURNAL = `# My Journal
+
+## 2017-02-11T02:05:17.338Z
+
+Hello!`;
 
 export const authenticateToDropbox = () => {
-  return () => {
+  return (dispatch, getState) => {
+    if (getState().dropbox.mock) {
+      return true;
+    }
     const dropbox = new Dropbox({ clientId: DROPBOX_CLIENT_ID });
     window.location = dropbox.getAuthenticationUrl(AUTH_REDIRECT_URL);
     return;
@@ -75,6 +83,9 @@ const createJournalOnDropbox = () => {
 export const downloadJournal = () => {
   // TODO: Split this up into smaller actions
   return (dispatch, getState) => {
+    if (getState().dropbox.mock) {
+      dispatch({ type: SET_FROM_MD, md: MOCK_JOURNAL });
+    }
     const dropbox = getDropboxClient(getState());
     dropbox
       .filesGetMetadata({ path: JOURNAL_PATH })
@@ -91,6 +102,9 @@ export const downloadJournal = () => {
 };
 
 const _uploadToDropbox = (dispatch, getState) => {
+  if (getState().dropbox.mock) {
+    return;
+  }
   dispatch({ type: STARTING_DROPBOX_UPLOAD });
   const dropbox = getDropboxClient(getState());
   const md = getMarkdown(getState());
