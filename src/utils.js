@@ -5,7 +5,7 @@ import { keyBy } from "lodash";
 
 import { TITLE_DATE_FORMAT } from "./constants";
 
-const ISO_DATETIME_REGEX = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
+const ISO_DATETIME_REGEX = /\d{4}-[01]\d-[0-3]\d(T[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))?/;
 
 export const isISODatetime = str => {
   return str.replace(ISO_DATETIME_REGEX, "") === "";
