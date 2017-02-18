@@ -1,4 +1,4 @@
-import { map, sortBy } from "lodash";
+import { map, sortBy, get } from "lodash";
 
 export const getAuthToken = state => state.dropbox.authToken;
 
@@ -7,6 +7,7 @@ export const getJournal = state => state.journal;
 export const getJournalAsArray = state => {
   return getJournal(state) && sortBy(map(getJournal(state)), "date").reverse();
 };
+export const getEntryById = (state, id) => get(getJournal(state), id, null);
 
 const primaryHeading = str => {
   return `# ${str}`;
@@ -29,4 +30,4 @@ export const getMarkdown = state => {
     .join("\n\n");
 };
 
-export const isLoggedIn = state => !!getAuthToken(state) || state.dropbox.mock;
+export const isLoggedIn = state => !!getAuthToken(state) || state.dropbo.mock;

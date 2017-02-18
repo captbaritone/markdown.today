@@ -7,7 +7,9 @@ import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import EditIcon from "material-ui/svg-icons/image/edit";
 import { push } from "react-router-redux";
 import marked from "marked";
-import { getEntryById, formatTimestamp } from "../utils";
+import CircularProgress from "material-ui/CircularProgress";
+import { getEntryById } from "../accessors";
+import { formatTimestamp } from "../utils";
 import { editEntry } from "../actionCreators";
 
 class Entry extends Component {
@@ -31,13 +33,21 @@ class Entry extends Component {
             )
           }
         />
-        <Card>
-          <CardText>
-            <div
-              dangerouslySetInnerHTML={{ __html: marked(this.props.markdown) }}
-            />
-          </CardText>
-        </Card>
+        {!this.props.loaded
+          ? <div
+              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
+            >
+              <CircularProgress size={80} thickness={5} />
+            </div>
+          : <Card>
+              <CardText>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: marked(this.props.markdown)
+                  }}
+                />
+              </CardText>
+            </Card>}
       </div>
     );
   }
@@ -45,7 +55,11 @@ class Entry extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
-  return { title: formatTimestamp(entry.date), markdown: entry.markdown };
+  return {
+    loaded: !!entry,
+    title: entry && formatTimestamp(entry.date),
+    markdown: entry && entry.markdown
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

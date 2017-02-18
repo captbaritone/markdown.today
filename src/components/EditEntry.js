@@ -5,7 +5,9 @@ import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
-import { getEntryById, formatTimestamp } from "../utils";
+import CircularProgress from "material-ui/CircularProgress";
+import { getEntryById } from "../accessors";
+import { formatTimestamp } from "../utils";
 import { updateEntry } from "../actionCreators";
 import SavingProgress from "./SavingProgress";
 
@@ -24,13 +26,19 @@ class EditEntry extends Component {
           }
         />
         <SavingProgress />
-        <TextField
-          id={`${this.props.id}`}
-          onChange={this.props.handleChange}
-          fullWidth={true}
-          multiLine={true}
-          value={this.props.markdown}
-        />
+        {!this.props.loaded
+          ? <div
+              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
+            >
+              <CircularProgress size={80} thickness={5} />
+            </div>
+          : <TextField
+              id={`${this.props.id}`}
+              onChange={this.props.handleChange}
+              fullWidth={true}
+              multiLine={true}
+              value={this.props.markdown}
+            />}
       </div>
     );
   }
@@ -39,9 +47,9 @@ class EditEntry extends Component {
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
   return {
-    id: entry.id,
-    title: formatTimestamp(entry.date),
-    markdown: entry.markdown
+    loaded: !!entry,
+    title: entry && formatTimestamp(entry.date),
+    markdown: entry && entry.markdown
   };
 };
 

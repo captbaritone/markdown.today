@@ -44,6 +44,7 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
 );
 
 const mapStateToProps = (state, ownProps) => ({
+  // TODO: Use acessor
   entry: state.journal[ownProps.id]
 });
 

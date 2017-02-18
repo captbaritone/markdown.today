@@ -16,8 +16,6 @@ export const extractISODatetime = str => {
   return matches ? matches[0] : null;
 };
 
-export const getEntryById = (state, id) => state.journal[id];
-
 export const entriesFromMarkdown = md => {
   const lines = md.split("\n");
   // TOOD: Maybe make ids a hash of the title?
