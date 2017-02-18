@@ -39,7 +39,7 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
       <div dangerouslySetInnerHTML={{ __html: marked(entry.markdown) }} />
     }
     secondaryTextLines={2}
-    onClick={viewEntry(entry.id)}
+    onTouchTap={viewEntry(entry.id)}
   />
 );
 
