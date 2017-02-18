@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ContentAdd from "material-ui/svg-icons/content/add";
+import AddBox from "material-ui/svg-icons/content/add-box";
 import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
@@ -23,7 +23,7 @@ class Home extends Component {
           iconElementRight={
             (
               <IconButton tooltip="New" onTouchTap={this.props.addEntry}>
-                <ContentAdd />
+                <AddBox />
               </IconButton>
             )
           }
