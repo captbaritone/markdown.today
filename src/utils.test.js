@@ -8,7 +8,7 @@ describe("entriesFromMarkdown", () => {
   it("can parse a simple Journal", () => {
     const md = `## 2017-03-01T08:00:00.000Z`;
     expect(entriesFromMarkdown(md)).toEqual({
-      "1": { date: 1488355200000, id: 1, markdown: "" }
+      "1488355200000": { date: 1488355200000, id: 1488355200000, markdown: "" }
     });
   });
   it("can parse a journal with a title", () => {
@@ -16,7 +16,7 @@ describe("entriesFromMarkdown", () => {
 
 ## 2017-03-01T08:00:00.000Z`;
     expect(entriesFromMarkdown(md)).toEqual({
-      "1": { date: 1488355200000, id: 1, markdown: "" }
+      "1488355200000": { date: 1488355200000, id: 1488355200000, markdown: "" }
     });
   });
   it("can parse a journal with a title", () => {
@@ -26,7 +26,11 @@ describe("entriesFromMarkdown", () => {
 
 Hello!`;
     expect(entriesFromMarkdown(md)).toEqual({
-      "1": { date: 1486778717338, id: 1, markdown: "Hello!" }
+      "1486778717338": {
+        date: 1486778717338,
+        id: 1486778717338,
+        markdown: "Hello!"
+      }
     });
   });
 });

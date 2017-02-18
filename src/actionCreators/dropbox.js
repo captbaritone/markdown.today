@@ -1,8 +1,10 @@
 import Dropbox from "dropbox";
+import { push } from "react-router-redux";
 import { debounce } from "lodash";
 
 import { getMarkdown, isLoggedIn, getAuthToken } from "../accessors";
 import {
+  MOCK_DROPBOX,
   SET_FROM_MD,
   DROPBOX_UPLOAD_COMPLETE,
   STARTING_DROPBOX_UPLOAD
@@ -85,6 +87,7 @@ export const downloadJournal = () => {
   return (dispatch, getState) => {
     if (getState().dropbox.mock) {
       dispatch({ type: SET_FROM_MD, md: MOCK_JOURNAL });
+      return;
     }
     const dropbox = getDropboxClient(getState());
     dropbox
@@ -130,3 +133,10 @@ export const uploadToDropbox = () => _uploadToDropbox;
 const _debouncedUploadToDropbox = debounce(_uploadToDropbox, 5000);
 
 export const debouncedUploadToDropbox = () => _debouncedUploadToDropbox;
+
+export const mockDropbox = () => {
+  return dispatch => {
+    dispatch({ type: MOCK_DROPBOX });
+    dispatch(push("/"));
+  };
+};

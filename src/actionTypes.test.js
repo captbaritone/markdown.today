@@ -11,7 +11,7 @@ describe("actionTypes", () => {
   });
   it("has values that match their keys", () => {
     forEach(TYPES, (value, key) => {
-      //expect(key).toBe(value);
+      expect(key).toBe(value);
     });
   });
 });

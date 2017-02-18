@@ -4,9 +4,11 @@ import AppBar from "material-ui/AppBar";
 import { Card, CardText } from "material-ui/Card";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
+import EditIcon from "material-ui/svg-icons/image/edit";
 import { push } from "react-router-redux";
 import marked from "marked";
 import { getEntryById, formatTimestamp } from "../utils";
+import { editEntry } from "../actionCreators";
 
 class Entry extends Component {
   render() {
@@ -18,6 +20,13 @@ class Entry extends Component {
             (
               <IconButton onClick={this.props.goHome}>
                 <KeyboardArrowLeft />
+              </IconButton>
+            )
+          }
+          iconElementRight={
+            (
+              <IconButton onClick={this.props.editEntry}>
+                <EditIcon />
               </IconButton>
             )
           }
@@ -40,7 +49,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goHome: () => dispatch(push("/"))
+  goHome: () => dispatch(push("/")),
+  editEntry: () => dispatch(editEntry(ownProps.routeParams.id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Entry);

@@ -1,4 +1,5 @@
-import { push } from "react-router-redux";
+// ?
+import { replace } from "react-router-redux";
 
 import { getAsDataURI } from "../utils";
 import { getMarkdown } from "../accessors";
@@ -10,14 +11,14 @@ import {
   LOGOUT
 } from "../actionTypes";
 import { downloadURI } from "../utils";
-import {
-  authenticateToDropbox,
-  uploadToDropbox,
-  debouncedUploadToDropbox,
-  downloadJournal
-} from "./dropbox";
+import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
 
-export { downloadJournal, uploadToDropbox, authenticateToDropbox };
+export {
+  downloadJournal,
+  uploadToDropbox,
+  authenticateToDropbox,
+  mockDropbox
+} from "./dropbox";
 
 const JOURNAL_FILENAME = "journal.md";
 
@@ -46,6 +47,12 @@ export const updateEntry = (id, markdown) => {
   };
 };
 
+export const editEntry = id => {
+  return dispatch => {
+    dispatch(replace(`/entry/${id}/edit`));
+    // TODO: Find a way to focus the textarea.
+  };
+};
 export const addEntry = () => {
   return (dispatch, getState) => {
     dispatch({ type: ADD_ENTRY });
@@ -61,6 +68,6 @@ export const logout = () => {
   return (dispatch, getState) => {
     dispatch({ type: LOGOUT });
     dispatch(setDrawerVisibility(false));
-    dispatch(push("/login/"));
+    dispatch(replace("/login/"));
   };
 };

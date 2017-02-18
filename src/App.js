@@ -17,7 +17,7 @@ import JournalDrawer from "./components/JournalDrawer";
 import Login from "./components/Login";
 import Auth from "./components/Auth";
 import { downloadJournal } from "./actionCreators";
-import { getJournal, getAuthToken } from "./accessors";
+import { getJournal, getAuthToken, isLoggedIn } from "./accessors";
 
 const slicer = paths => {
   return state => {
@@ -39,9 +39,11 @@ const store = createStore(
   )
 );
 
+//store.dispatch({ type: "MOCK_DROPBOX" });
+
 function requireAuth(nextState, replace) {
   const state = store.getState();
-  if (!getAuthToken(state)) {
+  if (!isLoggedIn(state)) {
     // TODO: Stash redirect URL
     replace({ pathname: "/login/" });
   } else if (!getJournal(state)) {

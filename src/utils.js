@@ -20,18 +20,17 @@ export const getEntryById = (state, id) => state.journal[id];
 
 export const entriesFromMarkdown = md => {
   const lines = md.split("\n");
-  let nextId = 1;
   // TOOD: Maybe make ids a hash of the title?
   const entries = lines.reduce(
     (acc, curr) => {
       const entry = acc[acc.length - 1];
       if (extractISODatetime(curr)) {
+        const timestamp = getTime(parse(extractISODatetime(curr)));
         acc.push({
-          id: nextId,
-          date: getTime(parse(extractISODatetime(curr))),
+          id: timestamp,
+          date: timestamp,
           markdown: ""
         });
-        nextId++;
       } else if (entry) {
         const entry = acc[acc.length - 1];
         entry.markdown += "\n" + curr;

@@ -13,7 +13,7 @@ const dropbox = (state = defaultDropboxSate, action) => {
     case SET_AUTH_TOKEN:
       return Object.assign({}, state, { authToken: action.token });
     case LOGOUT:
-      return Object.assign({}, state, { authToken: null });
+      return Object.assign({}, state, { authToken: null, mock: false });
     case STARTING_DROPBOX_UPLOAD:
       return Object.assign({}, state, { uploading: true });
     case DROPBOX_UPLOAD_COMPLETE:
