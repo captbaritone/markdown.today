@@ -7,6 +7,7 @@ import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import { getEntryById, formatTimestamp } from "../utils";
 import { updateEntry } from "../actionCreators";
+import SavingProgress from "./SavingProgress";
 
 class EditEntry extends Component {
   render() {
@@ -22,6 +23,7 @@ class EditEntry extends Component {
             )
           }
         />
+        <SavingProgress />
         <TextField
           id={`${this.props.id}`}
           onChange={this.props.handleChange}

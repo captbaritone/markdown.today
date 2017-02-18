@@ -6,12 +6,12 @@ import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
-import LinearProgress from "material-ui/LinearProgress";
 
 import { getJournalAsArray } from "../accessors";
 import { addEntry } from "../actionCreators";
 import { TOGGLE_DRAWER } from "../actionTypes";
 import EntryListItem from "./EntryListItem";
+import SavingProgress from "./SavingProgress";
 
 const style = { marginRight: 20, float: "right" };
 
@@ -23,11 +23,7 @@ class Home extends Component {
           title="Markdown Journal"
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
         />
-        {this.props.uploading &&
-          <LinearProgress
-            mode="indeterminate"
-            style={{ position: "absolute" }}
-          />}
+        <SavingProgress />
         {!this.props.entries
           ? <div
               style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
@@ -52,8 +48,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   entries: getJournalAsArray(state),
-  showDrawer: state.view.showDrawer,
-  uploading: state.dropbox.uploading
+  showDrawer: state.view.showDrawer
 });
 
 const mapDispatchToProps = dispatch => ({
