@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
+import IconButton from "material-ui/IconButton";
 
 import { getJournalAsArray } from "../accessors";
 import { addEntry } from "../actionCreators";
 import { TOGGLE_DRAWER } from "../actionTypes";
 import EntryListItem from "./EntryListItem";
 import SavingProgress from "./SavingProgress";
-
-const style = { marginRight: 20, float: "right" };
 
 class Home extends Component {
   render() {
@@ -22,6 +20,13 @@ class Home extends Component {
         <AppBar
           title="Markdown Journal"
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
+          iconElementRight={
+            (
+              <IconButton tooltip="New" onTouchTap={this.props.addEntry}>
+                <ContentAdd />
+              </IconButton>
+            )
+          }
         />
         <SavingProgress />
         {!this.props.entries
@@ -37,9 +42,6 @@ class Home extends Component {
                   <Divider inset={true} />
                 ])}
               </List>
-              <FloatingActionButton style={style} onClick={this.props.addEntry}>
-                <ContentAdd />
-              </FloatingActionButton>
             </div>}
       </div>
     );
@@ -48,6 +50,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   entries: getJournalAsArray(state),
+  // TODO: Move to acessor
   showDrawer: state.view.showDrawer
 });
 
