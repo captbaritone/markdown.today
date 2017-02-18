@@ -6,8 +6,9 @@ import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
 import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
 import FileCloudUpload from "material-ui/svg-icons/file/cloud-upload";
+import Divider from "material-ui/Divider";
 import {
-  downloadMarkdown,
+  exportMarkdown,
   uploadToDropbox,
   setDrawerVisibility,
   logout
@@ -23,14 +24,18 @@ const JournalDrawer = props => (
     onRequestChange={props.setDrawerVisibility}
   >
     <Subheader onClick={props.toggleDrawer}>MD Journal</Subheader>
-    <MenuItem leftIcon={<Download />} onClick={props.download}>
-      Download (.md)
-    </MenuItem>
     <MenuItem leftIcon={<FileCloudUpload />} onClick={props.upload}>
       Save to Dropbox
     </MenuItem>
+    <MenuItem leftIcon={<Download />} onClick={props.export}>
+      Export (.md)
+    </MenuItem>
     <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
       Logout
+    </MenuItem>
+    <Divider />
+    <MenuItem onTouchTap={props.readAbout}>
+      GitHub
     </MenuItem>
   </Drawer>
 );
@@ -43,12 +48,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
-  download: () => dispatch(downloadMarkdown()),
+  export: () => dispatch(exportMarkdown()),
   upload: () => {
     dispatch(uploadToDropbox());
     dispatch(setDrawerVisibility(false));
   },
   logout: () => dispatch(logout()),
+  readAbout: () =>
+    window.location = "https://github.com/captbaritone/markdown-journal",
   setDrawerVisibility: value => dispatch(setDrawerVisibility(value))
 });
 

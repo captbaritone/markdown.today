@@ -22,7 +22,7 @@ export {
 
 const JOURNAL_FILENAME = "journal.md";
 
-export const downloadMarkdown = () => {
+export const exportMarkdown = () => {
   return (dispatch, getState) => {
     const md = getMarkdown(getState());
     downloadURI(getAsDataURI(md), JOURNAL_FILENAME);
