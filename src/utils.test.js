@@ -1,7 +1,8 @@
 import {
   entriesFromMarkdown,
   isISODatetime,
-  extractISODatetime
+  extractISODatetime,
+  fileIsEncrypted
 } from "./utils";
 
 describe("entriesFromMarkdown", () => {
@@ -70,5 +71,21 @@ describe("extractISODatetime", () => {
     expect(extractISODatetime("## My Great Day (2017-03-01)")).toBe(
       "2017-03-01"
     );
+  });
+});
+
+describe("fileIsEncrypted", () => {
+  it("Markdown is not encrypted", () => {
+    expect(fileIsEncrypted("# My Journal")).toBe(false);
+  });
+  it("this JSON blob is encrypted", () => {
+    expect(
+      fileIsEncrypted(
+        `{"iv":"IgRCizyiQsvV0hwzGYttcw==","v":1,"iter":10000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"US4EEfq0KyY=","ct":"fVPT2gDG08IQI0L2POT/p2BE80BVGzxZnDVygHqm5szBAPu/htyGvh/cUAAdy5u4qV13apfz94OaTPKPE302+vuO11xZlLNrNFqYrFaVDQrb98TOM2Uz4+sWuyM4p+1QBANJpBZTVPheHaayF39+qiQ7rhT1duebDToFw0a0qp4qLWa6VDPEJ21VaXfcoQ=="}`
+      )
+    ).toBe(true);
+  });
+  it("Empty string is not encrypted", () => {
+    expect(fileIsEncrypted("")).toBe(false);
   });
 });

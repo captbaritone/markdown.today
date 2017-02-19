@@ -60,7 +60,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-localstorage": "^0.4.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sjcl": "^1.0.6"
   },
   "scripts": {
     "start": "node scripts/start.js",

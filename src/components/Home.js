@@ -19,6 +19,7 @@ class Home extends Component {
       <div>
         <AppBar
           title="Markdown Journal"
+          titleStyle={{ textAlign: "center" }}
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
           iconElementRight={
             (

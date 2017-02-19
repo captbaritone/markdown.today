@@ -8,7 +8,10 @@ import {
   EDIT_ENTRY,
   ADD_ENTRY,
   SET_DRAWER_VISIBILITY,
-  LOGOUT
+  LOGOUT,
+  SHOW_SETTINGS,
+  SET_ENCRYPTION_PASSWORD,
+  HIDE_SETTINGS
 } from "../actionTypes";
 import { downloadURI } from "../utils";
 import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
@@ -17,7 +20,8 @@ export {
   downloadJournal,
   uploadToDropbox,
   authenticateToDropbox,
-  mockDropbox
+  mockDropbox,
+  attemptToDecryptJournal
 } from "./dropbox";
 
 const JOURNAL_FILENAME = "journal.md";
@@ -70,4 +74,14 @@ export const logout = () => {
     dispatch(setDrawerVisibility(false));
     dispatch(replace("/login/"));
   };
+};
+
+export const showSettings = () => ({ type: SHOW_SETTINGS });
+export const hideSettings = () => ({ type: HIDE_SETTINGS });
+export const setEncryptionPassword = password => ({
+  type: SET_ENCRYPTION_PASSWORD,
+  password
+});
+export const toggleEncryption = () => {
+  return (dispatch, getState) => {};
 };

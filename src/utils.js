@@ -51,6 +51,15 @@ export const getAsDataURI = text => {
   return `data:text/text;base64,${base64}`;
 };
 
+export const fileIsEncrypted = contents => {
+  try {
+    // TODO: Come up with a more robust solution here.
+    JSON.parse(contents);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
 export const downloadURI = (uri, name) => {
   // TODO: Test in Firefox/IE
   const link = document.createElement("a");

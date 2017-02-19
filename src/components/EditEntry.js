@@ -10,6 +10,17 @@ import { getEntryById } from "../accessors";
 import { formatTimestamp } from "../utils";
 import { updateEntry } from "../actionCreators";
 import SavingProgress from "./SavingProgress";
+import { deleteEntry } from "../actionCreators";
+
+import MenuItem from "material-ui/MenuItem";
+import IconMenu from "material-ui/IconMenu";
+import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+
+const iconButtonElement = (
+  <IconButton touch={true}>
+    <MoreVertIcon />
+  </IconButton>
+);
 
 class EditEntry extends Component {
   render() {
@@ -22,6 +33,15 @@ class EditEntry extends Component {
               <IconButton onClick={this.props.goHome}>
                 <KeyboardArrowLeft />
               </IconButton>
+            )
+          }
+          iconElementRight={
+            (
+              <IconMenu iconButtonElement={iconButtonElement}>
+                <MenuItem onTouchTap={deleteEntry(this.props.id)}>
+                  Delete
+                </MenuItem>
+              </IconMenu>
             )
           }
         />
@@ -47,6 +67,7 @@ class EditEntry extends Component {
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
   return {
+    // What if the entry was deleted?
     loaded: !!entry,
     title: entry && formatTimestamp(entry.date),
     markdown: entry && entry.markdown
@@ -56,7 +77,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleChange: e =>
     dispatch(updateEntry(ownProps.routeParams.id, e.target.value)),
-  goHome: () => dispatch(push("/"))
+  goHome: () => dispatch(push("/")),
+  deleteEntry: () => dispatch(deleteEntry(ownProps.id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditEntry);

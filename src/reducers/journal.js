@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import getTime from "date-fns/get_time";
 import { max, keys } from "lodash";
 
@@ -7,10 +8,29 @@ import {
   EDIT_ENTRY,
   DELETE_ENTRY,
   ADD_ENTRY,
-  LOGOUT
+  LOGOUT,
+  SET_ENCRYPTION_PASSWORD,
+  SET_UNENCRYPTED_BLOB
 } from "../actionTypes";
 
-const journal = (previousState = null, action) => {
+const defaultEncryptionState = { password: null, enencryptedBlob: null };
+const encryption = (state = defaultEncryptionState, action) => {
+  switch (action.type) {
+    case SET_ENCRYPTION_PASSWORD:
+      return Object.assign({}, state, { password: action.password });
+    case SET_UNENCRYPTED_BLOB:
+      return Object.assign({}, state, {
+        unencryptedBlob: action.contents
+      });
+    case LOGOUT:
+      return null;
+    default:
+      return state;
+
+  }
+};
+
+const entries = (previousState = null, action) => {
   // TODO: Handle Journal title, and open the door to other meta-data like `path`
   // First step might be ensuring all entry access is done via an accessor
   switch (action.type) {
@@ -38,4 +58,8 @@ const journal = (previousState = null, action) => {
   }
 };
 
+const journal = combineReducers({
+  entries,
+  encryption
+});
 export default journal;

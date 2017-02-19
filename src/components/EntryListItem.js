@@ -12,9 +12,10 @@ import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
 import marked from "marked";
 import { formatTimestamp } from "../utils";
 import { deleteEntry, editEntry } from "../actionCreators";
+import { getEntryById } from "../accessors";
 
 const iconButtonElement = (
-  <IconButton touch={true} tooltip="more" tooltipPosition="bottom-left">
+  <IconButton touch={true} tooltipPosition="bottom-left">
     <MoreVertIcon color={grey400} />
   </IconButton>
 );
@@ -43,9 +44,8 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
   />
 );
 
-const mapStateToProps = (state, ownProps) => ({
-  // TODO: Use acessor
-  entry: state.journal[ownProps.id]
+const mapStateToProps = (state, { id }) => ({
+  entry: getEntryById(state, id)
 });
 
 const mapDispatchToProps = dispatch => ({

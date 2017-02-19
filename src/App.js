@@ -14,6 +14,8 @@ import EditEntry from "./components/EditEntry.js";
 import "./App.css";
 import reducer from "./reducers";
 import JournalDrawer from "./components/JournalDrawer";
+import Settings from "./components/Settings";
+import PasswordPrompt from "./components/PasswordPrompt";
 import Login from "./components/Login";
 import Auth from "./components/Auth";
 import { downloadJournal } from "./actionCreators";
@@ -38,8 +40,6 @@ const store = createStore(
     applyMiddleware(thunk, routerMiddleware(browserHistory))
   )
 );
-
-//store.dispatch({ type: "MOCK_DROPBOX" });
 
 function requireAuth(nextState, replace) {
   const state = store.getState();
@@ -73,6 +73,8 @@ class WrappedApp extends Component {
         <MuiThemeProvider>
           <div>
             <JournalDrawer />
+            <Settings />
+            <PasswordPrompt />
             <Routes />
           </div>
         </MuiThemeProvider>
