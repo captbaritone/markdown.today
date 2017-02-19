@@ -1,6 +1,4 @@
 import { combineReducers } from "redux";
-import getTime from "date-fns/get_time";
-import { max, keys } from "lodash";
 
 import { entriesFromMarkdown } from "../utils";
 import {
@@ -47,9 +45,11 @@ const entries = (previousState = null, action) => {
       delete newState[action.id];
       return newState;
     case ADD_ENTRY:
-      const newId = max(keys(previousState)) + 1;
-      const newEntry = { id: newId, date: getTime(new Date()), markdown: "" };
-      // FIXME
+      const newEntry = {
+        id: action.id,
+        date: action.date,
+        markdown: action.markdown
+      };
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
     case LOGOUT:
       return {};

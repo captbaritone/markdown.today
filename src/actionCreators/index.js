@@ -1,5 +1,5 @@
-// ?
 import { replace } from "react-router-redux";
+import getTime from "date-fns/get_time";
 
 import { getAsDataURI } from "../utils";
 import { getMarkdown } from "../accessors";
@@ -59,7 +59,11 @@ export const editEntry = id => {
 };
 export const addEntry = () => {
   return (dispatch, getState) => {
-    dispatch({ type: ADD_ENTRY });
+    const date = getTime(new Date());
+    const id = date;
+    const markdown = "";
+    dispatch({ type: ADD_ENTRY, date, id, markdown });
+    dispatch(editEntry(id));
     dispatch(debouncedUploadToDropbox());
   };
 };
