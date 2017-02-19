@@ -58,6 +58,7 @@ class EditEntry extends Component {
               fullWidth={true}
               multiLine={true}
               value={this.props.markdown}
+              autoFocus
             />}
       </div>
     );

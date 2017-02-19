@@ -53,6 +53,7 @@ class PasswordPrompt extends React.Component {
           type="password"
           onChange={this.updatePassword}
           value={this.state.password}
+          autoFocus
         />
       </Dialog>
     );
