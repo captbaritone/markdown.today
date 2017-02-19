@@ -15,7 +15,7 @@ echo "Cloning Markdown Journal"
 git clone git@github.com:captbaritone/markdown-journal.git $NEW_CLONE > /dev/null
 
 echo "Installing Node requirements"
-( cd $NEW_CLONE && npm install)
+( cd $NEW_CLONE && yarn install)
 
 #echo "Run tests"
 #( cd $NEW_CLONE && npm run test )
