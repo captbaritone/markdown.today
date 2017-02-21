@@ -1,11 +1,17 @@
 import {
   TOGGLE_DRAWER,
   SET_DRAWER_VISIBILITY,
-  SHOW_SETTINGS,
-  HIDE_SETTINGS
+  SHOW_CHANGE_PASSWORD,
+  HIDE_CHANGE_PASSWORD,
+  ADD_NOTIFICATION,
+  RESOLVE_FIRST_NOTIFICATION
 } from "../actionTypes";
 
-const defaultViewState = { showDrawer: false, showSettings: false };
+const defaultViewState = {
+  showDrawer: false,
+  showChangePassword: false,
+  notifications: []
+};
 
 const view = (previousState = defaultViewState, action) => {
   switch (action.type) {
@@ -17,13 +23,21 @@ const view = (previousState = defaultViewState, action) => {
       return Object.assign({}, previousState, {
         showDrawer: action.value
       });
-    case SHOW_SETTINGS:
+    case SHOW_CHANGE_PASSWORD:
       return Object.assign({}, previousState, {
-        showSettings: true
+        showChangePassword: true
       });
-    case HIDE_SETTINGS:
+    case HIDE_CHANGE_PASSWORD:
       return Object.assign({}, previousState, {
-        showSettings: false
+        showChangePassword: false
+      });
+    case ADD_NOTIFICATION:
+      return Object.assign({}, previousState, {
+        notifications: [...previousState.notifications, action.notification]
+      });
+    case RESOLVE_FIRST_NOTIFICATION:
+      return Object.assign({}, previousState, {
+        notifications: previousState.notifications.slice(1)
       });
     default:
       return previousState;

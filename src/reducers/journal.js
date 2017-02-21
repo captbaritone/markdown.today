@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-
 import { entriesFromMarkdown } from "../utils";
 import {
   SET_FROM_MD,
@@ -8,7 +7,7 @@ import {
   ADD_ENTRY,
   LOGOUT,
   SET_ENCRYPTION_PASSWORD,
-  SET_UNENCRYPTED_BLOB
+  SET_ENCRYPTED_BLOB
 } from "../actionTypes";
 
 const defaultEncryptionState = { password: null, enencryptedBlob: null };
@@ -16,12 +15,12 @@ const encryption = (state = defaultEncryptionState, action) => {
   switch (action.type) {
     case SET_ENCRYPTION_PASSWORD:
       return Object.assign({}, state, { password: action.password });
-    case SET_UNENCRYPTED_BLOB:
+    case SET_ENCRYPTED_BLOB:
       return Object.assign({}, state, {
-        unencryptedBlob: action.contents
+        encryptedBlob: action.contents
       });
     case LOGOUT:
-      return null;
+      return defaultEncryptionState;
     default:
       return state;
 
@@ -52,7 +51,7 @@ const entries = (previousState = null, action) => {
       };
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
     case LOGOUT:
-      return {};
+      return null;
     default:
       return previousState;
   }

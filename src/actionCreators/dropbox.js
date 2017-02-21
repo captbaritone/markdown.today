@@ -8,14 +8,14 @@ import {
   getAuthToken,
   getDropboxFileContents,
   getEncryptionPassword,
-  getUnencryptedBlob
+  getEncryptedBlob
 } from "../accessors";
 import {
   MOCK_DROPBOX,
   SET_FROM_MD,
   DROPBOX_UPLOAD_COMPLETE,
   STARTING_DROPBOX_UPLOAD,
-  SET_UNENCRYPTED_BLOB
+  SET_ENCRYPTED_BLOB
 } from "../actionTypes";
 import { fileIsEncrypted } from "../utils";
 import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "../constants";
@@ -62,12 +62,12 @@ export const attemptToDecryptJournal = () => {
   return (dispatch, getState) => {
     const state = getState();
     const password = getEncryptionPassword(state);
-    const unencryptedBlob = getUnencryptedBlob(state);
-    if (!password || !unencryptedBlob) {
+    const encryptedBlob = getEncryptedBlob(state);
+    if (!password || !encryptedBlob) {
       return;
     }
     // TODO: Do we need to handle the case where this doesn't work? I think it throws.
-    const md = decrypt(password, unencryptedBlob);
+    const md = decrypt(password, encryptedBlob);
     if (md) {
       dispatch(setJournalMarkdown(md));
     }
@@ -75,7 +75,7 @@ export const attemptToDecryptJournal = () => {
 };
 const setEncryptedContents = contents => {
   return dispatch => {
-    dispatch({ type: SET_UNENCRYPTED_BLOB, contents });
+    dispatch({ type: SET_ENCRYPTED_BLOB, contents });
     dispatch(attemptToDecryptJournal());
   };
 };

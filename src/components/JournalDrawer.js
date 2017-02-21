@@ -5,16 +5,16 @@ import Subheader from "material-ui/Subheader";
 import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
 import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
-import Settings from "material-ui/svg-icons/action/settings";
+import Lock from "material-ui/svg-icons/action/lock";
 import Divider from "material-ui/Divider";
 import {
   exportMarkdown,
   setDrawerVisibility,
   logout,
   toggleEncryption,
-  showSettings
+  showChangePassword
 } from "../actionCreators";
-import { isLoggedIn } from "../accessors";
+import { isLoggedIn, isEncrypted } from "../accessors";
 import { TOGGLE_DRAWER } from "../actionTypes";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
@@ -25,9 +25,10 @@ const JournalDrawer = props => (
     onRequestChange={props.setDrawerVisibility}
   >
     <Subheader onClick={props.toggleDrawer}>MD Journal</Subheader>
-    <MenuItem leftIcon={<Settings />} onClick={props.showSettings}>
-      Settings
-    </MenuItem>
+    {props.isEncrypted &&
+      <MenuItem leftIcon={<Lock />} onClick={props.showChangePassword}>
+        Change Password
+      </MenuItem>}
     <MenuItem leftIcon={<Download />} onClick={props.export}>
       Export (.md)
     </MenuItem>
@@ -44,7 +45,8 @@ const JournalDrawer = props => (
 const mapStateToProps = state => ({
   // TODO: Move to actionCreators
   showDrawer: state.view.showDrawer,
-  isLogedIn: isLoggedIn(state)
+  isLogedIn: isLoggedIn(state),
+  isEncrypted: isEncrypted(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -54,7 +56,7 @@ const mapDispatchToProps = dispatch => ({
   readAbout: () =>
     window.location = "https://github.com/captbaritone/markdown-journal",
   setDrawerVisibility: value => dispatch(setDrawerVisibility(value)),
-  showSettings: () => dispatch(showSettings()),
+  showChangePassword: () => dispatch(showChangePassword()),
   toggleEncryption: () => dispatch(toggleEncryption())
 });
 

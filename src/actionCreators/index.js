@@ -9,9 +9,11 @@ import {
   ADD_ENTRY,
   SET_DRAWER_VISIBILITY,
   LOGOUT,
-  SHOW_SETTINGS,
   SET_ENCRYPTION_PASSWORD,
-  HIDE_SETTINGS
+  SHOW_CHANGE_PASSWORD,
+  HIDE_CHANGE_PASSWORD,
+  ADD_NOTIFICATION,
+  RESOLVE_FIRST_NOTIFICATION
 } from "../actionTypes";
 import { downloadURI } from "../utils";
 import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
@@ -80,12 +82,33 @@ export const logout = () => {
   };
 };
 
-export const showSettings = () => ({ type: SHOW_SETTINGS });
-export const hideSettings = () => ({ type: HIDE_SETTINGS });
+export const showChangePassword = () => ({ type: SHOW_CHANGE_PASSWORD });
+export const hideChangePassword = () => {
+  return dispatch => {
+    dispatch({ type: HIDE_CHANGE_PASSWORD });
+    //dispatch(setDrawerVisibility(false));
+  };
+};
+export const addNotification = notification => ({
+  type: ADD_NOTIFICATION,
+  notification
+});
+
+export const resolveFirstNotification = () => ({
+  type: RESOLVE_FIRST_NOTIFICATION
+});
 export const setEncryptionPassword = password => ({
   type: SET_ENCRYPTION_PASSWORD,
   password
 });
+export const updateEncryptionPassword = password => {
+  return dispatch => {
+    dispatch(setEncryptionPassword(password));
+    dispatch(addNotification("Encryption password updated"));
+    dispatch(uploadToDropbox());
+    // TODO: Some kind of confirmation maybe?
+  };
+};
 export const toggleEncryption = () => {
   return (dispatch, getState) => {};
 };

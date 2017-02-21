@@ -1,5 +1,5 @@
 import { encrypt } from "sjcl";
-import { map, sortBy, get } from "lodash";
+import { map, sortBy, get, first } from "lodash";
 
 export const getAuthToken = state => state.dropbox.authToken;
 
@@ -33,13 +33,12 @@ export const getMarkdown = state => {
 };
 
 export const isLoggedIn = state => !!getAuthToken(state) || state.dropbox.mock;
-export const shouldShowSettings = state => state.view.showSettings;
+export const shouldShowChangePassword = state => state.view.showChangePassword;
 export const getEncryptionPassword = state => state.journal.encryption.password;
 export const isEncrypted = state => !!getEncryptionPassword(state);
-export const getUnencryptedBlob = state =>
-  state.journal.encryption.unencryptedBlob;
+export const getEncryptedBlob = state => state.journal.encryption.encryptedBlob;
 export const needsEncryptionPassword = state =>
-  !!getUnencryptedBlob(state) && !getEncryptionPassword(state);
+  !!getEncryptedBlob(state) && !getEncryptionPassword(state);
 
 export const getDropboxFileContents = state => {
   const md = getMarkdown(state);
@@ -48,3 +47,5 @@ export const getDropboxFileContents = state => {
   }
   return encrypt(getEncryptionPassword(state), md);
 };
+
+export const nextNotification = state => first(state.view.notifications);

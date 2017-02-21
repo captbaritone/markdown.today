@@ -14,10 +14,11 @@ import EditEntry from "./components/EditEntry.js";
 import "./App.css";
 import reducer from "./reducers";
 import JournalDrawer from "./components/JournalDrawer";
-import Settings from "./components/Settings";
 import PasswordPrompt from "./components/PasswordPrompt";
+import ChangePassword from "./components/ChangePassword";
 import Login from "./components/Login";
 import Auth from "./components/Auth";
+import Notifications from "./components/Notifications";
 import { downloadJournal } from "./actionCreators";
 import { getJournal, getAuthToken, isLoggedIn } from "./accessors";
 
@@ -73,7 +74,8 @@ class WrappedApp extends Component {
         <MuiThemeProvider>
           <div>
             <JournalDrawer />
-            <Settings />
+            <Notifications />
+            <ChangePassword />
             <PasswordPrompt />
             <Routes />
           </div>

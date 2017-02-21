@@ -56,6 +56,7 @@ class Entry extends Component {
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
   return {
+    // TODO: What if the entry was deleted?
     loaded: !!entry,
     title: entry && formatTimestamp(entry.date),
     markdown: entry && entry.markdown

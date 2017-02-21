@@ -7,9 +7,10 @@ import { decrypt } from "sjcl";
 
 import {
   attemptToDecryptJournal,
-  setEncryptionPassword
+  setEncryptionPassword,
+  logout
 } from "../actionCreators";
-import { needsEncryptionPassword, getUnencryptedBlob } from "../accessors";
+import { needsEncryptionPassword, getEncryptedBlob } from "../accessors";
 
 class PasswordPrompt extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class PasswordPrompt extends React.Component {
     const password = e.target.value;
     this.setState({ password });
     try {
-      decrypt(password, this.props.unencryptedBlob);
+      decrypt(password, this.props.encryptedBlob);
     } catch (e) {
       return;
     }
@@ -35,6 +36,7 @@ class PasswordPrompt extends React.Component {
     // TODO: Focus input
     return (
       <Dialog
+        contentStyle={{ maxWidth: "300px" }}
         title="Encryption Password"
         open={this.props.open}
         actions={
@@ -42,7 +44,7 @@ class PasswordPrompt extends React.Component {
             <FlatButton
               label="Cancel"
               primary={false}
-              onTouchTap={this.props.hideSettings}
+              onTouchTap={this.props.logout}
             />
           )
         }
@@ -62,12 +64,13 @@ class PasswordPrompt extends React.Component {
 
 const mapStateToProps = state => ({
   open: needsEncryptionPassword(state),
-  unencryptedBlob: getUnencryptedBlob(state)
+  encryptedBlob: getEncryptedBlob(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   attemptToDecryptJournal: () => dispatch(attemptToDecryptJournal()),
-  setEncryptionPassword: password => dispatch(setEncryptionPassword(password))
+  setEncryptionPassword: password => dispatch(setEncryptionPassword(password)),
+  logout: () => dispatch(logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordPrompt);
