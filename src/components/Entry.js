@@ -42,6 +42,7 @@ class Entry extends Component {
           : <Card>
               <CardText>
                 <div
+                  style={{ fontSize: "18px", lineHeight: "24px" }}
                   dangerouslySetInnerHTML={{
                     __html: marked(this.props.markdown)
                   }}

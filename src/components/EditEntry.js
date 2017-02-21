@@ -53,6 +53,10 @@ class EditEntry extends Component {
               <CircularProgress size={80} thickness={5} />
             </div>
           : <TextField
+              inputStyle={{
+                fontSize: "18px",
+                lineHeight: "24px"
+              }}
               id={`${this.props.id}`}
               onChange={this.props.handleChange}
               fullWidth={true}
