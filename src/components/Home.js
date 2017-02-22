@@ -8,8 +8,7 @@ import CircularProgress from "material-ui/CircularProgress";
 import IconButton from "material-ui/IconButton";
 
 import { getJournalAsArray } from "../accessors";
-import { addEntry } from "../actionCreators";
-import { TOGGLE_DRAWER } from "../actionTypes";
+import { addEntry, toggleDrawer } from "../actionCreators";
 import EntryListItem from "./EntryListItem";
 import SavingProgress from "./SavingProgress";
 
@@ -55,10 +54,4 @@ const mapStateToProps = state => ({
   showDrawer: state.view.showDrawer
 });
 
-const mapDispatchToProps = dispatch => ({
-  addEntry: () => dispatch(addEntry()),
-  // TODO: Move to action creator
-  toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, { addEntry, toggleDrawer })(Home);

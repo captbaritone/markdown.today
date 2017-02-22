@@ -13,7 +13,8 @@ import {
   SHOW_CHANGE_PASSWORD,
   HIDE_CHANGE_PASSWORD,
   ADD_NOTIFICATION,
-  RESOLVE_FIRST_NOTIFICATION
+  RESOLVE_FIRST_NOTIFICATION,
+  TOGGLE_DRAWER
 } from "../actionTypes";
 import { downloadURI } from "../utils";
 import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
@@ -73,6 +74,8 @@ export const addEntry = () => {
 export const setDrawerVisibility = visible => {
   return { type: SET_DRAWER_VISIBILITY, value: visible };
 };
+
+export const toggleDrawer = () => ({ type: TOGGLE_DRAWER });
 
 export const logout = () => {
   return (dispatch, getState) => {
