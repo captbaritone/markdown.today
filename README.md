@@ -1,4 +1,4 @@
-# Markdown Journal
+# Markdown Today
 
 _Work in progress. Name likely to change._
 
