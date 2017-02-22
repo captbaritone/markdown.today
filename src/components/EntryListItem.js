@@ -9,7 +9,6 @@ import Avatar from "material-ui/Avatar";
 import { ListItem } from "material-ui/List";
 import IconMenu from "material-ui/IconMenu";
 import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
-import marked from "marked";
 import { formatTimestamp } from "../utils";
 import { deleteEntry, editEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
@@ -36,9 +35,7 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
         </IconMenu>
       )
     }
-    secondaryText={
-      <div dangerouslySetInnerHTML={{ __html: marked(entry.markdown) }} />
-    }
+    secondaryText={entry.markdown}
     secondaryTextLines={2}
     onTouchTap={viewEntry(entry.id)}
   />
