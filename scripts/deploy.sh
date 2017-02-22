@@ -12,7 +12,7 @@ PREVIOUS_LINK=$REPOS/markdown-today-previous
 
 # Do the clone
 echo "Cloning Markdown Today"
-git clone git@github.com:captbaritone/markdown-today.git $NEW_CLONE > /dev/null
+git clone git@github.com:captbaritone/markdown.today.git $NEW_CLONE > /dev/null
 
 echo "Installing Node requirements"
 ( cd $NEW_CLONE && yarn install)
