@@ -19,7 +19,6 @@ export const extractISODatetime = str => {
 
 export const entriesFromMarkdown = md => {
   const lines = md.split("\n");
-  // TOOD: Maybe make ids a hash of the title?
   const entries = lines.reduce(
     (acc, curr) => {
       const entry = acc[acc.length - 1];
