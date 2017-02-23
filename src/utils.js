@@ -1,6 +1,7 @@
 import parse from "date-fns/parse";
 import getTime from "date-fns/get_time";
 import format from "date-fns/format";
+import isSameMonth from "date-fns/is_same_month";
 import { keyBy } from "lodash";
 
 import { TITLE_DATE_FORMAT } from "./constants";
@@ -67,4 +68,11 @@ export const downloadURI = (uri, name) => {
   link.href = uri;
   document.body.appendChild(link);
   link.click();
+};
+
+export const getHeading = (lastDate, date) => {
+  if (lastDate && isSameMonth(lastDate, date)) {
+    return null;
+  }
+  return format(date, "MMMM YYYY");
 };

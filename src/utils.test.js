@@ -2,7 +2,8 @@ import {
   entriesFromMarkdown,
   isISODatetime,
   extractISODatetime,
-  fileIsEncrypted
+  fileIsEncrypted,
+  getHeading
 } from "./utils";
 
 describe("entriesFromMarkdown", () => {
@@ -31,6 +32,26 @@ Hello!`;
         date: 1486778717338,
         id: 1486778717338,
         markdown: "Hello!"
+      }
+    });
+  });
+  it("can parse a journal with a title and subheading", () => {
+    const md = `# My Journal
+
+## 2017-02-11T02:05:17.338Z
+
+### Additional heading
+
+Hello!`;
+    expect(entriesFromMarkdown(md)).toEqual({
+      "1486778717338": {
+        date: 1486778717338,
+        id: 1486778717338,
+        markdown: (
+          `### Additional heading
+
+Hello!`
+        )
       }
     });
   });
@@ -88,4 +109,19 @@ describe("fileIsEncrypted", () => {
   it("Empty string is not encrypted", () => {
     expect(fileIsEncrypted("")).toBe(false);
   });
+});
+
+describe("getHeading", () => {
+  it("Shows a heading for the first item", () => {
+    expect(getHeading(undefined, "2017-02-01")).toBe("February 2017");
+  });
+  it("Shows no heading if dates are in the same month", () => {
+    expect(getHeading("2017-02-20", "2017-02-01")).toBeNull();
+  });
+  it(
+    "Shows a heading if dates are in the same month but different years",
+    () => {
+      expect(getHeading("2016-02-20", "2017-02-01")).toBe("February 2017");
+    }
+  );
 });

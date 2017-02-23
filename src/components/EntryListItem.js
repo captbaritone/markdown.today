@@ -9,7 +9,7 @@ import Avatar from "material-ui/Avatar";
 import { ListItem } from "material-ui/List";
 import IconMenu from "material-ui/IconMenu";
 import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
-import { formatTimestamp } from "../utils";
+import format from "date-fns/format";
 import { deleteEntry, editEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
 
@@ -22,7 +22,7 @@ const iconButtonElement = (
 const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
   <ListItem
     leftAvatar={<Avatar icon={<EditorInsertChart />} />}
-    primaryText={formatTimestamp(entry.date)}
+    primaryText={format(entry.date, "dddd [the] Do, ha")}
     rightIconButton={
       (
         <IconMenu iconButtonElement={iconButtonElement}>

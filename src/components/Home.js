@@ -6,18 +6,20 @@ import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
 import IconButton from "material-ui/IconButton";
+import Subheader from "material-ui/Subheader";
 
 import { getJournalAsArray } from "../accessors";
 import { addEntry, toggleDrawer } from "../actionCreators";
 import EntryListItem from "./EntryListItem";
 import SavingProgress from "./SavingProgress";
+import { getHeading } from "../utils";
 
 class Home extends Component {
   render() {
     return (
       <div>
         <AppBar
-          title="Markdown Today"
+          title={"Markdown Today"}
           titleStyle={{ textAlign: "center" }}
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
           iconElementRight={
@@ -37,10 +39,22 @@ class Home extends Component {
             </div>
           : <div>
               <List>
-                {this.props.entries.map(entry => [
-                  <EntryListItem id={entry.id} />,
-                  <Divider inset={true} />
-                ])}
+                {this.props.entries.reduce(
+                  (memo, entry, i, entries) => {
+                    const previous = entries[i - 1];
+                    const previousDate = previous && previous.date;
+                    return memo.concat([
+                      (
+                        <Subheader key={`heading-${entry.id}`}>
+                          {getHeading(previousDate, entry.date)}
+                        </Subheader>
+                      ),
+                      <EntryListItem id={entry.id} key={`entry-${entry.id}`} />,
+                      <Divider inset={true} key={`divider-${entry.id}`} />
+                    ]);
+                  },
+                  []
+                )}
               </List>
             </div>}
       </div>
