@@ -4,12 +4,9 @@ import { push } from "react-router-redux";
 import { parse } from "qs";
 import { downloadJournal } from "../actionCreators";
 
-const getHash = () => this.props.location.hash.slice(1);
-const getAccessTokenFromHash = () => parse(getHash()).access_token;
-
 class Auth extends React.Component {
   componentWillMount() {
-    const accessToken = getAccessTokenFromHash();
+    const accessToken = parse(this.props.location.hash.slice(1)).access_token;
     // TODO: Convert to action creator
     this.props.dispatch({ type: "SET_AUTH_TOKEN", token: accessToken });
     this.props.dispatch(downloadJournal());
