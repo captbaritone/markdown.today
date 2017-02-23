@@ -21,7 +21,7 @@ import Login from "./components/Login";
 import Auth from "./components/Auth";
 import Notifications from "./components/Notifications";
 import { downloadJournal } from "./actionCreators";
-import { getJournal, getAuthToken, isLoggedIn } from "./accessors";
+import { getEntries, getAuthToken, isLoggedIn } from "./accessors";
 
 const slicer = paths => {
   return state => {
@@ -48,7 +48,7 @@ function requireAuth(nextState, replace) {
   if (!isLoggedIn(state)) {
     // TODO: Stash redirect URL
     replace({ pathname: "/login/" });
-  } else if (!getJournal(state)) {
+  } else if (!getEntries(state)) {
     // TODO: Consider storing this in local storage?
     store.dispatch(downloadJournal());
   }

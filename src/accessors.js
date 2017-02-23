@@ -4,12 +4,12 @@ import { map, sortBy, get, first } from "lodash";
 export const getAuthToken = state => state.dropbox.authToken;
 
 // TODO: Reanme to getEntries
-export const getJournal = state => state.journal.entries;
+export const getEntries = state => state.journal.entries;
 
 export const getJournalAsArray = state => {
-  return getJournal(state) && sortBy(map(getJournal(state)), "date").reverse();
+  return getEntries(state) && sortBy(map(getEntries(state)), "date").reverse();
 };
-export const getEntryById = (state, id) => get(getJournal(state), id, null);
+export const getEntryById = (state, id) => get(getEntries(state), id, null);
 
 const primaryHeading = str => {
   return `# ${str}`;
