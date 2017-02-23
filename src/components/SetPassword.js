@@ -74,6 +74,7 @@ class SetPassword extends React.Component {
           type="password"
           value={this.state.enteredNewPassword}
           onChange={this.handleNewPasswordChange}
+          autoFocus
         />
         <br />
         <TextField
