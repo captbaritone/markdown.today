@@ -1,6 +1,6 @@
 import Dropbox from "dropbox";
 import { push } from "react-router-redux";
-import { debounce } from "lodash";
+import { debounce, get } from "lodash";
 import { decrypt } from "sjcl";
 
 import {
@@ -17,10 +17,19 @@ import {
   STARTING_DROPBOX_UPLOAD,
   SET_ENCRYPTED_BLOB
 } from "../actionTypes";
+import { addNotification } from "./";
 import { fileIsEncrypted } from "../utils";
 import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "../constants";
 
-const DEFAULT_JOURNAL = "## Journal";
+const responseIs404 = response =>
+  get(JSON.parse(response.error), ["error", "path", ".tag"]) === "not_found";
+
+const getDefaultJournal = () => `# Journal
+
+## ${new Date().toISOString()}
+
+Welcome to Markdown Today!`;
+
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
 const MOCK_JOURNAL = `# My Journal
@@ -130,15 +139,18 @@ const actuallyDownloadJournal = () => {
 const createJournalOnDropbox = () => {
   return (dispatch, getState) => {
     const dropbox = getDropboxClient(getState());
-    // TODO: Initialize the journal with an entry for today/now.
+    const md = getDefaultJournal();
     dropbox
-      // TODO: Initialize the journal with at least one entry.
-      .filesUpload({ contents: DEFAULT_JOURNAL, path: JOURNAL_PATH })
+      .filesUpload({ contents: md, path: JOURNAL_PATH })
       .then(file => {
-        dispatch(setJournalMarkdown(DEFAULT_JOURNAL));
+        dispatch(addNotification(`Created: "Apps/Markdown Today/journal.md"`));
+        // `file` does not contain the contents, so we
+        // reuse the content we already have.
+        dispatch(setJournalMarkdown(md));
       })
-      .catch(() => {
+      .catch(error => {
         // TODO: Handle errors
+        console.log({ error });
       });
   };
 };
@@ -156,11 +168,12 @@ export const downloadJournal = () => {
       .then(file => {
         dispatch(actuallyDownloadJournal());
       })
-      .catch(reason => {
-        // TOOD: Check to make sure the reason we failed was that the file does not exist.
-        // TODO: Dispatch action saying that we're creating a journal
-        dispatch(createJournalOnDropbox());
-        // console.log("error", reason);
+      .catch(response => {
+        if (responseIs404(response.error)) {
+          dispatch(createJournalOnDropbox());
+          return;
+        }
+        console.log("error");
       });
   };
 };
