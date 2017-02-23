@@ -34,6 +34,7 @@ export const getMarkdown = state => {
 
 export const isLoggedIn = state => !!getAuthToken(state) || state.dropbox.mock;
 export const shouldShowChangePassword = state => state.view.showChangePassword;
+export const shouldShowSetPassword = state => state.view.showSetPassword;
 export const getEncryptionPassword = state => state.journal.encryption.password;
 export const isEncrypted = state => !!getEncryptionPassword(state);
 export const getEncryptedBlob = state => state.journal.encryption.encryptedBlob;

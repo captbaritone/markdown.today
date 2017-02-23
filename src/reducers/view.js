@@ -3,6 +3,8 @@ import {
   SET_DRAWER_VISIBILITY,
   SHOW_CHANGE_PASSWORD,
   HIDE_CHANGE_PASSWORD,
+  SHOW_SET_PASSWORD,
+  HIDE_SET_PASSWORD,
   ADD_NOTIFICATION,
   RESOLVE_FIRST_NOTIFICATION
 } from "../actionTypes";
@@ -10,6 +12,7 @@ import {
 const defaultViewState = {
   showDrawer: false,
   showChangePassword: false,
+  showSetPassword: false,
   notifications: []
 };
 
@@ -30,6 +33,14 @@ const view = (previousState = defaultViewState, action) => {
     case HIDE_CHANGE_PASSWORD:
       return Object.assign({}, previousState, {
         showChangePassword: false
+      });
+    case SHOW_SET_PASSWORD:
+      return Object.assign({}, previousState, {
+        showSetPassword: true
+      });
+    case HIDE_SET_PASSWORD:
+      return Object.assign({}, previousState, {
+        showSetPassword: false
       });
     case ADD_NOTIFICATION:
       return Object.assign({}, previousState, {
