@@ -57,26 +57,26 @@ class ChangePassword extends React.Component {
         title="Change Password"
         open={this.props.open}
         modal={true}
-        actions={
+        actions={[
           (
-            <div>
-              <FlatButton
-                label="Cancel"
-                onTouchTap={this.hideChangePassword}
-                primary={true}
-              />
-              <FlatButton
-                disabled={!(currentPasswordMatches && newPasswordsMatch)}
-                label="Update"
-                primary={true}
-                onTouchTap={() =>
-                  this.props.updateEncryptionPassword(
-                    this.state.enteredNewPassword
-                  )}
-              />
-            </div>
+            <FlatButton
+              label="Cancel"
+              onTouchTap={this.hideChangePassword}
+              secondary={true}
+            />
+          ),
+          (
+            <FlatButton
+              disabled={!(currentPasswordMatches && newPasswordsMatch)}
+              label="Update"
+              primary={true}
+              onTouchTap={() =>
+                this.props.updateEncryptionPassword(
+                  this.state.enteredNewPassword
+                )}
+            />
           )
-        }
+        ]}
       >
         <TextField
           errorText={

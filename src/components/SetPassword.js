@@ -44,33 +44,33 @@ class SetPassword extends React.Component {
     return (
       <Dialog
         contentStyle={{ maxWidth: "300px" }}
-        title="Set Password"
+        title="Set Encryption Password"
         open={this.props.open}
         modal={true}
-        actions={
+        actions={[
           (
-            <div>
-              <FlatButton
-                label="Cancel"
-                onTouchTap={this.hideSetPassword}
-                primary={true}
-              />
-              <FlatButton
-                disabled={!(currentPasswordMatches && newPasswordsMatch)}
-                label="Set"
-                primary={true}
-                onTouchTap={() =>
-                  this.props.updateEncryptionPassword(
-                    this.state.enteredNewPassword
-                  )}
-              />
-            </div>
+            <FlatButton
+              label="Cancel"
+              onTouchTap={this.hideSetPassword}
+              secondary={true}
+            />
+          ),
+          (
+            <FlatButton
+              disabled={!(currentPasswordMatches && newPasswordsMatch)}
+              label="Set"
+              primary={true}
+              onTouchTap={() =>
+                this.props.updateEncryptionPassword(
+                  this.state.enteredNewPassword
+                )}
+            />
           )
-        }
+        ]}
       >
         <TextField
-          hintText="New Password"
-          floatingLabelText="New Password"
+          hintText="Encryption Password"
+          floatingLabelText="Encryption Password"
           type="password"
           value={this.state.enteredNewPassword}
           onChange={this.handleNewPasswordChange}
@@ -83,8 +83,8 @@ class SetPassword extends React.Component {
               this.state.enteredConfirmNewPassword &&
               "Must match the password given above."
           }
-          hintText="Confirm New Password"
-          floatingLabelText="Confirm New Password"
+          hintText="Confirm Encryption Password"
+          floatingLabelText="Confirm Encryption Password"
           type="password"
           value={this.state.enteredConfirmNewPassword}
           onChange={this.handleConfirmNewPasswordChange}

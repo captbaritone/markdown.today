@@ -37,17 +37,18 @@ class PasswordPrompt extends React.Component {
     return (
       <Dialog
         contentStyle={{ maxWidth: "300px" }}
-        title="Encryption Password"
+        title="Decrypt Journal"
         open={this.props.open}
-        actions={
+        actions={[
           (
             <FlatButton
               label="Cancel"
-              primary={false}
+              secondary={true}
               onTouchTap={this.props.logout}
             />
-          )
-        }
+          ),
+          <FlatButton disabled={true} label="Decrypt" primary={true} />
+        ]}
       >
         <TextField
           hintText="Encryption Password"

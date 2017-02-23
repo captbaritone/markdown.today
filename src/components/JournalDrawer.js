@@ -11,12 +11,12 @@ import {
   exportMarkdown,
   setDrawerVisibility,
   logout,
+  toggleEncryption,
   showChangePassword,
-  showSetPassword,
-  toggleDrawer,
-  readAbout
+  showSetPassword
 } from "../actionCreators";
 import { isLoggedIn, isEncrypted } from "../accessors";
+import { TOGGLE_DRAWER } from "../actionTypes";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (
@@ -32,12 +32,12 @@ const JournalDrawer = props => (
     />
     {props.isEncrypted
       ? <MenuItem leftIcon={<Lock />} onClick={props.showChangePassword}>
-          Change Password
+          Update Password
         </MenuItem>
       : <MenuItem leftIcon={<Lock />} onClick={props.showSetPassword}>
-          Set Password
+          Encrypt
         </MenuItem>}
-    <MenuItem leftIcon={<Download />} onClick={props.exportMarkdown}>
+    <MenuItem leftIcon={<Download />} onClick={props.export}>
       Export (.md)
     </MenuItem>
     <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
@@ -51,20 +51,22 @@ const JournalDrawer = props => (
 );
 
 const mapStateToProps = state => ({
-  // TODO: Move to accessor
+  // TODO: Move to actionCreators
   showDrawer: state.view.showDrawer,
   isLogedIn: isLoggedIn(state),
   isEncrypted: isEncrypted(state)
 });
 
-const mapDispatchToProps = {
-  toggleDrawer,
-  exportMarkdown,
-  logout,
-  readAbout,
-  setDrawerVisibility,
-  showChangePassword,
-  showSetPassword
-};
+const mapDispatchToProps = dispatch => ({
+  toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
+  export: () => dispatch(exportMarkdown()),
+  logout: () => dispatch(logout()),
+  readAbout: () =>
+    window.location = "https://github.com/captbaritone/markdown-journal",
+  setDrawerVisibility: value => dispatch(setDrawerVisibility(value)),
+  showChangePassword: () => dispatch(showChangePassword()),
+  showSetPassword: () => dispatch(showSetPassword()),
+  toggleEncryption: () => dispatch(toggleEncryption())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(JournalDrawer);
