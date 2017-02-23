@@ -72,7 +72,6 @@ const getDropboxClient = state => {
     // TODO: Consider redirect to login page
     authenticateToDropbox();
   }
-  // TODO: Ensure this does not make an API call
   const dropbox = new Dropbox({
     clientId: DROPBOX_CLIENT_ID,
     accessToken: getAuthToken(state)
@@ -90,7 +89,9 @@ export const attemptToDecryptJournal = () => {
     if (!password || !encryptedBlob) {
       return;
     }
-    // TODO: Do we need to handle the case where this doesn't work? I think it throws.
+    // This will throw if the password is wrong.
+    // That should be okay, because this code path
+    // is only ever executed with a validated password.
     const md = decrypt(password, encryptedBlob);
     if (md) {
       dispatch(setJournalMarkdown(md));
