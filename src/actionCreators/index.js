@@ -27,7 +27,6 @@ export { addEntry, deleteEntry, updateEntry, exportMarkdown } from "./journal";
 export const editEntry = id => {
   return dispatch => {
     dispatch(replace(`/entry/${id}/edit`));
-    // TODO: Find a way to focus the textarea.
   };
 };
 
