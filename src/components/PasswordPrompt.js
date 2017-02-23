@@ -68,10 +68,10 @@ const mapStateToProps = state => ({
   encryptedBlob: getEncryptedBlob(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  attemptToDecryptJournal: () => dispatch(attemptToDecryptJournal()),
-  setEncryptionPassword: password => dispatch(setEncryptionPassword(password)),
-  logout: () => dispatch(logout())
-});
+const mapDispatchToProps = {
+  attemptToDecryptJournal,
+  setEncryptionPassword,
+  logout
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordPrompt);
