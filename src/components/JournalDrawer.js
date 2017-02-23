@@ -11,12 +11,12 @@ import {
   exportMarkdown,
   setDrawerVisibility,
   logout,
-  toggleEncryption,
   showChangePassword,
-  showSetPassword
+  showSetPassword,
+  toggleDrawer,
+  readAbout
 } from "../actionCreators";
 import { isLoggedIn, isEncrypted } from "../accessors";
-import { TOGGLE_DRAWER } from "../actionTypes";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (
@@ -37,7 +37,7 @@ const JournalDrawer = props => (
       : <MenuItem leftIcon={<Lock />} onClick={props.showSetPassword}>
           Set Password
         </MenuItem>}
-    <MenuItem leftIcon={<Download />} onClick={props.export}>
+    <MenuItem leftIcon={<Download />} onClick={props.exportMarkdown}>
       Export (.md)
     </MenuItem>
     <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
@@ -51,22 +51,20 @@ const JournalDrawer = props => (
 );
 
 const mapStateToProps = state => ({
-  // TODO: Move to actionCreators
+  // TODO: Move to accessor
   showDrawer: state.view.showDrawer,
   isLogedIn: isLoggedIn(state),
   isEncrypted: isEncrypted(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  toggleDrawer: () => dispatch({ type: TOGGLE_DRAWER }),
-  export: () => dispatch(exportMarkdown()),
-  logout: () => dispatch(logout()),
-  readAbout: () =>
-    window.location = "https://github.com/captbaritone/markdown-journal",
-  setDrawerVisibility: value => dispatch(setDrawerVisibility(value)),
-  showChangePassword: () => dispatch(showChangePassword()),
-  showSetPassword: () => dispatch(showSetPassword()),
-  toggleEncryption: () => dispatch(toggleEncryption())
-});
+const mapDispatchToProps = {
+  toggleDrawer,
+  exportMarkdown,
+  logout,
+  readAbout,
+  setDrawerVisibility,
+  showChangePassword,
+  showSetPassword
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(JournalDrawer);
