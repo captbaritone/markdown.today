@@ -6,6 +6,6 @@ export const AUTH_REDIRECT_URL = devProd(
   "https://markdown.today/auth/"
 );
 
-export const DROPBOX_CLIENT_ID = devProd("pzasrphp12vfnt6", "pc9cssrvvmgo4bp");
+export const DROPBOX_CLIENT_ID = devProd("pzasrphp12vfnt6", "oy195rq9frxll56");
 
 export const TITLE_DATE_FORMAT = "dddd, MMMM Do, YYYY";

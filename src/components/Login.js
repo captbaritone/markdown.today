@@ -19,7 +19,7 @@ const Login = props => (
         label="Login to Dropbox"
         labelPosition="before"
         primary={true}
-        style={{ width: "80%", margin: "0 auto" }}
+        style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
         onTouchTap={props.login}
       />
       <br />
@@ -28,7 +28,7 @@ const Login = props => (
           label="Mock Dropbox"
           labelPosition="before"
           primary={true}
-          style={{ width: "80%", margin: "0 auto" }}
+          style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
           onTouchTap={props.mockDropbox}
         />}
     </Paper>

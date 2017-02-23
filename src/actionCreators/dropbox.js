@@ -23,14 +23,29 @@ import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "../constants";
 const DEFAULT_JOURNAL = "## Journal";
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
-/*
 const MOCK_JOURNAL = `# My Journal
 
 ## 2017-02-11T02:05:17.338Z
 
+Hello!
+
+## 2017-02-02T02:05:17.338Z
+
+Again!
+
+## 2017-01-30T02:05:17.338Z
+
+Again!
+
+
+## 2017-01-11T02:05:17.338Z
+
+Hello!
+
+## 2016-01-11T02:05:17.338Z
+
 Hello!`;
-*/
-const MOCK_JOURNAL = `{"iv":"L/aB6yFONnInkws56OHrcQ==","v":1,"iter":10000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"US4EEfq0KyY=","ct":"5ObD/LRkIjIoM000R7Y2qyBDmsTktTPAUE2YQKWUvafGPH+Hr8uspzG2Ke/hxnCZgQ3pZFc64V+kubduOKlp8nc4mhzEgvY/EqKXTh/FDRyFpfSJm7duwjgC4qlFfh2BtB4j+4NfqTjPR95trkM0sD6fPS4rtEMfMEo5LbKHkW6rQon5kpIYeuG8Qqw="}`;
+//const MOCK_JOURNAL = `{"iv":"L/aB6yFONnInkws56OHrcQ==","v":1,"iter":10000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"US4EEfq0KyY=","ct":"5ObD/LRkIjIoM000R7Y2qyBDmsTktTPAUE2YQKWUvafGPH+Hr8uspzG2Ke/hxnCZgQ3pZFc64V+kubduOKlp8nc4mhzEgvY/EqKXTh/FDRyFpfSJm7duwjgC4qlFfh2BtB4j+4NfqTjPR95trkM0sD6fPS4rtEMfMEo5LbKHkW6rQon5kpIYeuG8Qqw="}`;
 
 export const authenticateToDropbox = () => {
   return (dispatch, getState) => {
@@ -117,9 +132,9 @@ const createJournalOnDropbox = () => {
     const dropbox = getDropboxClient(getState());
     // TODO: Initialize the journal with an entry for today/now.
     dropbox
+      // TODO: Initialize the journal with at least one entry.
       .filesUpload({ contents: DEFAULT_JOURNAL, path: JOURNAL_PATH })
       .then(file => {
-        // TODO: Use the return value, if it includes the content. `file.fileBlob`?
         dispatch(setJournalMarkdown(DEFAULT_JOURNAL));
       })
       .catch(() => {

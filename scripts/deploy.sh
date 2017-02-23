@@ -26,12 +26,12 @@ echo "Build the webpack bundle"
 echo "Cleaning up node_modules/ to save space"
 ( cd $NEW_CLONE && rm -r node_modules)
 
-# PREVIOUS=$(readlink -f $TARGET)
+PREVIOUS=$(readlink -f $TARGET)
 
-# echo "The previous buid was: $PREVIOUS"
+echo "The previous buid was: $PREVIOUS"
 
-# echo "Creating 'previous' link $PREVIOUS_LINK to enable reverts"
-# ln -snf $PREVIOUS $PREVIOUS_LINK
+echo "Creating 'previous' link $PREVIOUS_LINK to enable reverts"
+ln -snf $PREVIOUS $PREVIOUS_LINK
 
 echo "Linking new Markdown Today into place"
 ln -snf $NEW_BUILD/ $TARGET
