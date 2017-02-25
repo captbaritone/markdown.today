@@ -71,7 +71,7 @@ const JournalDrawer = props => (
 );
 
 const mapStateToProps = state => ({
-  // TODO: Move to actionCreators
+  // TODO: Move to accessor
   showDrawer: state.view.showDrawer,
   isLogedIn: isLoggedIn(state),
   isEncrypted: isEncrypted(state)
