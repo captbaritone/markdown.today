@@ -21,8 +21,15 @@ import { addNotification } from "./";
 import { fileIsEncrypted } from "../utils";
 import { DROPBOX_CLIENT_ID, AUTH_REDIRECT_URL } from "../constants";
 
-const responseIs404 = response =>
-  get(JSON.parse(response.error), ["error", "path", ".tag"]) === "not_found";
+export const errorIs404 = error => {
+  let errorObj;
+  try {
+    errorObj = JSON.parse(error);
+  } catch (e) {
+    return false;
+  }
+  return get(errorObj, ["error", "path", ".tag"]) === "not_found";
+};
 
 const getDefaultJournal = () => `# Journal
 
