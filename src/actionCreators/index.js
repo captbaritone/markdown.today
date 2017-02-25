@@ -7,6 +7,8 @@ import {
   HIDE_CHANGE_PASSWORD,
   SHOW_SET_PASSWORD,
   HIDE_SET_PASSWORD,
+  SHOW_REMOVE_PASSWORD,
+  HIDE_REMOVE_PASSWORD,
   ADD_NOTIFICATION,
   RESOLVE_FIRST_NOTIFICATION,
   TOGGLE_DRAWER
@@ -57,6 +59,8 @@ export const hideChangePassword = () => {
 };
 export const showSetPassword = () => ({ type: SHOW_SET_PASSWORD });
 export const hideSetPassword = () => ({ type: HIDE_SET_PASSWORD });
+export const showRemovePassword = () => ({ type: SHOW_REMOVE_PASSWORD });
+export const hideRemovePassword = () => ({ type: HIDE_REMOVE_PASSWORD });
 export const addNotification = notification => ({
   type: ADD_NOTIFICATION,
   notification

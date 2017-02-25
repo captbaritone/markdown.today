@@ -6,6 +6,7 @@ import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
 import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
 import Lock from "material-ui/svg-icons/action/lock";
+import LockOpen from "material-ui/svg-icons/action/lock-open";
 import Divider from "material-ui/Divider";
 import {
   exportMarkdown,
@@ -13,7 +14,8 @@ import {
   logout,
   toggleEncryption,
   showChangePassword,
-  showSetPassword
+  showSetPassword,
+  showRemovePassword
 } from "../actionCreators";
 import { isLoggedIn, isEncrypted } from "../accessors";
 import { TOGGLE_DRAWER } from "../actionTypes";
@@ -31,9 +33,26 @@ const JournalDrawer = props => (
       onTouchTap={props.toggleDrawer}
     />
     {props.isEncrypted
-      ? <MenuItem leftIcon={<Lock />} onClick={props.showChangePassword}>
-          Update Password
-        </MenuItem>
+      ? [
+          (
+            <MenuItem
+              key="update"
+              leftIcon={<Lock />}
+              onClick={props.showChangePassword}
+            >
+              Update Password
+            </MenuItem>
+          ),
+          (
+            <MenuItem
+              key="remove"
+              leftIcon={<LockOpen />}
+              onClick={props.showRemovePassword}
+            >
+              Remove Encryption
+            </MenuItem>
+          )
+        ]
       : <MenuItem leftIcon={<Lock />} onClick={props.showSetPassword}>
           Encrypt
         </MenuItem>}
@@ -66,6 +85,7 @@ const mapDispatchToProps = dispatch => ({
   setDrawerVisibility: value => dispatch(setDrawerVisibility(value)),
   showChangePassword: () => dispatch(showChangePassword()),
   showSetPassword: () => dispatch(showSetPassword()),
+  showRemovePassword: () => dispatch(showRemovePassword()),
   toggleEncryption: () => dispatch(toggleEncryption())
 });
 

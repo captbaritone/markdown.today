@@ -17,6 +17,7 @@ import JournalDrawer from "./components/JournalDrawer";
 import PasswordPrompt from "./components/PasswordPrompt";
 import ChangePassword from "./components/ChangePassword";
 import SetPassword from "./components/SetPassword";
+import RemovePassword from "./components/RemovePassword";
 import Login from "./components/Login";
 import Auth from "./components/Auth";
 import Notifications from "./components/Notifications";
@@ -78,6 +79,7 @@ class WrappedApp extends Component {
             <Notifications />
             <ChangePassword />
             <SetPassword />
+            <RemovePassword />
             <PasswordPrompt />
             <Routes />
           </div>
