@@ -139,8 +139,9 @@ const actuallyDownloadJournal = () => {
       .then(file => {
         dispatch(setJournalFromBlob(file.fileBlob));
       })
-      .catch(() => {
-        // TODO: Handle errors
+      .catch(error => {
+        dispatch(addNotification(`Error downloading journal from Dropbox`));
+        console.log({ error });
       });
   };
 };
@@ -151,13 +152,13 @@ const createJournalOnDropbox = () => {
     dropbox
       .filesUpload({ contents: md, path: JOURNAL_PATH })
       .then(file => {
-        dispatch(addNotification(`Created: "Apps/Markdown Today/journal.md"`));
+        dispatch(addNotification(`Created: ${JOURNAL_FILENAME} on Dropbox`));
         // `file` does not contain the contents, so we
         // reuse the content we already have.
         dispatch(setJournalMarkdown(md));
       })
       .catch(error => {
-        // TODO: Handle errors
+        dispatch(addNotification(`Error creating journal on Dropbox`));
         console.log({ error });
       });
   };
@@ -177,11 +178,12 @@ export const downloadJournal = () => {
         dispatch(actuallyDownloadJournal());
       })
       .catch(response => {
-        if (responseIs404(response.error)) {
+        if (errorIs404(response.error)) {
           dispatch(createJournalOnDropbox());
           return;
         }
-        console.log("error");
+        // Can be JSON.parse('{"error_summary": "invalid_access_token/...", "error": {".tag": "invalid_access_token"}}');
+        dispatch(addNotification(`Error looking for journal on Dropbox`));
       });
   };
 };
@@ -207,7 +209,7 @@ const _uploadToDropbox = (dispatch, getState) => {
       dispatch({ type: DROPBOX_UPLOAD_COMPLETE });
     })
     .catch(error => {
-      // TODO: Handle the error case
+      dispatch(addNotification(`Error updating journal on Dropbox`));
       console.log({ error });
     });
 };
