@@ -10,7 +10,7 @@ import {
   SET_ENCRYPTED_BLOB
 } from "../actionTypes";
 
-const defaultEncryptionState = { password: null, enencryptedBlob: null };
+const defaultEncryptionState = { password: null, encryptedBlob: null };
 const encryption = (state = defaultEncryptionState, action) => {
   switch (action.type) {
     case SET_ENCRYPTION_PASSWORD:
