@@ -2,34 +2,90 @@ import React from "react";
 import { connect } from "react-redux";
 import Paper from "material-ui/Paper";
 import RaisedButton from "material-ui/RaisedButton";
+import { darkWhite } from "material-ui/styles/colors";
 import { authenticateToDropbox, mockDropbox } from "../actionCreators";
+import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
+import typography from "material-ui/styles/typography";
+
+const features = [
+  "Journal stored as markdown",
+  "Browser connects directly to Dropbox",
+  "Optional in-browser AES encryption",
+  "Free and open source"
+];
+
+const pageStyle = {
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  backgroundColor: lightBaseTheme.palette.primary1Color,
+  color: darkWhite,
+  textAlign: "center",
+  fontWeight: typography.fontWeightLight
+};
+
+const h1Style = {
+  fontWeight: typography.fontWeightLight,
+  margin: "0"
+};
+
+const h2Style = {
+  fontSize: "20px",
+  paddingTop: "19px",
+  margin: "0",
+  fontWeight: typography.fontWeightLight
+};
+
+/*
+// TODO: Enable these when we are on a large display.
+const h1WhenLarge = Object.assign({}, h1Style, {
+  fontSize: 56
+});
+const h2WhenLarge = Object.assign({}, h2Style, {
+  fontSize: 24,
+  lineHeight: "32px",
+  paddingTop: 16,
+  marginBottom: 12
+});
+*/
+
+const ulStyle = {
+  listStyle: "none",
+  padding: 0,
+  margin: "50px 0"
+};
 
 // TODO: Format this page better.
 const Login = props => (
   <div style={{ height: "100vh", overflowY: "auto" }}>
-    <Paper
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center"
-      }}
-    >
+    <Paper style={pageStyle}>
+      <h1 style={h1Style}>Markdown Today</h1>
+      <h2 style={h2Style}>Journal from any browser</h2>
+      <ul style={ulStyle}>
+        {features.map(feature => (
+          <li key={feature} style={{ margin: "5px" }}>{feature}</li>
+        ))}
+      </ul>
       <RaisedButton
         label="Login to Dropbox"
         labelPosition="before"
-        primary={true}
         style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
         onTouchTap={props.login}
+        labelStyle={{
+          color: lightBaseTheme.palette.primary1Color
+        }}
       />
       <br />
       {process.env.NODE_ENV === "development" &&
         <RaisedButton
           label="Mock Dropbox"
           labelPosition="before"
-          primary={true}
           style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
           onTouchTap={props.mockDropbox}
+          labelStyle={{
+            color: lightBaseTheme.palette.primary1Color
+          }}
         />}
     </Paper>
   </div>
