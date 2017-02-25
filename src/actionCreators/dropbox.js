@@ -41,26 +41,25 @@ const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
 const MOCK_JOURNAL = `# My Journal
 
-## 2017-02-11T02:05:17.338Z
+## 2017-02-24T02:05:17.338Z
 
-Hello!
+The polish is starting to pay off! Still some clunky bits (focusing inputs on ios, the \`<textarea>\` in general...) but I think it's probably ready to show people.
 
 ## 2017-02-02T02:05:17.338Z
 
-Again!
+I've added encryption support. This makes some annoying tradeoffs. Notably, it prevents you from editing your journal in a text editor, which was supposed to be a big part of this project. That said, the "trust no one" security that it brings is pretty cool!
 
 ## 2017-01-30T02:05:17.338Z
 
-Again!
-
+Okay! I think I've connected most of the big pieces. Still lots of polish to sort out, especially in the UI, but the big pieces are there.
 
 ## 2017-01-11T02:05:17.338Z
 
-Hello!
+I've been playing with Material-UI and it seems to solve the issue of how to build a mobile friendly UI without having any particular experience in that arena.
 
 ## 2016-01-11T02:05:17.338Z
 
-Hello!`;
+Starting work on a journaling application that accesses your journal as a markdown file on Dropbox and lets you edit it from a mobile browser. Still figuring out how to get the UI looking reasonable, but I think it should be possible.`;
 //const MOCK_JOURNAL = `{"iv":"L/aB6yFONnInkws56OHrcQ==","v":1,"iter":10000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"US4EEfq0KyY=","ct":"5ObD/LRkIjIoM000R7Y2qyBDmsTktTPAUE2YQKWUvafGPH+Hr8uspzG2Ke/hxnCZgQ3pZFc64V+kubduOKlp8nc4mhzEgvY/EqKXTh/FDRyFpfSJm7duwjgC4qlFfh2BtB4j+4NfqTjPR95trkM0sD6fPS4rtEMfMEo5LbKHkW6rQon5kpIYeuG8Qqw="}`;
 
 export const authenticateToDropbox = () => {
