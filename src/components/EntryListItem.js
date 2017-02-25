@@ -8,7 +8,7 @@ import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import Avatar from "material-ui/Avatar";
 import { ListItem } from "material-ui/List";
 import IconMenu from "material-ui/IconMenu";
-import EditorInsertChart from "material-ui/svg-icons/editor/insert-chart";
+import EventNote from "material-ui/svg-icons/notification/event-note";
 import format from "date-fns/format";
 import { deleteEntry, editEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
@@ -21,7 +21,7 @@ const iconButtonElement = (
 
 const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
   <ListItem
-    leftAvatar={<Avatar icon={<EditorInsertChart />} />}
+    leftAvatar={<Avatar icon={<EventNote />} />}
     primaryText={format(entry.date, "dddd [the] Do, ha")}
     rightIconButton={
       (
