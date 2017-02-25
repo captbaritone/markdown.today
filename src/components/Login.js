@@ -8,7 +8,7 @@ import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import typography from "material-ui/styles/typography";
 
 const features = [
-  "Journal stored as markdown",
+  "Stores journal as markdown",
   "Browser connects directly to Dropbox",
   "Optional in-browser AES encryption",
   "Free and open source"
@@ -87,6 +87,22 @@ const Login = props => (
             color: lightBaseTheme.palette.primary1Color
           }}
         />}
+      <p
+        style={{
+          position: "fixed",
+          bottom: "0",
+          width: "100%",
+          fontSize: "12px"
+        }}
+      >
+        By{" "}
+        <a
+          style={{ color: lightBaseTheme.palette.alternateTextColor }}
+          href="https://jordaneldredge.com"
+        >
+          Jordan Eldredge
+        </a>
+      </p>
     </Paper>
   </div>
 );
