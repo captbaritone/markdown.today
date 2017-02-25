@@ -58,7 +58,7 @@ class SetPassword extends React.Component {
           (
             <FlatButton
               disabled={!(currentPasswordMatches && newPasswordsMatch)}
-              label="Set"
+              label="Encrypt"
               primary={true}
               onTouchTap={() =>
                 this.props.updateEncryptionPassword(

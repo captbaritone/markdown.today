@@ -37,7 +37,7 @@ class PasswordPrompt extends React.Component {
     return (
       <Dialog
         contentStyle={{ maxWidth: "300px" }}
-        title="Decrypt Journal"
+        title="Unlock Journal"
         open={this.props.open}
         actions={[
           (
