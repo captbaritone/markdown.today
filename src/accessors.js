@@ -50,3 +50,5 @@ export const getDropboxFileContents = state => {
 };
 
 export const nextNotification = state => first(state.view.notifications);
+
+export const shouldShowDrawer = state => state.view.showDrawer;

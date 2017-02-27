@@ -17,7 +17,8 @@ import {
   showSetPassword,
   showRemovePassword,
   readAbout,
-  toggleDrawer
+  toggleDrawer,
+  shouldShowDrawer
 } from "../actionCreators";
 import { isLoggedIn, isEncrypted } from "../accessors";
 
@@ -72,7 +73,7 @@ const JournalDrawer = props => (
 
 const mapStateToProps = state => ({
   // TODO: Move to accessor
-  showDrawer: state.view.showDrawer,
+  showDrawer: shouldShowDrawer(state),
   isLogedIn: isLoggedIn(state),
   isEncrypted: isEncrypted(state)
 });
