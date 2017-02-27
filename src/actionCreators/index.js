@@ -22,7 +22,7 @@ export {
   attemptToDecryptJournal
 } from "./dropbox";
 
-export { setEncryptionPassword, updateEncryptionPassword } from "./encryption";
+export { setEncryptionPassword, changeEnryptionPassword } from "./encryption";
 
 export { addEntry, deleteEntry, updateEntry, exportMarkdown } from "./journal";
 

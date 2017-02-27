@@ -8,9 +8,7 @@ export const setEncryptionPassword = password => ({
   password
 });
 
-// Reencrypt the journal with a new password.
-// TODO: Rename
-export const updateEncryptionPassword = password => {
+export const changeEnryptionPassword = password => {
   return dispatch => {
     dispatch(setEncryptionPassword(password));
     dispatch(addNotification("Encryption password updated"));
