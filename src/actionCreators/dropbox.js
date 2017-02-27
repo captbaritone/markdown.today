@@ -15,7 +15,8 @@ import {
   SET_FROM_MD,
   DROPBOX_UPLOAD_COMPLETE,
   STARTING_DROPBOX_UPLOAD,
-  SET_ENCRYPTED_BLOB
+  SET_ENCRYPTED_BLOB,
+  SET_AUTH_TOKEN
 } from "../actionTypes";
 import { addNotification } from "./";
 import { fileIsEncrypted } from "../utils";
@@ -164,7 +165,6 @@ const createJournalOnDropbox = () => {
 };
 
 export const downloadJournal = () => {
-  // TODO: Split this up into smaller actions
   return (dispatch, getState) => {
     if (getState().dropbox.mock) {
       dispatch(setJournalContents(MOCK_JOURNAL));
@@ -224,3 +224,5 @@ export const mockDropbox = () => {
     dispatch(push("/"));
   };
 };
+
+export const setAuthToken = token => ({ type: SET_AUTH_TOKEN, token });

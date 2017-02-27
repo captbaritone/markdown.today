@@ -50,7 +50,6 @@ function requireAuth(nextState, replace) {
     // TODO: Stash redirect URL
     replace({ pathname: "/login/" });
   } else if (!getEntries(state)) {
-    // TODO: Consider storing this in local storage?
     store.dispatch(downloadJournal());
   }
 }

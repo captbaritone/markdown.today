@@ -19,7 +19,8 @@ export {
   uploadToDropbox,
   authenticateToDropbox,
   mockDropbox,
-  attemptToDecryptJournal
+  attemptToDecryptJournal,
+  setAuthToken
 } from "./dropbox";
 
 export { setEncryptionPassword, changeEnryptionPassword } from "./encryption";
