@@ -17,10 +17,9 @@ import {
   showSetPassword,
   showRemovePassword,
   readAbout,
-  toggleDrawer,
-  shouldShowDrawer
+  toggleDrawer
 } from "../actionCreators";
-import { isLoggedIn, isEncrypted } from "../accessors";
+import { isLoggedIn, isEncrypted, shouldShowDrawer } from "../accessors";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (

@@ -4,7 +4,10 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
 
-import { changeEnryptionPassword, hideChangePassword } from "../actionCreators";
+import {
+  changeEncryptionPassword,
+  hideChangePassword
+} from "../actionCreators";
 import { getEncryptionPassword, shouldShowChangePassword } from "../accessors";
 
 const defaultState = {
@@ -68,7 +71,7 @@ class ChangePassword extends React.Component {
               label="Update"
               primary={true}
               onTouchTap={() =>
-                this.props.changeEnryptionPassword(
+                this.props.changeEncryptionPassword(
                   this.state.enteredNewPassword
                 )}
             />
@@ -121,8 +124,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeEnryptionPassword: newPassword => {
-    dispatch(changeEnryptionPassword(newPassword));
+  changeEncryptionPassword: newPassword => {
+    dispatch(changeEncryptionPassword(newPassword));
     dispatch(hideChangePassword());
   },
   hideChangePassword: () => dispatch(hideChangePassword())

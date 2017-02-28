@@ -4,7 +4,7 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
 
-import { changeEnryptionPassword, hideRemovePassword } from "../actionCreators";
+import { removeEncryption, hideRemovePassword } from "../actionCreators";
 import { getEncryptionPassword, shouldShowRemovePassword } from "../accessors";
 
 const defaultState = {
@@ -14,13 +14,13 @@ class RemovePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
-    this.handleCurrenPasswordChange = this.handleCurrenPasswordChange.bind(
+    this.handleCurrentPasswordChange = this.handleCurrentPasswordChange.bind(
       this
     );
     this.hideChangePassword = this.hideChangePassword.bind(this);
   }
 
-  handleCurrenPasswordChange(e) {
+  handleCurrentPasswordChange(e) {
     this.setState({ enteredCurrentPassword: e.target.value });
   }
   hideChangePassword() {
@@ -50,7 +50,7 @@ class RemovePassword extends React.Component {
               disabled={!currentPasswordMatches}
               label="Decrypt"
               primary={true}
-              onTouchTap={() => this.props.changeEnryptionPassword(null)}
+              onTouchTap={() => this.props.removeEncryptionPassword()}
             />
           )
         ]}
@@ -65,7 +65,7 @@ class RemovePassword extends React.Component {
           floatingLabelText="Current Password"
           type="password"
           value={this.state.enteredCurrentPassword}
-          onChange={this.handleCurrenPasswordChange}
+          onChange={this.handleCurrentPasswordChange}
           autoFocus
         />
       </Dialog>
@@ -79,8 +79,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeEnryptionPassword: newPassword => {
-    dispatch(changeEnryptionPassword(newPassword));
+  removeEncryptionPassword: newPassword => {
+    dispatch(removeEncryption());
     dispatch(hideRemovePassword());
   },
   hideRemovePassword: () => dispatch(hideRemovePassword())

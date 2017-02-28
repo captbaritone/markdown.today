@@ -23,7 +23,11 @@ export {
   setAuthToken
 } from "./dropbox";
 
-export { setEncryptionPassword, changeEnryptionPassword } from "./encryption";
+export {
+  setEncryptionPassword,
+  changeEncryptionPassword,
+  removeEncryption
+} from "./encryption";
 
 export { addEntry, deleteEntry, updateEntry, exportMarkdown } from "./journal";
 

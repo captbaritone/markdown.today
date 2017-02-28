@@ -8,10 +8,12 @@ export const setEncryptionPassword = password => ({
   password
 });
 
-export const changeEnryptionPassword = password => {
+export const changeEncryptionPassword = password => {
   return dispatch => {
     dispatch(setEncryptionPassword(password));
     dispatch(addNotification("Encryption password updated"));
     dispatch(uploadToDropbox());
   };
 };
+
+export const removeEncryption = changeEncryptionPassword.bind(null, null);
