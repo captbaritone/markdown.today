@@ -63,6 +63,7 @@ class EditEntry extends Component {
               multiLine={true}
               value={this.props.markdown}
               autoFocus
+              placeholder="What happened today?"
             />}
       </div>
     );
