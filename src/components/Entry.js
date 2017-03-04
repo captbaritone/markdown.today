@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
 import { Card, CardText } from "material-ui/Card";

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import AppBar from "material-ui/AppBar";
@@ -22,53 +22,49 @@ const iconButtonElement = (
   </IconButton>
 );
 
-class EditEntry extends Component {
-  render() {
-    return (
-      <div>
-        <AppBar
-          title={this.props.title}
-          iconElementLeft={
-            (
-              <IconButton onClick={this.props.goHome}>
-                <KeyboardArrowLeft />
-              </IconButton>
-            )
-          }
-          iconElementRight={
-            (
-              <IconMenu iconButtonElement={iconButtonElement}>
-                <MenuItem onTouchTap={deleteEntry(this.props.id)}>
-                  Delete
-                </MenuItem>
-              </IconMenu>
-            )
-          }
-        />
-        <SavingProgress />
-        {!this.props.loaded
-          ? <div
-              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
-            >
-              <CircularProgress size={80} thickness={5} />
-            </div>
-          : <TextField
-              inputStyle={{
-                fontSize: "18px",
-                lineHeight: "24px"
-              }}
-              id={`${this.props.id}`}
-              onChange={this.props.handleChange}
-              fullWidth={true}
-              multiLine={true}
-              value={this.props.markdown}
-              autoFocus
-              placeholder="What happened today?"
-            />}
-      </div>
-    );
-  }
-}
+const EditEntry = (
+  { title, goHome, deleteEntry, loaded, id, handleChange, markdown }
+) => (
+  <div>
+    <AppBar
+      title={title}
+      iconElementLeft={
+        (
+          <IconButton onClick={goHome}>
+            <KeyboardArrowLeft />
+          </IconButton>
+        )
+      }
+      iconElementRight={
+        (
+          <IconMenu iconButtonElement={iconButtonElement}>
+            <MenuItem onTouchTap={deleteEntry}>
+              Delete
+            </MenuItem>
+          </IconMenu>
+        )
+      }
+    />
+    <SavingProgress />
+    {!loaded
+      ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
+      : <TextField
+          inputStyle={{
+            fontSize: "18px",
+            lineHeight: "24px"
+          }}
+          id={`${id}`}
+          onChange={handleChange}
+          fullWidth={true}
+          multiLine={true}
+          value={markdown}
+          autoFocus
+          placeholder="What happened today?"
+        />}
+  </div>
+);
 
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
