@@ -14,47 +14,41 @@ import { editEntry } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
 
-class Entry extends Component {
-  render() {
-    return (
-      <div>
-        <AppBar
-          title={this.props.title}
-          iconElementLeft={
-            (
-              <IconButton onClick={this.props.goHome}>
-                <KeyboardArrowLeft />
-              </IconButton>
-            )
-          }
-          iconElementRight={
-            (
-              <IconButton onClick={this.props.editEntry}>
-                <EditIcon />
-              </IconButton>
-            )
-          }
-        />
-        {!this.props.loaded
-          ? <div
-              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
-            >
-              <CircularProgress size={80} thickness={5} />
-            </div>
-          : <Card>
-              <CardText>
-                <div
-                  className="markdown-body"
-                  dangerouslySetInnerHTML={{
-                    __html: marked(this.props.markdown)
-                  }}
-                />
-              </CardText>
-            </Card>}
-      </div>
-    );
-  }
-}
+const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
+  <div>
+    <AppBar
+      title={title}
+      iconElementLeft={
+        (
+          <IconButton onClick={goHome}>
+            <KeyboardArrowLeft />
+          </IconButton>
+        )
+      }
+      iconElementRight={
+        (
+          <IconButton onClick={editEntry}>
+            <EditIcon />
+          </IconButton>
+        )
+      }
+    />
+    {!loaded
+      ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
+      : <Card>
+          <CardText>
+            <div
+              className="markdown-body"
+              dangerouslySetInnerHTML={{
+                __html: marked(markdown)
+              }}
+            />
+          </CardText>
+        </Card>}
+  </div>
+);
 
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
