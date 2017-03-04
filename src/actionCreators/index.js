@@ -52,7 +52,9 @@ export const logout = () => {
 };
 
 export const readAbout = () => {
-  window.location = "https://github.com/captbaritone/markdown-journal";
+  // Use a thunk here so that the rest of the app does not expect an action object
+  return () =>
+    window.location = "https://github.com/captbaritone/markdown-journal";
 };
 
 export const showChangePassword = () => ({ type: SHOW_CHANGE_PASSWORD });
