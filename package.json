@@ -50,6 +50,7 @@
   "dependencies": {
     "date-fns": "^1.27.1",
     "dropbox": "^2.5.1",
+    "github-markdown-css": "^2.4.1",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "material-ui": "^0.16.7",

@@ -12,6 +12,8 @@ import { getEntryById } from "../accessors";
 import { formatTimestamp } from "../utils";
 import { editEntry } from "../actionCreators";
 
+import "github-markdown-css/github-markdown.css";
+
 class Entry extends Component {
   render() {
     return (
@@ -42,7 +44,7 @@ class Entry extends Component {
           : <Card>
               <CardText>
                 <div
-                  style={{ fontSize: "18px", lineHeight: "24px" }}
+                  className="markdown-body"
                   dangerouslySetInnerHTML={{
                     __html: marked(this.props.markdown)
                   }}
