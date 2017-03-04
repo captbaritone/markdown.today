@@ -10,7 +10,7 @@ import { getEntryById } from "../accessors";
 import { formatTimestamp } from "../utils";
 import { updateEntry } from "../actionCreators";
 import SavingProgress from "./SavingProgress";
-import { deleteEntry } from "../actionCreators";
+import { deleteEntry, viewEntry } from "../actionCreators";
 
 import MenuItem from "material-ui/MenuItem";
 import IconMenu from "material-ui/IconMenu";
@@ -23,7 +23,7 @@ const iconButtonElement = (
 );
 
 const EditEntry = (
-  { title, goHome, deleteEntry, loaded, id, handleChange, markdown }
+  { title, goHome, viewEntry, deleteEntry, loaded, id, handleChange, markdown }
 ) => (
   <div>
     <AppBar
@@ -38,6 +38,9 @@ const EditEntry = (
       iconElementRight={
         (
           <IconMenu iconButtonElement={iconButtonElement}>
+            <MenuItem onTouchTap={viewEntry}>
+              View
+            </MenuItem>
             <MenuItem onTouchTap={deleteEntry}>
               Delete
             </MenuItem>
@@ -80,7 +83,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   handleChange: e =>
     dispatch(updateEntry(ownProps.routeParams.id, e.target.value)),
   goHome: () => dispatch(push("/")),
-  deleteEntry: () => dispatch(deleteEntry(ownProps.id))
+  deleteEntry: () => {
+    dispatch(deleteEntry(ownProps.routeParams.id));
+    dispatch(push("/"));
+  },
+  viewEntry: () => dispatch(viewEntry(ownProps.routeParams.id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditEntry);

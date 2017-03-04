@@ -40,6 +40,7 @@ const entries = (previousState = null, action) => {
         })
       });
     case DELETE_ENTRY:
+      // TODO: Consider copying to a "trash" to enable "undelete".
       const newState = Object.assign({}, previousState);
       delete newState[action.id];
       return newState;

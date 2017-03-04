@@ -7,7 +7,7 @@ import { DELETE_ENTRY, EDIT_ENTRY, ADD_ENTRY } from "../actionTypes";
 
 import { downloadURI } from "../utils";
 import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
-import { editEntry } from "./";
+import { editEntry, addNotification } from "./";
 
 const JOURNAL_FILENAME = "journal.md";
 
@@ -26,6 +26,7 @@ export const deleteEntry = id => {
   return (dispatch, getProps) => {
     dispatch({ type: DELETE_ENTRY, id });
     dispatch(uploadToDropbox());
+    dispatch(addNotification("Entry deleted."));
   };
 };
 
