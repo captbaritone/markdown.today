@@ -4,7 +4,6 @@ import {
   LOGOUT,
   SET_AUTH_TOKEN,
   MOCK_DROPBOX,
-  SET_FROM_MD,
   EDIT_ENTRY,
   DELETE_ENTRY,
   ADD_ENTRY
@@ -30,7 +29,6 @@ const dropbox = (state = defaultDropboxSate, action) => {
         uploading: false,
         dirty: false
       });
-    case SET_FROM_MD:
     case EDIT_ENTRY:
     case DELETE_ENTRY:
     case ADD_ENTRY:

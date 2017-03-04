@@ -5,6 +5,7 @@ import AppBar from "material-ui/AppBar";
 import MenuItem from "material-ui/MenuItem";
 import Download from "material-ui/svg-icons/file/file-download";
 import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
+import Save from "material-ui/svg-icons/content/save";
 import Lock from "material-ui/svg-icons/action/lock";
 import LockOpen from "material-ui/svg-icons/action/lock-open";
 import Divider from "material-ui/Divider";
@@ -17,9 +18,16 @@ import {
   showSetPassword,
   showRemovePassword,
   readAbout,
-  toggleDrawer
+  toggleDrawer,
+  uploadToDropbox
 } from "../actionCreators";
-import { isLoggedIn, isEncrypted, shouldShowDrawer } from "../accessors";
+import {
+  isLoggedIn,
+  isEncrypted,
+  shouldShowDrawer,
+  isUploading,
+  isDirty
+} from "../accessors";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
 const JournalDrawer = props => (
@@ -33,33 +41,52 @@ const JournalDrawer = props => (
       iconElementLeft={<span />}
       onTouchTap={props.toggleDrawer}
     />
+    {/* TODO Make icon grey if saving/not dirty */}
+    <MenuItem
+      key="save"
+      leftIcon={
+        (
+          <Save
+            color={
+              !props.isDirty || props.isUploading
+                ? "rgba(0, 0, 0, 0.298039)"
+                : null
+            }
+          />
+        )
+      }
+      onClick={props.uploadToDropbox}
+      disabled={props.isUploading || !props.isDirty}
+    >
+      {/* TODO Nested ternary statements?? Are you crazy?? */}
+      {props.isUploading
+        ? "Saving..."
+        : !props.isDirty ? "All changes saved" : "Save"}
+    </MenuItem>
+    <Divider />
+    {props.isEncrypted &&
+      <MenuItem
+        key="update"
+        leftIcon={<Lock />}
+        onClick={props.showChangePassword}
+      >
+        Update Password
+      </MenuItem>}
     {props.isEncrypted
-      ? [
-          (
-            <MenuItem
-              key="update"
-              leftIcon={<Lock />}
-              onClick={props.showChangePassword}
-            >
-              Update Password
-            </MenuItem>
-          ),
-          (
-            <MenuItem
-              key="remove"
-              leftIcon={<LockOpen />}
-              onClick={props.showRemovePassword}
-            >
-              Remove Encryption
-            </MenuItem>
-          )
-        ]
+      ? <MenuItem
+          key="remove"
+          leftIcon={<LockOpen />}
+          onClick={props.showRemovePassword}
+        >
+          Remove Encryption
+        </MenuItem>
       : <MenuItem leftIcon={<Lock />} onClick={props.showSetPassword}>
           Encrypt
         </MenuItem>}
     <MenuItem leftIcon={<Download />} onClick={props.exportMarkdown}>
       Export (.md)
     </MenuItem>
+    <Divider />
     <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
       Logout
     </MenuItem>
@@ -74,7 +101,9 @@ const mapStateToProps = state => ({
   // TODO: Move to accessor
   showDrawer: shouldShowDrawer(state),
   isLogedIn: isLoggedIn(state),
-  isEncrypted: isEncrypted(state)
+  isEncrypted: isEncrypted(state),
+  isUploading: isUploading(state),
+  isDirty: isDirty(state)
 });
 
 const mapDispatchToProps = {
@@ -86,7 +115,8 @@ const mapDispatchToProps = {
   showChangePassword,
   showSetPassword,
   showRemovePassword,
-  toggleEncryption
+  toggleEncryption,
+  uploadToDropbox
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JournalDrawer);

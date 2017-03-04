@@ -52,3 +52,5 @@ export const getDropboxFileContents = state => {
 export const nextNotification = state => first(state.view.notifications);
 
 export const shouldShowDrawer = state => state.view.showDrawer;
+export const isUploading = state => state.dropbox.uploading;
+export const isDirty = state => state.dropbox.dirty;

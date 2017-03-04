@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import LinearProgress from "material-ui/LinearProgress";
+import { isUploading } from "../accessors";
 
 const SavingProgress = props =>
   props.uploading
@@ -8,7 +9,7 @@ const SavingProgress = props =>
     : null;
 
 const mapStateToProps = state => ({
-  uploading: state.dropbox.uploading
+  uploading: isUploading(state)
 });
 
 export default connect(mapStateToProps)(SavingProgress);
