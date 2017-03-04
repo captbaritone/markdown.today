@@ -1,3 +1,4 @@
+import { push } from "react-router-redux";
 import getTime from "date-fns/get_time";
 
 import { getAsDataURI } from "../utils";
@@ -41,3 +42,5 @@ export const exportMarkdown = () => {
     downloadURI(getAsDataURI(md), JOURNAL_FILENAME);
   };
 };
+
+export const viewEntry = id => push(`/entry/${id}`);

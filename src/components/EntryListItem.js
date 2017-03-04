@@ -1,5 +1,4 @@
 import React from "react";
-import { push } from "react-router-redux";
 import { connect } from "react-redux";
 import MenuItem from "material-ui/MenuItem";
 import { grey400 } from "material-ui/styles/colors";
@@ -10,7 +9,7 @@ import { ListItem } from "material-ui/List";
 import IconMenu from "material-ui/IconMenu";
 import EventNote from "material-ui/svg-icons/notification/event-note";
 import format from "date-fns/format";
-import { deleteEntry, editEntry } from "../actionCreators";
+import { deleteEntry, editEntry, viewEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
 
 const iconButtonElement = (
@@ -26,10 +25,10 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
     rightIconButton={
       (
         <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem onTouchTap={editEntry(entry.id)}>
+          <MenuItem onTouchTap={editEntry}>
             Edit
           </MenuItem>
-          <MenuItem onTouchTap={deleteEntry(entry.id)}>
+          <MenuItem onTouchTap={deleteEntry}>
             Delete
           </MenuItem>
         </IconMenu>
@@ -37,7 +36,7 @@ const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
     }
     secondaryText={entry.markdown}
     secondaryTextLines={2}
-    onTouchTap={viewEntry(entry.id)}
+    onTouchTap={viewEntry}
   />
 );
 
@@ -45,10 +44,9 @@ const mapStateToProps = (state, { id }) => ({
   entry: getEntryById(state, id)
 });
 
-const mapDispatchToProps = dispatch => ({
-  // TODO: Convert to action creator
-  viewEntry: id => () => dispatch(push(`/entry/${id}`)),
-  editEntry: id => () => dispatch(editEntry(id)),
-  deleteEntry: id => () => dispatch(deleteEntry(id))
+const mapDispatchToProps = (dispatch, { id }) => ({
+  viewEntry: () => dispatch(viewEntry(id)),
+  editEntry: () => dispatch(editEntry(id)),
+  deleteEntry: () => dispatch(deleteEntry(id))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EntryListItem);

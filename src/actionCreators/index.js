@@ -29,7 +29,13 @@ export {
   removeEncryption
 } from "./encryption";
 
-export { addEntry, deleteEntry, updateEntry, exportMarkdown } from "./journal";
+export {
+  addEntry,
+  deleteEntry,
+  updateEntry,
+  viewEntry,
+  exportMarkdown
+} from "./journal";
 
 export const editEntry = id => {
   return dispatch => {
