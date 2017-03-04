@@ -76,18 +76,18 @@ const JournalDrawer = props => (
       ? <MenuItem
           key="remove"
           leftIcon={<LockOpen />}
-          onClick={props.showRemovePassword}
+          onTouchTap={props.showRemovePassword}
         >
           Remove Encryption
         </MenuItem>
-      : <MenuItem leftIcon={<Lock />} onClick={props.showSetPassword}>
+      : <MenuItem leftIcon={<Lock />} onTouchTap={props.showSetPassword}>
           Encrypt
         </MenuItem>}
-    <MenuItem leftIcon={<Download />} onClick={props.exportMarkdown}>
+    <MenuItem leftIcon={<Download />} onTouchTap={props.exportMarkdown}>
       Export (.md)
     </MenuItem>
     <Divider />
-    <MenuItem leftIcon={<ExitToApp />} onClick={props.logout}>
+    <MenuItem leftIcon={<ExitToApp />} onTouchTap={props.logout}>
       Logout
     </MenuItem>
     <Divider />
