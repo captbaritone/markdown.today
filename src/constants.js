@@ -8,4 +8,4 @@ export const AUTH_REDIRECT_URL = devProd(
 
 export const DROPBOX_CLIENT_ID = devProd("pzasrphp12vfnt6", "oy195rq9frxll56");
 
-export const TITLE_DATE_FORMAT = "dddd, MMMM Do, YYYY";
+export const TITLE_DATE_FORMAT = "MMM. Do, YYYY";

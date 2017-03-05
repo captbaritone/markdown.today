@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
-import { Card, CardText } from "material-ui/Card";
+import { CardText } from "material-ui/Card";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import EditIcon from "material-ui/svg-icons/image/edit";
 import { push } from "react-router-redux";
 import marked from "marked";
+import format from "date-fns/format";
 import CircularProgress from "material-ui/CircularProgress";
 import { getEntryById } from "../accessors";
-import { formatTimestamp } from "../utils";
 import { editEntry } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
@@ -17,6 +17,7 @@ import "github-markdown-css/github-markdown.css";
 const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
   <div>
     <AppBar
+      titleStyle={{ textAlign: "center" }}
       title={title}
       iconElementLeft={
         (
@@ -37,16 +38,14 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
       ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
           <CircularProgress size={80} thickness={5} />
         </div>
-      : <Card>
-          <CardText>
-            <div
-              className="markdown-body"
-              dangerouslySetInnerHTML={{
-                __html: marked(markdown)
-              }}
-            />
-          </CardText>
-        </Card>}
+      : <CardText>
+          <div
+            className="markdown-body"
+            dangerouslySetInnerHTML={{
+              __html: marked(markdown)
+            }}
+          />
+        </CardText>}
   </div>
 );
 
@@ -55,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     // TODO: What if the entry was deleted?
     loaded: !!entry,
-    title: entry && formatTimestamp(entry.date),
+    title: entry && format(entry.date, "MMM. Do, YYYY"),
     markdown: entry && entry.markdown
   };
 };

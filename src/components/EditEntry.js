@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import format from "date-fns/format";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import CircularProgress from "material-ui/CircularProgress";
 import { getEntryById } from "../accessors";
-import { formatTimestamp } from "../utils";
 import { updateEntry } from "../actionCreators";
 import SavingProgress from "./SavingProgress";
 import { deleteEntry, viewEntry } from "../actionCreators";
@@ -27,6 +27,7 @@ const EditEntry = (
 ) => (
   <div>
     <AppBar
+      titleStyle={{ textAlign: "center" }}
       title={title}
       iconElementLeft={
         (
@@ -74,7 +75,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     // What if the entry was deleted?
     loaded: !!entry,
-    title: entry && formatTimestamp(entry.date),
+    title: entry && format(entry.date, "MMM. Do, YYYY"),
     markdown: entry && entry.markdown
   };
 };
