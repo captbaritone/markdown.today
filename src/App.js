@@ -3,16 +3,11 @@ import React, { Component } from "react";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
-import { routerMiddleware } from "react-router-redux";
-import { compose, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import persistState from "redux-localstorage";
 
 import Home from "./components/Home.js";
 import Entry from "./components/Entry.js";
 import EditEntry from "./components/EditEntry.js";
 import "./App.css";
-import reducer from "./reducers";
 import JournalDrawer from "./components/JournalDrawer";
 import PasswordPrompt from "./components/PasswordPrompt";
 import ChangePassword from "./components/ChangePassword";
@@ -22,28 +17,10 @@ import Login from "./components/Login";
 import Auth from "./components/Auth";
 import Notifications from "./components/Notifications";
 import { downloadJournal } from "./actionCreators";
-import { getEntries, getAuthToken, isLoggedIn } from "./accessors";
+import { getEntries, isLoggedIn } from "./accessors";
+import { getStore } from "./store";
 
-const slicer = paths => {
-  return state => {
-    return Object.assign({}, {
-      dropbox: {
-        authToken: getAuthToken(state)
-      }
-    });
-  };
-};
-
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  // TODO: Consider raven-for-redux middleware
-  compose(
-    persistState("dropbox", { slicer }),
-    applyMiddleware(thunk, routerMiddleware(browserHistory))
-  )
-);
-
+const store = getStore();
 function requireAuth(nextState, replace) {
   const state = store.getState();
   if (!isLoggedIn(state)) {
