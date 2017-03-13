@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import format from "date-fns/format";
 import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import CircularProgress from "material-ui/CircularProgress";
@@ -15,6 +14,8 @@ import { deleteEntry, viewEntry } from "../actionCreators";
 import MenuItem from "material-ui/MenuItem";
 import IconMenu from "material-ui/IconMenu";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+
+import Editor from "./Editor";
 
 const iconButtonElement = (
   <IconButton touch={true}>
@@ -54,17 +55,9 @@ const EditEntry = (
       ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
           <CircularProgress size={80} thickness={5} />
         </div>
-      : <TextField
-          inputStyle={{
-            fontSize: "18px",
-            lineHeight: "24px"
-          }}
-          id={`${id}`}
+      : <Editor
           onChange={handleChange}
-          fullWidth={true}
-          multiLine={true}
-          value={markdown}
-          autoFocus
+          content={markdown}
           placeholder="What happened today?"
         />}
   </div>
