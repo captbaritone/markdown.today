@@ -39,7 +39,7 @@ export {
 
 export const editEntry = id => {
   return dispatch => {
-    dispatch(replace(`/entry/${id}/edit`));
+    dispatch(replace(`/journal/entry/${id}/edit`));
   };
 };
 
@@ -53,7 +53,7 @@ export const logout = () => {
   return (dispatch, getState) => {
     dispatch({ type: LOGOUT });
     dispatch(setDrawerVisibility(false));
-    dispatch(replace("/login/"));
+    dispatch(replace("/"));
   };
 };
 

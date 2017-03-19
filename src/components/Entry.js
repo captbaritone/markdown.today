@@ -20,18 +20,14 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
       titleStyle={{ textAlign: "center" }}
       title={title}
       iconElementLeft={
-        (
-          <IconButton onClick={goHome}>
-            <KeyboardArrowLeft />
-          </IconButton>
-        )
+        <IconButton onClick={goHome}>
+          <KeyboardArrowLeft />
+        </IconButton>
       }
       iconElementRight={
-        (
-          <IconButton onClick={editEntry}>
-            <EditIcon />
-          </IconButton>
-        )
+        <IconButton onClick={editEntry}>
+          <EditIcon />
+        </IconButton>
       }
     />
     {!loaded
@@ -60,7 +56,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  goHome: () => dispatch(push("/")),
+  goHome: () => dispatch(push("/journal/")),
   editEntry: () => dispatch(editEntry(ownProps.routeParams.id))
 });
 

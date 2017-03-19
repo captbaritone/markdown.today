@@ -32,7 +32,8 @@ export const errorIs404 = error => {
   return get(errorObj, ["error", "path", ".tag"]) === "not_found";
 };
 
-const getDefaultJournal = () => `# Journal
+const getDefaultJournal = () =>
+  `# Journal
 
 ## ${new Date().toISOString()}
 
@@ -221,7 +222,7 @@ export const debouncedUploadToDropbox = () => _debouncedUploadToDropbox;
 export const mockDropbox = () => {
   return dispatch => {
     dispatch({ type: MOCK_DROPBOX });
-    dispatch(push("/"));
+    dispatch(push("/journal/"));
   };
 };
 

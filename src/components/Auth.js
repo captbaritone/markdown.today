@@ -14,7 +14,7 @@ class Auth extends React.Component {
     const accessToken = parse(this.props.location.hash.slice(1)).access_token;
     this.props.dispatch(setAuthToken(accessToken));
     // TODO: Get desired URL from URL or some such thing
-    this.props.dispatch(push("/"));
+    this.props.dispatch(push("/journal/"));
   }
   render() {
     return null;

@@ -31,23 +31,19 @@ const EditEntry = (
       titleStyle={{ textAlign: "center" }}
       title={title}
       iconElementLeft={
-        (
-          <IconButton onClick={goHome}>
-            <KeyboardArrowLeft />
-          </IconButton>
-        )
+        <IconButton onClick={goHome}>
+          <KeyboardArrowLeft />
+        </IconButton>
       }
       iconElementRight={
-        (
-          <IconMenu iconButtonElement={iconButtonElement}>
-            <MenuItem onTouchTap={viewEntry}>
-              View
-            </MenuItem>
-            <MenuItem onTouchTap={deleteEntry}>
-              Delete
-            </MenuItem>
-          </IconMenu>
-        )
+        <IconMenu iconButtonElement={iconButtonElement}>
+          <MenuItem onTouchTap={viewEntry}>
+            View
+          </MenuItem>
+          <MenuItem onTouchTap={deleteEntry}>
+            Delete
+          </MenuItem>
+        </IconMenu>
       }
     />
     <SavingProgress />
@@ -76,10 +72,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleChange: e =>
     dispatch(updateEntry(ownProps.routeParams.id, e.target.value)),
-  goHome: () => dispatch(push("/")),
+  goHome: () => dispatch(push("/journal/")),
   deleteEntry: () => {
     dispatch(deleteEntry(ownProps.routeParams.id));
-    dispatch(push("/"));
+    dispatch(push("/journal/"));
   },
   viewEntry: () => dispatch(viewEntry(ownProps.routeParams.id))
 });

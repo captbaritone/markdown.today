@@ -4,9 +4,9 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 
-import Home from "./components/Home.js";
-import Entry from "./components/Entry.js";
-import EditEntry from "./components/EditEntry.js";
+import Journal from "./components/Journal";
+import Entry from "./components/Entry";
+import EditEntry from "./components/EditEntry";
 import "./App.css";
 import JournalDrawer from "./components/JournalDrawer";
 import PasswordPrompt from "./components/PasswordPrompt";
@@ -25,7 +25,7 @@ function requireAuth(nextState, replace) {
   const state = store.getState();
   if (!isLoggedIn(state)) {
     // TODO: Stash redirect URL
-    replace({ pathname: "/login/" });
+    replace({ pathname: "/" });
   } else if (!getEntries(state)) {
     store.dispatch(downloadJournal());
   }
@@ -37,10 +37,14 @@ injectTapEventPlugin();
 
 const Routes = props => (
   <Router history={browserHistory}>
-    <Route path="/" component={Home} onEnter={requireAuth} />
-    <Route path="/entry/:id" component={Entry} onEnter={requireAuth} />
-    <Route path="/entry/:id/edit" component={EditEntry} onEnter={requireAuth} />
-    <Route path="/login/" component={Login} />
+    <Route path="/journal/" component={Journal} onEnter={requireAuth} />
+    <Route path="/journal/entry/:id" component={Entry} onEnter={requireAuth} />
+    <Route
+      path="/journal/entry/:id/edit"
+      component={EditEntry}
+      onEnter={requireAuth}
+    />
+    <Route path="/" component={Login} />
     <Route path="/auth/" component={Auth} />
   </Router>
 );

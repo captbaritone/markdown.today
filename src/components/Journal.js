@@ -14,7 +14,7 @@ import EntryListItem from "./EntryListItem";
 import SavingProgress from "./SavingProgress";
 import { getHeading } from "../utils";
 
-class Home extends Component {
+class Journal extends Component {
   render() {
     return (
       <div>
@@ -23,11 +23,9 @@ class Home extends Component {
           titleStyle={{ textAlign: "center" }}
           onLeftIconButtonTouchTap={this.props.toggleDrawer}
           iconElementRight={
-            (
-              <IconButton tooltip="New" onTouchTap={this.props.addEntry}>
-                <AddBox />
-              </IconButton>
-            )
+            <IconButton tooltip="New" onTouchTap={this.props.addEntry}>
+              <AddBox />
+            </IconButton>
           }
         />
         <SavingProgress />
@@ -44,11 +42,9 @@ class Home extends Component {
                     const previous = entries[i - 1];
                     const previousDate = previous && previous.date;
                     return memo.concat([
-                      (
-                        <Subheader key={`heading-${entry.id}`}>
-                          {getHeading(previousDate, entry.date)}
-                        </Subheader>
-                      ),
+                      <Subheader key={`heading-${entry.id}`}>
+                        {getHeading(previousDate, entry.date)}
+                      </Subheader>,
                       <EntryListItem id={entry.id} key={`entry-${entry.id}`} />,
                       <Divider inset={true} key={`divider-${entry.id}`} />
                     ]);
@@ -68,4 +64,4 @@ const mapStateToProps = state => ({
   showDrawer: state.view.showDrawer
 });
 
-export default connect(mapStateToProps, { addEntry, toggleDrawer })(Home);
+export default connect(mapStateToProps, { addEntry, toggleDrawer })(Journal);

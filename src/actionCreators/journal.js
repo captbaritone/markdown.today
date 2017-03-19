@@ -44,4 +44,4 @@ export const exportMarkdown = () => {
   };
 };
 
-export const viewEntry = id => push(`/entry/${id}`);
+export const viewEntry = id => push(`/journal/entry/${id}`);
