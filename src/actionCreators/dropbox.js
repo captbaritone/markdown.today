@@ -189,7 +189,7 @@ export const downloadJournal = () => {
 
 const _uploadToDropbox = (dispatch, getState) => {
   const state = getState();
-  if (state.dropbox.mock) {
+  if (state.dropbox.mock || !state.dropbox.dirty) {
     return;
   }
   dispatch({ type: STARTING_DROPBOX_UPLOAD });
