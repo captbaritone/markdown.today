@@ -68,7 +68,7 @@ const Login = props => (
         ))}
       </ul>
       <RaisedButton
-        label="Login to Dropbox"
+        label="Access Dropbox"
         labelPosition="before"
         style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
         onTouchTap={props.login}
