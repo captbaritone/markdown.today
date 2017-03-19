@@ -26,7 +26,6 @@ export class PasswordPrompt extends React.Component {
     try {
       decrypt(this.state.password, this.props.encryptedBlob);
     } catch (e) {
-      console.log("fail");
       isValid = false;
     }
     return isValid;
@@ -55,21 +54,17 @@ export class PasswordPrompt extends React.Component {
         title="Unlock Journal"
         open={this.props.open}
         actions={[
-          (
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.props.logout}
-            />
-          ),
-          (
-            <FlatButton
-              disabled={!this.checkValidity()}
-              onTouchTap={this.decrypt}
-              label="Decrypt"
-              primary={true}
-            />
-          )
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.props.logout}
+          />,
+          <FlatButton
+            disabled={!this.checkValidity()}
+            onTouchTap={this.decrypt}
+            label="Decrypt"
+            primary={true}
+          />
         ]}
       >
         <form onSubmit={this.decrypt}>
