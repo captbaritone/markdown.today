@@ -2,6 +2,8 @@
 
 Store your journal as a markdown file on Dropbox, and edit/view it from any browser.
 
+![Screenshots of Markdown Today](pubic/images/screenshot.png)
+
 ## Features
 
 * Optimized for use in a mobile browser but looks great on desktop too.
