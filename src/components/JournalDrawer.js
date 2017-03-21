@@ -45,15 +45,13 @@ const JournalDrawer = props => (
     <MenuItem
       key="save"
       leftIcon={
-        (
-          <Save
-            color={
-              !props.isDirty || props.isUploading
-                ? "rgba(0, 0, 0, 0.298039)"
-                : null
-            }
-          />
-        )
+        <Save
+          color={
+            !props.isDirty || props.isUploading
+              ? "rgba(0, 0, 0, 0.298039)"
+              : null
+          }
+        />
       }
       onClick={props.uploadToDropbox}
       disabled={props.isUploading || !props.isDirty}
