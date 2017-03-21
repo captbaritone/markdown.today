@@ -190,7 +190,8 @@ export const downloadJournal = () => {
 
 const _uploadToDropbox = (dispatch, getState) => {
   const state = getState();
-  if (state.dropbox.mock || !state.dropbox.dirty) {
+  // TODO: Find a robust way to short circut here if the journal is not dirty.
+  if (state.dropbox.mock) {
     return;
   }
   dispatch({ type: STARTING_DROPBOX_UPLOAD });
