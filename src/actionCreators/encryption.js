@@ -1,4 +1,4 @@
-import { SET_ENCRYPTION_PASSWORD } from "../actionTypes";
+import { SET_ENCRYPTION_PASSWORD, SET_ENCRYPTED_BLOB } from "../actionTypes";
 import { uploadToDropbox } from "./dropbox";
 import { addNotification } from "./";
 
@@ -16,4 +16,12 @@ export const changeEncryptionPassword = password => {
   };
 };
 
-export const removeEncryption = changeEncryptionPassword.bind(null, null);
+export const removeEncryption = password => {
+  return dispatch => {
+    // TODO: Create new action type that does both of these.
+    dispatch(setEncryptionPassword(null));
+    dispatch({ type: SET_ENCRYPTED_BLOB, contents: null });
+    dispatch(addNotification("Encryption removed"));
+    dispatch(uploadToDropbox());
+  };
+};
