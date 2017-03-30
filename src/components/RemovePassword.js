@@ -38,23 +38,20 @@ class RemovePassword extends React.Component {
         open={this.props.open}
         modal={true}
         actions={[
-          (
-            <FlatButton
-              label="Cancel"
-              onTouchTap={this.hideChangePassword}
-              secondary={true}
-            />
-          ),
-          (
-            <FlatButton
-              disabled={!currentPasswordMatches}
-              label="Decrypt"
-              primary={true}
-              onTouchTap={() => this.props.removeEncryptionPassword()}
-            />
-          )
+          <FlatButton
+            label="Cancel"
+            onTouchTap={this.hideChangePassword}
+            secondary={true}
+          />,
+          <FlatButton
+            disabled={!currentPasswordMatches}
+            label="Decrypt"
+            primary={true}
+            onTouchTap={this.props.removeEncryptionPassword}
+          />
         ]}
       >
+        {/* TODO: Wrap in <form> to enable pressing enter */}
         <TextField
           errorText={
             !currentPasswordMatches &&
