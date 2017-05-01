@@ -1,5 +1,7 @@
 # Markdown Today
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/captbaritone/markdown.today.svg)](https://greenkeeper.io/)
+
 Store your journal as a markdown file on Dropbox, and edit/view it from any browser.
 
 ![Screenshots of Markdown Today](public/images/screenshot.png)
