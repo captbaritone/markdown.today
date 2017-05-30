@@ -1,0 +1,27 @@
+body {
+    padding: 10px;
+}
+
+#target {
+    outline: 4px dashed black;
+    height: 100%;
+    text-align: center;
+}
+
+#result_textarea {
+    display: block;
+    height: 600px;
+    width: 100%;
+}
+
+#result {
+    display: none;
+}
+
+.decrypted #target {
+    display: none;
+}
+
+.decrypted #result {
+    display: block;
+}
