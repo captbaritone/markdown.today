@@ -6,9 +6,9 @@ import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import EditIcon from "material-ui/svg-icons/image/edit";
 import { push } from "react-router-redux";
-import marked from "marked";
 import format from "date-fns/format";
 import CircularProgress from "material-ui/CircularProgress";
+import ReactMarkdown from "react-markdown";
 import { getEntryById } from "../accessors";
 import { editEntry } from "../actionCreators";
 
@@ -35,11 +35,10 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
           <CircularProgress size={80} thickness={5} />
         </div>
       : <CardText>
-          <div
+          <ReactMarkdown
             className="markdown-body"
-            dangerouslySetInnerHTML={{
-              __html: marked(markdown)
-            }}
+            source={markdown}
+            escapeHtml={true}
           />
         </CardText>}
   </div>
