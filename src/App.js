@@ -5,6 +5,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 
 import Journal from "./components/Journal";
+import JournalCalendar from "./components/JournalCalendar";
 import Entry from "./components/Entry";
 import EditEntry from "./components/EditEntry";
 import "./App.css";
@@ -38,6 +39,11 @@ injectTapEventPlugin();
 const Routes = props => (
   <Router history={browserHistory}>
     <Route path="/journal/" component={Journal} onEnter={requireAuth} />
+    <Route
+      path="/calendar/"
+      component={JournalCalendar}
+      onEnter={requireAuth}
+    />
     <Route path="/journal/entry/:id" component={Entry} onEnter={requireAuth} />
     <Route
       path="/journal/entry/:id/edit"

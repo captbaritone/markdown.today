@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddBox from "material-ui/svg-icons/content/add-box";
-import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
-import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
 import IconButton from "material-ui/IconButton";
-import Subheader from "material-ui/Subheader";
+import InfiniteCalendar, {
+  Calendar,
+  defaultMultipleDateInterpolation,
+  withMultipleDates
+} from "react-infinite-calendar";
+import "react-infinite-calendar/styles.css"; // only needs to be imported once
 
 import { getJournalAsArray } from "../accessors";
-import { addEntryForToday, toggleDrawer } from "../actionCreators";
-import EntryListItem from "./EntryListItem";
+import { addEntry, addEntryForToday, toggleDrawer } from "../actionCreators";
 import SavingProgress from "./SavingProgress";
-import { getHeading } from "../utils";
+
+const MultipleDatesCalendar = withMultipleDates(Calendar);
 
 class Journal extends Component {
   render() {
@@ -36,19 +39,19 @@ class Journal extends Component {
               <CircularProgress size={80} thickness={5} />
             </div>
           : <div>
-              <List>
-                {this.props.entries.reduce((memo, entry, i, entries) => {
-                  const previous = entries[i - 1];
-                  const previousDate = previous && previous.date;
-                  return memo.concat([
-                    <Subheader key={`heading-${entry.id}`}>
-                      {getHeading(previousDate, entry.date)}
-                    </Subheader>,
-                    <EntryListItem id={entry.id} key={`entry-${entry.id}`} />,
-                    <Divider inset={true} key={`divider-${entry.id}`} />
-                  ]);
-                }, [])}
-              </List>
+              {this.props.entries &&
+                <InfiniteCalendar
+                  width="100%"
+                  Component={MultipleDatesCalendar}
+                  interpolateSelection={defaultMultipleDateInterpolation}
+                  selected={this.props.entries.map(
+                    entry => new Date(entry.date)
+                  )}
+                  displayOptions={{
+                    showHeader: false
+                  }}
+                  onSelect={this.props.addEntry}
+                />}
             </div>}
       </div>
     );
@@ -61,6 +64,8 @@ const mapStateToProps = state => ({
   showDrawer: state.view.showDrawer
 });
 
-export default connect(mapStateToProps, { addEntryForToday, toggleDrawer })(
-  Journal
-);
+export default connect(mapStateToProps, {
+  addEntry,
+  addEntryForToday,
+  toggleDrawer
+})(Journal);

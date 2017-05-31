@@ -11,15 +11,19 @@ import { editEntry, addNotification } from "./";
 
 const JOURNAL_FILENAME = "journal.md";
 
-export const addEntry = () => {
+export const addEntry = dateObj => {
   return (dispatch, getState) => {
-    const date = getTime(new Date());
+    const date = getTime(dateObj);
     const id = date;
     const markdown = "";
     dispatch({ type: ADD_ENTRY, date, id, markdown });
     dispatch(editEntry(id));
     dispatch(debouncedUploadToDropbox());
   };
+};
+
+export const addEntryForToday = () => {
+  return addEntry(new Date());
 };
 
 export const deleteEntry = id => {
