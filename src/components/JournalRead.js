@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
+import { CardText } from "material-ui/Card";
 import CircularProgress from "material-ui/CircularProgress";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import IconButton from "material-ui/IconButton";
@@ -39,11 +40,13 @@ class Journal extends Component {
               <CircularProgress size={80} thickness={5} />
             </div>
           : <div>
-              <ReactMarkdown
-                className="markdown-body"
-                source={this.props.markdown}
-                escapeHtml={true}
-              />
+              : <CardText>
+                <ReactMarkdown
+                  className="markdown-body"
+                  source={this.props.markdown}
+                  escapeHtml={true}
+                />
+              </CardText>}
             </div>}
       </div>
     );
