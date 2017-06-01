@@ -46,7 +46,7 @@ class Journal extends Component {
                   source={this.props.markdown}
                   escapeHtml={true}
                 />
-              </CardText>}
+              </CardText>
             </div>}
       </div>
     );
