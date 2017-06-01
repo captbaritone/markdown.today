@@ -32,14 +32,16 @@ class Journal extends Component {
             </IconButton>
           }
         />
-        <JournalContent>
-          <CardText>
-            <ReactMarkdown
-              className="markdown-body"
-              source={this.props.markdown}
-              escapeHtml={true}
-            />
-          </CardText>
+        <JournalContent isLoading={!this.props.entries}>
+          {() => (
+            <CardText>
+              <ReactMarkdown
+                className="markdown-body"
+                source={this.props.markdown}
+                escapeHtml={true}
+              />
+            </CardText>
+          )}
         </JournalContent>
       </div>
     );

@@ -35,17 +35,19 @@ class Journal extends Component {
             </IconButton>
           }
         />
-        <JournalContent>
-          <InfiniteCalendar
-            width="100%"
-            Component={MultipleDatesCalendar}
-            interpolateSelection={defaultMultipleDateInterpolation}
-            selected={this.props.entries.map(entry => new Date(entry.date))}
-            displayOptions={{
-              showHeader: false
-            }}
-            onSelect={this.props.editEntriesForDay}
-          />
+        <JournalContent isLoading={!this.props.entries}>
+          {() => (
+            <InfiniteCalendar
+              width="100%"
+              Component={MultipleDatesCalendar}
+              interpolateSelection={defaultMultipleDateInterpolation}
+              selected={this.props.entries.map(entry => new Date(entry.date))}
+              displayOptions={{
+                showHeader: false
+              }}
+              onSelect={this.props.editEntriesForDay}
+            />
+          )}
         </JournalContent>
       </div>
     );
@@ -53,7 +55,7 @@ class Journal extends Component {
 }
 
 const mapStateToProps = state => ({
-  entries: getJournalAsArray(state) || [],
+  entries: getJournalAsArray(state),
   // TODO: Move to acessor
   showDrawer: state.view.showDrawer
 });

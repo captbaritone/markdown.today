@@ -27,20 +27,23 @@ class Journal extends Component {
             </IconButton>
           }
         />
-        <JournalContent>
-          <List>
-            {this.props.entries.reduce((memo, entry, i, entries) => {
-              const previous = entries[i - 1];
-              const previousDate = previous && previous.date;
-              return memo.concat([
-                <Subheader key={`heading-${entry.id}`}>
-                  {getHeading(previousDate, entry.date)}
-                </Subheader>,
-                <EntryListItem id={entry.id} key={`entry-${entry.id}`} />,
-                <Divider inset={true} key={`divider-${entry.id}`} />
-              ]);
-            }, [])}
-          </List>
+
+        <JournalContent isLoading={!this.props.entries}>
+          {() => (
+            <List>
+              {this.props.entries.reduce((memo, entry, i, entries) => {
+                const previous = entries[i - 1];
+                const previousDate = previous && previous.date;
+                return memo.concat([
+                  <Subheader key={`heading-${entry.id}`}>
+                    {getHeading(previousDate, entry.date)}
+                  </Subheader>,
+                  <EntryListItem id={entry.id} key={`entry-${entry.id}`} />,
+                  <Divider inset={true} key={`divider-${entry.id}`} />
+                ]);
+              }, [])}
+            </List>
+          )}
         </JournalContent>
       </div>
     );
@@ -48,7 +51,7 @@ class Journal extends Component {
 }
 
 const mapStateToProps = state => ({
-  entries: getJournalAsArray(state) || [],
+  entries: getJournalAsArray(state),
   // TODO: Move to acessor
   showDrawer: state.view.showDrawer
 });

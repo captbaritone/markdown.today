@@ -1,23 +1,24 @@
 import React from "react";
-import { connect } from "react-redux";
 import CircularProgress from "material-ui/CircularProgress";
 
-import { getJournalAsArray } from "../accessors";
 import SavingProgress from "./SavingProgress";
 
-const JournalContent = ({ entries, children }) => (
-  <div>
-    <SavingProgress />
-    {!entries
-      ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
-          <CircularProgress size={80} thickness={5} />
-        </div>
-      : children}
+const LoadingPage = () => (
+  <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
+    <CircularProgress size={80} thickness={5} />
   </div>
 );
 
-const mapStateToProps = state => ({
-  entries: getJournalAsArray(state)
-});
+const JournalContent = ({ isLoading, children }) => (
+  <div>
+    <SavingProgress />
+    {isLoading ? <LoadingPage /> : children()}
+  </div>
+);
 
-export default connect(mapStateToProps)(JournalContent);
+JournalContent.propTypes = {
+  isLoading: React.PropTypes.bool,
+  children: React.PropTypes.func
+};
+
+export default JournalContent;
