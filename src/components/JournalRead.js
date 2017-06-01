@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
 import { CardText } from "material-ui/Card";
-import CircularProgress from "material-ui/CircularProgress";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import IconButton from "material-ui/IconButton";
 import ReactMarkdown from "react-markdown";
@@ -17,7 +16,8 @@ import {
   editEntriesForDay,
   goHome
 } from "../actionCreators";
-import SavingProgress from "./SavingProgress";
+
+import JournalContent from "./JournalContent";
 
 class Journal extends Component {
   render() {
@@ -32,22 +32,15 @@ class Journal extends Component {
             </IconButton>
           }
         />
-        <SavingProgress />
-        {!this.props.entries
-          ? <div
-              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
-            >
-              <CircularProgress size={80} thickness={5} />
-            </div>
-          : <div>
-              : <CardText>
-                <ReactMarkdown
-                  className="markdown-body"
-                  source={this.props.markdown}
-                  escapeHtml={true}
-                />
-              </CardText>
-            </div>}
+        <JournalContent>
+          <CardText>
+            <ReactMarkdown
+              className="markdown-body"
+              source={this.props.markdown}
+              escapeHtml={true}
+            />
+          </CardText>
+        </JournalContent>
       </div>
     );
   }

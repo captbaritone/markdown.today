@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddBox from "material-ui/svg-icons/content/add-box";
 import AppBar from "material-ui/AppBar";
-import CircularProgress from "material-ui/CircularProgress";
 import IconButton from "material-ui/IconButton";
 import InfiniteCalendar, {
   Calendar,
@@ -18,7 +17,7 @@ import {
   toggleDrawer,
   editEntriesForDay
 } from "../actionCreators";
-import SavingProgress from "./SavingProgress";
+import JournalContent from "./JournalContent";
 
 const MultipleDatesCalendar = withMultipleDates(Calendar);
 
@@ -36,35 +35,25 @@ class Journal extends Component {
             </IconButton>
           }
         />
-        <SavingProgress />
-        {!this.props.entries
-          ? <div
-              style={{ width: "100%", textAlign: "center", marginTop: "300px" }}
-            >
-              <CircularProgress size={80} thickness={5} />
-            </div>
-          : <div>
-              {this.props.entries &&
-                <InfiniteCalendar
-                  width="100%"
-                  Component={MultipleDatesCalendar}
-                  interpolateSelection={defaultMultipleDateInterpolation}
-                  selected={this.props.entries.map(
-                    entry => new Date(entry.date)
-                  )}
-                  displayOptions={{
-                    showHeader: false
-                  }}
-                  onSelect={this.props.editEntriesForDay}
-                />}
-            </div>}
+        <JournalContent>
+          <InfiniteCalendar
+            width="100%"
+            Component={MultipleDatesCalendar}
+            interpolateSelection={defaultMultipleDateInterpolation}
+            selected={this.props.entries.map(entry => new Date(entry.date))}
+            displayOptions={{
+              showHeader: false
+            }}
+            onSelect={this.props.editEntriesForDay}
+          />
+        </JournalContent>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  entries: getJournalAsArray(state),
+  entries: getJournalAsArray(state) || [],
   // TODO: Move to acessor
   showDrawer: state.view.showDrawer
 });
