@@ -35,6 +35,7 @@ export {
   updateEntry,
   viewEntry,
   exportMarkdown,
+  addEntryForToday,
   editEntriesForDay
 } from "./journal";
 
