@@ -28,7 +28,6 @@ export const addEntryForToday = () => {
 
 export const editEntriesForDay = date => {
   return (dispatch, getState) => {
-    debugger;
     const entries = getEntriesForDay(getState(), date);
     if (entries.length === 0) {
       dispatch(addEntry(date));
