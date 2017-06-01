@@ -1,4 +1,4 @@
-import { replace } from "react-router-redux";
+import { replace, push } from "react-router-redux";
 
 import {
   SET_DRAWER_VISIBILITY,
@@ -43,6 +43,8 @@ export const editEntry = id => {
   };
 };
 
+export const goHome = () => push(`/journal/`);
+
 export const setDrawerVisibility = visible => {
   return { type: SET_DRAWER_VISIBILITY, value: visible };
 };
@@ -60,7 +62,7 @@ export const logout = () => {
 export const readAbout = () => {
   // Use a thunk here so that the rest of the app does not expect an action object
   return () =>
-    window.location = "https://github.com/captbaritone/markdown-journal";
+    (window.location = "https://github.com/captbaritone/markdown-journal");
 };
 
 export const showChangePassword = () => ({ type: SHOW_CHANGE_PASSWORD });

@@ -1,5 +1,6 @@
 import { encrypt } from "sjcl";
-import { map, sortBy, get, first } from "lodash";
+import isSameDay from "date-fns/is_same_day";
+import { filter, map, sortBy, get, first } from "lodash";
 
 export const getAuthToken = state => state.dropbox.authToken;
 
@@ -10,6 +11,9 @@ export const getJournalAsArray = state => {
 };
 export const getEntryById = (state, id) => get(getEntries(state), id, null);
 
+export const getEntriesForDay = (state, date) =>
+  filter(getEntries(state), entry => isSameDay(date, entry.date));
+
 const primaryHeading = str => {
   return `# ${str}`;
 };
@@ -17,7 +21,8 @@ const secondaryHeading = str => {
   return `## ${str}`;
 };
 export const getMarkdown = state => {
-  return getJournalAsArray(state)
+  const entries = getJournalAsArray(state) || [];
+  return entries
     .reduce(
       (acc, entry) => {
         return [

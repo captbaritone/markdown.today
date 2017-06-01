@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 
 import Journal from "./components/Journal";
 import JournalCalendar from "./components/JournalCalendar";
+import JournalRead from "./components/JournalRead";
 import Entry from "./components/Entry";
 import EditEntry from "./components/EditEntry";
 import "./App.css";
@@ -40,8 +41,13 @@ const Routes = props => (
   <Router history={browserHistory}>
     <Route path="/journal/" component={Journal} onEnter={requireAuth} />
     <Route
-      path="/calendar/"
+      path="/journal/calendar/"
       component={JournalCalendar}
+      onEnter={requireAuth}
+    />
+    <Route
+      path="/journal/read/"
+      component={JournalRead}
       onEnter={requireAuth}
     />
     <Route path="/journal/entry/:id" component={Entry} onEnter={requireAuth} />

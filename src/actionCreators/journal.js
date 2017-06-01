@@ -2,7 +2,7 @@ import { push } from "react-router-redux";
 import getTime from "date-fns/get_time";
 
 import { getAsDataURI } from "../utils";
-import { getMarkdown } from "../accessors";
+import { getMarkdown, getEntriesForDay } from "../accessors";
 import { DELETE_ENTRY, EDIT_ENTRY, ADD_ENTRY } from "../actionTypes";
 
 import { downloadURI } from "../utils";
@@ -24,6 +24,20 @@ export const addEntry = dateObj => {
 
 export const addEntryForToday = () => {
   return addEntry(new Date());
+};
+
+export const editEntriesForDay = date => {
+  return (dispatch, getState) => {
+    debugger;
+    const entries = getEntriesForDay(getState(), date);
+    if (entries.length === 0) {
+      dispatch(addEntry(date));
+    } else if (entries.length === 1) {
+      dispatch(editEntry(entries[0].id));
+    } else {
+      alert("Whoops. There are more than one entires for this date.");
+    }
+  };
 };
 
 export const deleteEntry = id => {

@@ -23,9 +23,16 @@ const iconButtonElement = (
   </IconButton>
 );
 
-const EditEntry = (
-  { title, goHome, viewEntry, deleteEntry, loaded, id, handleChange, markdown }
-) => (
+const EditEntry = ({
+  title,
+  goHome,
+  viewEntry,
+  deleteEntry,
+  loaded,
+  id,
+  handleChange,
+  markdown
+}) => (
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}

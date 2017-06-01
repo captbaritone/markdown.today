@@ -12,7 +12,12 @@ import InfiniteCalendar, {
 import "react-infinite-calendar/styles.css"; // only needs to be imported once
 
 import { getJournalAsArray } from "../accessors";
-import { addEntry, addEntryForToday, toggleDrawer } from "../actionCreators";
+import {
+  addEntry,
+  addEntryForToday,
+  toggleDrawer,
+  editEntriesForDay
+} from "../actionCreators";
 import SavingProgress from "./SavingProgress";
 
 const MultipleDatesCalendar = withMultipleDates(Calendar);
@@ -50,7 +55,7 @@ class Journal extends Component {
                   displayOptions={{
                     showHeader: false
                   }}
-                  onSelect={this.props.addEntry}
+                  onSelect={this.props.editEntriesForDay}
                 />}
             </div>}
       </div>
@@ -67,5 +72,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   addEntry,
   addEntryForToday,
-  toggleDrawer
+  toggleDrawer,
+  editEntriesForDay
 })(Journal);
