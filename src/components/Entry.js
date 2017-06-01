@@ -6,8 +6,8 @@ import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import EditIcon from "material-ui/svg-icons/image/edit";
 import format from "date-fns/format";
-import CircularProgress from "material-ui/CircularProgress";
 import ReactMarkdown from "react-markdown";
+import JournalContent from "./JournalContent";
 import { getEntryById } from "../accessors";
 import { editEntry, goHome } from "../actionCreators";
 
@@ -29,17 +29,18 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
         </IconButton>
       }
     />
-    {!loaded
-      ? <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
-          <CircularProgress size={80} thickness={5} />
-        </div>
-      : <CardText>
+
+    <JournalContent isLoading={!loaded}>
+      {() => (
+        <CardText>
           <ReactMarkdown
             className="markdown-body"
             source={markdown}
             escapeHtml={true}
           />
-        </CardText>}
+        </CardText>
+      )}
+    </JournalContent>
   </div>
 );
 
