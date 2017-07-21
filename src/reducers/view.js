@@ -8,7 +8,8 @@ import {
   SHOW_REMOVE_PASSWORD,
   HIDE_REMOVE_PASSWORD,
   ADD_NOTIFICATION,
-  RESOLVE_FIRST_NOTIFICATION
+  RESOLVE_FIRST_NOTIFICATION,
+  SET_SEARCH_QUERY
 } from "../actionTypes";
 
 const defaultViewState = {
@@ -16,7 +17,8 @@ const defaultViewState = {
   showChangePassword: false,
   showSetPassword: false,
   showRemovePassword: false,
-  notifications: []
+  notifications: [],
+  searchQuery: null
 };
 
 const view = (previousState = defaultViewState, action) => {
@@ -61,6 +63,8 @@ const view = (previousState = defaultViewState, action) => {
       return Object.assign({}, previousState, {
         notifications: previousState.notifications.slice(1)
       });
+    case SET_SEARCH_QUERY:
+      return Object.assign({}, previousState, { searchQuery: action.query });
     default:
       return previousState;
   }
