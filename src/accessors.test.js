@@ -7,6 +7,30 @@ describe("getEntriesContainingString", () => {
     const expected = [];
     expect(actual).toEqual(expected);
   });
+  it("returns all entries for a null query", () => {
+    const store = getStore();
+    store.dispatch({
+      type: "ADD_ENTRY",
+      date: 1,
+      id: 1,
+      markdown: "Entry one foo"
+    });
+    const actual = getEntriesContainingString(store.getState(), null);
+    const expected = [getEntryById(store.getState(), 1)];
+    expect(actual).toEqual(expected);
+  });
+  it("returns all entries for an empty query", () => {
+    const store = getStore();
+    store.dispatch({
+      type: "ADD_ENTRY",
+      date: 1,
+      id: 1,
+      markdown: "Entry one foo"
+    });
+    const actual = getEntriesContainingString(store.getState(), "");
+    const expected = [getEntryById(store.getState(), 1)];
+    expect(actual).toEqual(expected);
+  });
   it("returns entries containing a query", () => {
     const store = getStore();
     store.dispatch({

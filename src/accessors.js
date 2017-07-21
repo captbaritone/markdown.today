@@ -6,16 +6,39 @@ export const getAuthToken = state => state.dropbox.authToken;
 
 export const getEntries = state => state.journal.entries;
 
-export const getJournalAsArray = state => {
-  return getEntries(state) && sortBy(map(getEntries(state)), "date").reverse();
+export const getEntriesAsArray = entries => {
+  return entries && sortBy(map(entries), "date").reverse();
 };
+
+export const getJournalAsArray = state => {
+  return getEntriesAsArray(getEntries(state));
+};
+
 export const getEntryById = (state, id) => get(getEntries(state), id, null);
 
 export const getEntriesForDay = (state, date) =>
   filter(getEntries(state), entry => isSameDay(date, entry.date));
 
+let lastState = null;
+let lastQuery = null;
+let cache = null;
 export const getEntriesContainingString = (state, query) => {
-  return filter(getEntries(state), entry => entry.markdown.includes(query));
+  let entries = getEntries(state);
+  if (state === lastState) {
+    if (query === lastQuery) {
+      // Cool! We can use the same response we calculated last time.
+      return cache;
+    }
+    if (query.startsWith(lastQuery)) {
+      // We know these will be a subset of the last results, so let's start there.
+      entries = cache;
+    }
+  }
+  const result = filter(entries, entry => entry.markdown.includes(query));
+  lastQuery = query;
+  cache = result;
+  lastState = state;
+  return result;
 };
 
 const primaryHeading = str => {
