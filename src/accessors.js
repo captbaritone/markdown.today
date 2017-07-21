@@ -14,6 +14,10 @@ export const getEntryById = (state, id) => get(getEntries(state), id, null);
 export const getEntriesForDay = (state, date) =>
   filter(getEntries(state), entry => isSameDay(date, entry.date));
 
+export const getEntriesContainingString = (state, query) => {
+  return filter(getEntries(state), entry => entry.markdown.includes(query));
+};
+
 const primaryHeading = str => {
   return `# ${str}`;
 };
