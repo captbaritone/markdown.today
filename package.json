@@ -58,6 +58,7 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
+    "react-highlight-words": "^0.8.0",
     "react-infinite-calendar": "^2.3.1",
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.2",

@@ -2482,6 +2482,12 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+highlight-words-core@^1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/highlight-words-core/-/highlight-words-core-1.0.3.tgz#0886d0e757c8ca3928cbc873042bd544f8f6b2e5"
+  dependencies:
+    babel-runtime "^6.11.6"
+
 history@^3.0.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/history/-/history-3.2.1.tgz#71c7497f4e6090363d19a6713bb52a1bfcdd99aa"
@@ -4318,7 +4324,7 @@ promise@7.1.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.1, prop-types@^15.5.6, prop-types@^15.5.7:
+prop-types@^15.5.1, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -4458,6 +4464,13 @@ react-event-listener@^0.4.0:
     babel-runtime "^6.20.0"
     react-addons-shallow-compare "^15.4.2"
     warning "^3.0.0"
+
+react-highlight-words@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-highlight-words/-/react-highlight-words-0.8.0.tgz#a83055378c1e5e46fe2061b663b0b37fde60bad6"
+  dependencies:
+    highlight-words-core "^1.0.2"
+    prop-types "^15.5.8"
 
 react-infinite-calendar@^2.3.1:
   version "2.3.1"

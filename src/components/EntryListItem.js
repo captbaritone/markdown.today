@@ -11,6 +11,7 @@ import EventNote from "material-ui/svg-icons/notification/event-note";
 import format from "date-fns/format";
 import { deleteEntry, editEntry, viewEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
+import Highlighter from "react-highlight-words";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltipPosition="bottom-left">
@@ -18,30 +19,40 @@ const iconButtonElement = (
   </IconButton>
 );
 
-const EntryListItem = ({ entry, editEntry, deleteEntry, viewEntry }) => (
+const EntryListItem = ({
+  entry,
+  editEntry,
+  deleteEntry,
+  viewEntry,
+  searchQuery
+}) =>
   <ListItem
     leftAvatar={<Avatar icon={<EventNote />} />}
     primaryText={format(entry.date, "dddd [the] Do, ha")}
     rightIconButton={
-      (
-        <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem onTouchTap={editEntry}>
-            Edit
-          </MenuItem>
-          <MenuItem onTouchTap={deleteEntry}>
-            Delete
-          </MenuItem>
-        </IconMenu>
-      )
+      <IconMenu iconButtonElement={iconButtonElement}>
+        <MenuItem onTouchTap={editEntry}>Edit</MenuItem>
+        <MenuItem onTouchTap={deleteEntry}>Delete</MenuItem>
+      </IconMenu>
     }
-    secondaryText={entry.markdown}
+    secondaryText={
+      searchQuery
+        ? <span>
+            {/* Wrapping <span> is needed so Material-ui can inject style */}
+            <Highlighter
+              searchWords={[searchQuery]}
+              textToHighlight={entry.markdown}
+            />
+          </span>
+        : entry.markdown
+    }
     secondaryTextLines={2}
     onTouchTap={viewEntry}
-  />
-);
+  />;
 
 const mapStateToProps = (state, { id }) => ({
-  entry: getEntryById(state, id)
+  entry: getEntryById(state, id),
+  searchQuery: state.view.searchQuery
 });
 
 const mapDispatchToProps = (dispatch, { id }) => ({
