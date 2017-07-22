@@ -34,7 +34,9 @@ export const getEntriesContainingString = (state, query) => {
       entries = cache;
     }
   }
-  const result = filter(entries, entry => entry.markdown.includes(query));
+  const result = query
+    ? filter(entries, entry => entry.markdown.includes(query))
+    : entries;
   lastQuery = query;
   cache = result;
   lastState = state;
