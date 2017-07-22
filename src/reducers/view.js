@@ -9,7 +9,9 @@ import {
   HIDE_REMOVE_PASSWORD,
   ADD_NOTIFICATION,
   RESOLVE_FIRST_NOTIFICATION,
-  SET_SEARCH_QUERY
+  SET_SEARCH_QUERY,
+  SHOW_SEARCH_INPUT,
+  HIDE_SEARCH_INPUT
 } from "../actionTypes";
 
 const defaultViewState = {
@@ -18,6 +20,7 @@ const defaultViewState = {
   showSetPassword: false,
   showRemovePassword: false,
   notifications: [],
+  showSearchInput: false,
   searchQuery: null
 };
 
@@ -63,6 +66,10 @@ const view = (previousState = defaultViewState, action) => {
       return Object.assign({}, previousState, {
         notifications: previousState.notifications.slice(1)
       });
+    case SHOW_SEARCH_INPUT:
+      return Object.assign({}, { showSearchInput: true });
+    case HIDE_SEARCH_INPUT:
+      return Object.assign({}, { showSearchInput: false });
     case SET_SEARCH_QUERY:
       return Object.assign({}, previousState, { searchQuery: action.query });
     default:
