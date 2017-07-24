@@ -37,7 +37,7 @@ function requireAuth(nextState, replace) {
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-const Routes = props => (
+const Routes = props =>
   <Router history={browserHistory}>
     <Route path="/journal/" component={Journal} onEnter={requireAuth} />
     <Route
@@ -58,8 +58,7 @@ const Routes = props => (
     />
     <Route path="/" component={Login} />
     <Route path="/auth/" component={Auth} />
-  </Router>
-);
+  </Router>;
 
 class WrappedApp extends Component {
   render() {
