@@ -30,7 +30,7 @@ import {
 } from "../accessors";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
-const JournalDrawer = props => (
+const JournalDrawer = props =>
   <Drawer
     open={props.showDrawer}
     docked={false}
@@ -89,11 +89,8 @@ const JournalDrawer = props => (
       Logout
     </MenuItem>
     <Divider />
-    <MenuItem onTouchTap={props.readAbout}>
-      GitHub
-    </MenuItem>
-  </Drawer>
-);
+    <MenuItem onTouchTap={props.readAbout}>GitHub</MenuItem>
+  </Drawer>;
 
 const mapStateToProps = state => ({
   // TODO: Move to accessor

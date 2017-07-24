@@ -47,10 +47,10 @@ class ChangePassword extends React.Component {
   render() {
     // TODO: Maybe debounce these? This article may have some ideas:
     // https://medium.com/wdstack/inline-validation-in-forms-designing-the-experience-123fb34088ce#.mf99mi3bf
-    const currentPasswordMatches = this.state.enteredCurrentPassword ===
-      this.props.encryptionPassword;
-    const newPasswordsMatch = this.state.enteredNewPassword ===
-      this.state.enteredConfirmNewPassword;
+    const currentPasswordMatches =
+      this.state.enteredCurrentPassword === this.props.encryptionPassword;
+    const newPasswordsMatch =
+      this.state.enteredNewPassword === this.state.enteredConfirmNewPassword;
     return (
       <Dialog
         contentStyle={{ maxWidth: "300px" }}
@@ -58,31 +58,27 @@ class ChangePassword extends React.Component {
         open={this.props.open}
         modal={true}
         actions={[
-          (
-            <FlatButton
-              label="Cancel"
-              onTouchTap={this.hideChangePassword}
-              secondary={true}
-            />
-          ),
-          (
-            <FlatButton
-              disabled={!(currentPasswordMatches && newPasswordsMatch)}
-              label="Update"
-              primary={true}
-              onTouchTap={() =>
-                this.props.changeEncryptionPassword(
-                  this.state.enteredNewPassword
-                )}
-            />
-          )
+          <FlatButton
+            label="Cancel"
+            onTouchTap={this.hideChangePassword}
+            secondary={true}
+          />,
+          <FlatButton
+            disabled={!(currentPasswordMatches && newPasswordsMatch)}
+            label="Update"
+            primary={true}
+            onTouchTap={() =>
+              this.props.changeEncryptionPassword(
+                this.state.enteredNewPassword
+              )}
+          />
         ]}
       >
         <TextField
           errorText={
             !currentPasswordMatches &&
-              this.state.enteredCurrentPassword &&
-              "Must match your current encryption password."
+            this.state.enteredCurrentPassword &&
+            "Must match your current encryption password."
           }
           hintText="Current Password"
           floatingLabelText="Current Password"
@@ -103,8 +99,8 @@ class ChangePassword extends React.Component {
         <TextField
           errorText={
             !newPasswordsMatch &&
-              this.state.enteredConfirmNewPassword &&
-              "Must match the password given above."
+            this.state.enteredConfirmNewPassword &&
+            "Must match the password given above."
           }
           hintText="Confirm New Password"
           floatingLabelText="Confirm New Password"
@@ -112,7 +108,9 @@ class ChangePassword extends React.Component {
           value={this.state.enteredConfirmNewPassword}
           onChange={this.handleConfirmNewPasswordChange}
         />
-        <p><strong>Note:</strong> This password cannot be recovered if lost.</p>
+        <p>
+          <strong>Note:</strong> This password cannot be recovered if lost.
+        </p>
       </Dialog>
     );
   }

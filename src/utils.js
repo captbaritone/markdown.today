@@ -19,27 +19,25 @@ export const extractISODatetime = str => {
 
 export const entriesFromMarkdown = md => {
   const lines = md.split("\n");
-  const entries = lines.reduce(
-    (acc, curr) => {
+  const entries = lines.reduce((acc, curr) => {
+    const entry = acc[acc.length - 1];
+    if (extractISODatetime(curr)) {
+      const timestamp = getTime(parse(extractISODatetime(curr)));
+      acc.push({
+        id: timestamp,
+        date: timestamp,
+        markdown: ""
+      });
+    } else if (entry) {
       const entry = acc[acc.length - 1];
-      if (extractISODatetime(curr)) {
-        const timestamp = getTime(parse(extractISODatetime(curr)));
-        acc.push({
-          id: timestamp,
-          date: timestamp,
-          markdown: ""
-        });
-      } else if (entry) {
-        const entry = acc[acc.length - 1];
-        entry.markdown += "\n" + curr;
-      }
-      return acc;
-    },
-    []
-  );
+      entry.markdown += "\n" + curr;
+    }
+    return acc;
+  }, []);
 
   const trimmedEntries = entries.map(entry =>
-    Object.assign({}, entry, { markdown: entry.markdown.trim() }));
+    Object.assign({}, entry, { markdown: entry.markdown.trim() })
+  );
 
   return keyBy(trimmedEntries, "id");
 };

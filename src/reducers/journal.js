@@ -23,7 +23,6 @@ const encryption = (state = defaultEncryptionState, action) => {
       return defaultEncryptionState;
     default:
       return state;
-
   }
 };
 

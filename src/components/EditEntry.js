@@ -31,7 +31,7 @@ const EditEntry = ({
   id,
   handleChange,
   markdown
-}) => (
+}) =>
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}
@@ -43,27 +43,21 @@ const EditEntry = ({
       }
       iconElementRight={
         <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem onTouchTap={viewEntry}>
-            View
-          </MenuItem>
-          <MenuItem onTouchTap={deleteEntry}>
-            Delete
-          </MenuItem>
+          <MenuItem onTouchTap={viewEntry}>View</MenuItem>
+          <MenuItem onTouchTap={deleteEntry}>Delete</MenuItem>
         </IconMenu>
       }
     />
 
     <JournalContent isLoading={!loaded}>
-      {() => (
+      {() =>
         <Editor
           onChange={handleChange}
           content={markdown}
           placeholder="What happened today?"
-        />
-      )}
+        />}
     </JournalContent>
-  </div>
-);
+  </div>;
 
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);

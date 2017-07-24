@@ -13,7 +13,7 @@ import { editEntry, goHome } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
 
-const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
+const Entry = ({ title, goHome, editEntry, loaded, markdown }) =>
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}
@@ -31,18 +31,16 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) => (
     />
 
     <JournalContent isLoading={!loaded}>
-      {() => (
+      {() =>
         <CardText>
           <ReactMarkdown
             className="markdown-body"
             source={markdown}
             escapeHtml={true}
           />
-        </CardText>
-      )}
+        </CardText>}
     </JournalContent>
-  </div>
-);
+  </div>;
 
 const mapStateToProps = (state, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);

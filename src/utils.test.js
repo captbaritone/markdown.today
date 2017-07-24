@@ -47,11 +47,9 @@ Hello!`;
       "1486778717338": {
         date: 1486778717338,
         id: 1486778717338,
-        markdown: (
-          `### Additional heading
+        markdown: `### Additional heading
 
 Hello!`
-        )
       }
     });
   });
@@ -118,10 +116,7 @@ describe("getHeading", () => {
   it("Shows no heading if dates are in the same month", () => {
     expect(getHeading("2017-02-20", "2017-02-01")).toBeNull();
   });
-  it(
-    "Shows a heading if dates are in the same month but different years",
-    () => {
-      expect(getHeading("2016-02-20", "2017-02-01")).toBe("February 2017");
-    }
-  );
+  it("Shows a heading if dates are in the same month but different years", () => {
+    expect(getHeading("2016-02-20", "2017-02-01")).toBe("February 2017");
+  });
 });

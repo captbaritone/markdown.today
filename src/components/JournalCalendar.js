@@ -36,7 +36,7 @@ class Journal extends Component {
           }
         />
         <JournalContent isLoading={!this.props.entries}>
-          {() => (
+          {() =>
             <InfiniteCalendar
               width="100%"
               Component={MultipleDatesCalendar}
@@ -46,8 +46,7 @@ class Journal extends Component {
                 showHeader: false
               }}
               onSelect={this.props.editEntriesForDay}
-            />
-          )}
+            />}
         </JournalContent>
       </div>
     );

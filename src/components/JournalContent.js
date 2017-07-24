@@ -3,18 +3,16 @@ import CircularProgress from "material-ui/CircularProgress";
 
 import SavingProgress from "./SavingProgress";
 
-const LoadingPage = () => (
+const LoadingPage = () =>
   <div style={{ width: "100%", textAlign: "center", marginTop: "300px" }}>
     <CircularProgress size={80} thickness={5} />
-  </div>
-);
+  </div>;
 
-const JournalContent = ({ isLoading, children }) => (
+const JournalContent = ({ isLoading, children }) =>
   <div>
     <SavingProgress />
     {isLoading ? <LoadingPage /> : children()}
-  </div>
-);
+  </div>;
 
 JournalContent.propTypes = {
   isLoading: React.PropTypes.bool,

@@ -57,15 +57,17 @@ const ulStyle = {
 };
 
 // TODO: Format this page better.
-const Login = props => (
+const Login = props =>
   <div style={{ height: "100vh", overflowY: "auto" }}>
     <Paper style={pageStyle}>
       <h1 style={h1Style}>Markdown Today</h1>
       <h2 style={h2Style}>Journal from any browser</h2>
       <ul style={ulStyle}>
-        {features.map(feature => (
-          <li key={feature} style={{ margin: "5px" }}>{feature}</li>
-        ))}
+        {features.map(feature =>
+          <li key={feature} style={{ margin: "5px" }}>
+            {feature}
+          </li>
+        )}
       </ul>
       <RaisedButton
         label="Access Dropbox"
@@ -104,8 +106,7 @@ const Login = props => (
         </a>
       </p>
     </Paper>
-  </div>
-);
+  </div>;
 
 const mapDispatchToProps = dispatch => ({
   // TODO: Only insitage login, let future actions worry about downloading

@@ -10,11 +10,14 @@ import { getAuthToken } from "./accessors";
 export const getStore = () => {
   const slicer = paths => {
     return state => {
-      return Object.assign({}, {
-        dropbox: {
-          authToken: getAuthToken(state)
+      return Object.assign(
+        {},
+        {
+          dropbox: {
+            authToken: getAuthToken(state)
+          }
         }
-      });
+      );
     };
   };
 

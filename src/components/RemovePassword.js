@@ -29,8 +29,8 @@ class RemovePassword extends React.Component {
   }
 
   render() {
-    const currentPasswordMatches = this.state.enteredCurrentPassword ===
-      this.props.encryptionPassword;
+    const currentPasswordMatches =
+      this.state.enteredCurrentPassword === this.props.encryptionPassword;
     return (
       <Dialog
         contentStyle={{ maxWidth: "300px" }}
@@ -55,8 +55,8 @@ class RemovePassword extends React.Component {
         <TextField
           errorText={
             !currentPasswordMatches &&
-              this.state.enteredCurrentPassword &&
-              "Must match your current encryption password."
+            this.state.enteredCurrentPassword &&
+            "Must match your current encryption password."
           }
           hintText="Current Password"
           floatingLabelText="Current Password"

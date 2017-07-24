@@ -21,7 +21,7 @@ const style = {
 
 const autoFocusRef = input => input && input.focus();
 
-const Editor = ({ content, onChange, placeholder }) => (
+const Editor = ({ content, onChange, placeholder }) =>
   <div style={wrapperStyle}>
     <textarea
       onChange={onChange}
@@ -30,8 +30,7 @@ const Editor = ({ content, onChange, placeholder }) => (
       placeholder={placeholder}
       ref={autoFocusRef}
     />
-  </div>
-);
+  </div>;
 
 Editor.propTypes = {
   content: React.PropTypes.string,

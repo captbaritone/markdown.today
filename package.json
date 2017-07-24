@@ -51,9 +51,12 @@
   "dependencies": {
     "date-fns": "^1.27.1",
     "dropbox": "^2.5.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "github-markdown-css": "^2.4.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.16.7",
+    "prettier": "^1.5.3",
     "qs": "^6.3.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.5.2",
