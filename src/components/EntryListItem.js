@@ -38,7 +38,8 @@ const EntryListItem = ({
     secondaryText={
       searchQuery
         ? <span>
-            {/* Wrapping <span> is needed so Material-ui can inject style */}
+            {/* Wrapping <span> is needed so Material-ui can inject style. */}
+            {/* TODO: Trim the string so that you can always see the match. */}
             <Highlighter
               autoEscape={true}
               searchWords={[searchQuery]}
