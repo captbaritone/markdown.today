@@ -11,7 +11,10 @@ import {
   HIDE_REMOVE_PASSWORD,
   ADD_NOTIFICATION,
   RESOLVE_FIRST_NOTIFICATION,
-  TOGGLE_DRAWER
+  TOGGLE_DRAWER,
+  SHOW_SEARCH_INPUT,
+  HIDE_SEARCH_INPUT,
+  SET_SEARCH_QUERY
 } from "../actionTypes";
 
 export {
@@ -86,3 +89,9 @@ export const addNotification = notification => ({
 export const resolveFirstNotification = () => ({
   type: RESOLVE_FIRST_NOTIFICATION
 });
+
+export const showSearchInput = () => ({ type: SHOW_SEARCH_INPUT });
+export const hideSearchInput = () => dispatch => {
+  dispatch({ type: HIDE_SEARCH_INPUT });
+  dispatch({ type: SET_SEARCH_QUERY, query: null });
+};

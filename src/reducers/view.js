@@ -67,9 +67,9 @@ const view = (previousState = defaultViewState, action) => {
         notifications: previousState.notifications.slice(1)
       });
     case SHOW_SEARCH_INPUT:
-      return Object.assign({}, { showSearchInput: true });
+      return Object.assign({}, previousState, { showSearchInput: true });
     case HIDE_SEARCH_INPUT:
-      return Object.assign({}, { showSearchInput: false });
+      return Object.assign({}, previousState, { showSearchInput: false });
     case SET_SEARCH_QUERY:
       return Object.assign({}, previousState, { searchQuery: action.query });
     default:

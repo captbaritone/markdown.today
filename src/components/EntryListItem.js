@@ -40,6 +40,7 @@ const EntryListItem = ({
         ? <span>
             {/* Wrapping <span> is needed so Material-ui can inject style */}
             <Highlighter
+              autoEscape={true}
               searchWords={[searchQuery]}
               textToHighlight={entry.markdown}
             />

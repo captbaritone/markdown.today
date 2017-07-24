@@ -1,35 +1,114 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddBox from "material-ui/svg-icons/content/add-box";
+import Search from "material-ui/svg-icons/action/search";
+import ArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 import { List } from "material-ui/List";
 import AppBar from "material-ui/AppBar";
 import Divider from "material-ui/Divider";
 import IconButton from "material-ui/IconButton";
 import Subheader from "material-ui/Subheader";
+import TextField from "material-ui/TextField";
+import muiThemeable from "material-ui/styles/muiThemeable";
 
-import { getJournalAsArray } from "../accessors";
-import { addEntryForToday, toggleDrawer } from "../actionCreators";
+import { getEntriesAsArray, getEntriesContainingString } from "../accessors";
+import {
+  addEntryForToday,
+  toggleDrawer,
+  showSearchInput,
+  hideSearchInput
+} from "../actionCreators";
 import EntryListItem from "./EntryListItem";
 import JournalContent from "./JournalContent";
 import { getHeading } from "../utils";
+
+const mapStateToProps = state => ({
+  entries: getEntriesAsArray(
+    getEntriesContainingString(state, state.view.searchQuery)
+  ),
+  // TODO: Move to acessor
+  showDrawer: state.view.showDrawer,
+  shouldShowSearchInput: state.view.showSearchInput,
+  searchQuery: state.view.searchQuery
+});
+
+const setSearchQuery = e => ({
+  type: "SET_SEARCH_QUERY",
+  query: e.target.value
+});
+
+const connectJounral = connect(mapStateToProps, {
+  addEntryForToday,
+  toggleDrawer,
+  setSearchQuery,
+  showSearchInput,
+  hideSearchInput
+});
+
+const MainHeading = muiThemeable()(
+  connectJounral(props =>
+    <AppBar
+      title={"Markdown Today"}
+      titleStyle={{ textAlign: "center" }}
+      onLeftIconButtonTouchTap={props.toggleDrawer}
+      iconElementRight={
+        <span>
+          <IconButton tooltip="Search" onTouchTap={props.showSearchInput}>
+            <Search color={props.muiTheme.appBar.textColor} />
+          </IconButton>
+          <IconButton tooltip="New" onTouchTap={props.addEntryForToday}>
+            <AddBox color={props.muiTheme.appBar.textColor} />
+          </IconButton>
+        </span>
+      }
+    />
+  )
+);
+
+class SearchHeading extends React.Component {
+  componentDidMount(prevProps) {
+    this.inputNode.focus();
+  }
+  componentWillUnmount() {
+    this.props.hideSearchInput();
+  }
+  render() {
+    return (
+      <AppBar
+        title={
+          <TextField
+            value={this.props.searchQuery || ""}
+            onChange={this.props.setSearchQuery}
+            ref={node => (this.inputNode = node)}
+            inputStyle={{
+              color: this.props.muiTheme.appBar.textColor,
+              fontSize: "20px"
+            }}
+            hintStyle={{ color: this.props.muiTheme.tabs.textColor }}
+            hintText="Search"
+          />
+        }
+        iconElementLeft={
+          <IconButton>
+            <ArrowBack />
+          </IconButton>
+        }
+        onLeftIconButtonTouchTap={this.props.hideSearchInput}
+      />
+    );
+  }
+}
+
+SearchHeading = muiThemeable()(connectJounral(SearchHeading));
 
 class Journal extends Component {
   render() {
     return (
       <div>
-        <AppBar
-          title={"Markdown Today"}
-          titleStyle={{ textAlign: "center" }}
-          onLeftIconButtonTouchTap={this.props.toggleDrawer}
-          iconElementRight={
-            <IconButton tooltip="New" onTouchTap={this.props.addEntryForToday}>
-              <AddBox />
-            </IconButton>
-          }
-        />
-
+        {this.props.shouldShowSearchInput ? <SearchHeading /> : <MainHeading />}
         <JournalContent isLoading={!this.props.entries}>
-          {() => (
+          {/* TODO: Indicate when we are searching but there are no matches */}
+          {() =>
             <List>
               {this.props.entries.reduce((memo, entry, i, entries) => {
                 const previous = entries[i - 1];
@@ -42,20 +121,11 @@ class Journal extends Component {
                   <Divider inset={true} key={`divider-${entry.id}`} />
                 ]);
               }, [])}
-            </List>
-          )}
+            </List>}
         </JournalContent>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  entries: getJournalAsArray(state),
-  // TODO: Move to acessor
-  showDrawer: state.view.showDrawer
-});
-
-export default connect(mapStateToProps, { addEntryForToday, toggleDrawer })(
-  Journal
-);
+export default connectJounral(Journal);
