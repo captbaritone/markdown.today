@@ -23,7 +23,8 @@ let lastState = null;
 let lastQuery = null;
 let cache = null;
 export const getEntriesContainingString = (state, query) => {
-  let entries = getEntries(state);
+  // Map to convert object to array.
+  let entries = map(getEntries(state));
   if (state === lastState) {
     if (query === lastQuery) {
       // Cool! We can use the same response we calculated last time.
@@ -34,8 +35,11 @@ export const getEntriesContainingString = (state, query) => {
       entries = cache;
     }
   }
+
   const result = query
-    ? filter(entries, entry => entry.markdown.includes(query))
+    ? filter(entries, entry =>
+        entry.markdown.toLowerCase().includes(query.toLowerCase())
+      )
     : entries;
   lastQuery = query;
   cache = result;

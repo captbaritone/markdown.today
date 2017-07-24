@@ -49,4 +49,16 @@ describe("getEntriesContainingString", () => {
     const expected = [getEntryById(store.getState(), 1)];
     expect(actual).toEqual(expected);
   });
+  it("returns entries that match case insensitively", () => {
+    const store = getStore();
+    store.dispatch({
+      type: "ADD_ENTRY",
+      date: 1,
+      id: 1,
+      markdown: "Entry one FOO"
+    });
+    const actual = getEntriesContainingString(store.getState(), "foo");
+    const expected = [getEntryById(store.getState(), 1)];
+    expect(actual).toEqual(expected);
+  });
 });
