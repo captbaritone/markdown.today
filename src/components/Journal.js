@@ -92,7 +92,6 @@ class SearchHeading extends React.Component {
     this.props.hideSearchInput();
   }
   _handleChange = e => {
-    console.log(e.key);
     switch (e.key) {
       case "Enter":
         // TODO: Open the selected entry
@@ -107,7 +106,7 @@ class SearchHeading extends React.Component {
         this.props.hideSearchInput();
         break;
       default:
-        this.props.setSearchQuery(e);
+        break;
     }
   };
   render() {
@@ -117,6 +116,7 @@ class SearchHeading extends React.Component {
           <TextField
             value={this.props.searchQuery || ""}
             onKeyDown={this._handleChange}
+            onChange={this.props.setSearchQuery}
             ref={node => (this.inputNode = node)}
             inputStyle={{
               color: this.props.muiTheme.appBar.textColor,
