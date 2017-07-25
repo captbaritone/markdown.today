@@ -5,10 +5,12 @@ import format from "date-fns/format";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
+import DatePicker from "material-ui/DatePicker";
+import muiThemeable from "material-ui/styles/muiThemeable";
 import { getEntryById } from "../accessors";
 import { updateEntry } from "../actionCreators";
 import JournalContent from "./JournalContent";
-import { deleteEntry, viewEntry } from "../actionCreators";
+import { deleteEntry, viewEntry, setEntryDate } from "../actionCreators";
 
 import MenuItem from "material-ui/MenuItem";
 import IconMenu from "material-ui/IconMenu";
@@ -29,13 +31,30 @@ const EditEntry = ({
   deleteEntry,
   loaded,
   id,
+  date,
+  setEntryDate,
   handleChange,
-  markdown
+  markdown,
+  muiTheme
 }) =>
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}
-      title={title}
+      title={
+        loaded
+          ? <DatePicker
+              id={`date-${id}`}
+              value={new Date(date)}
+              autoOk={true}
+              formatDate={date => format(date, "MMM. Do, YYYY")}
+              onChange={setEntryDate}
+              inputStyle={{
+                color: muiTheme.appBar.textColor,
+                fontSize: "20px"
+              } /* Note: This prop is undocumented. I think it gets passed to the underlying TextEditor */}
+            />
+          : "Loading..."
+      }
       iconElementLeft={
         <IconButton onClick={goHome}>
           <KeyboardArrowLeft />
@@ -52,6 +71,7 @@ const EditEntry = ({
     <JournalContent isLoading={!loaded}>
       {() =>
         <Editor
+          id={`markdown-${id}`}
           onChange={handleChange}
           content={markdown}
           placeholder="What happened today?"
@@ -65,7 +85,8 @@ const mapStateToProps = (state, ownProps) => {
     // What if the entry was deleted?
     loaded: !!entry,
     title: entry && format(entry.date, "MMM. Do, YYYY"),
-    markdown: entry && entry.markdown
+    markdown: entry && entry.markdown,
+    date: entry && entry.date
   };
 };
 
@@ -77,7 +98,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(deleteEntry(ownProps.routeParams.id));
     dispatch(push("/journal/"));
   },
-  viewEntry: () => dispatch(viewEntry(ownProps.routeParams.id))
+  viewEntry: () => dispatch(viewEntry(ownProps.routeParams.id)),
+  setEntryDate: (e, date) => {
+    dispatch(setEntryDate(ownProps.routeParams.id, Number(date)));
+  }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditEntry);
+export default muiThemeable()(
+  connect(mapStateToProps, mapDispatchToProps)(EditEntry)
+);

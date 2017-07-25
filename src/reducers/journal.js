@@ -7,7 +7,8 @@ import {
   ADD_ENTRY,
   LOGOUT,
   SET_ENCRYPTION_PASSWORD,
-  SET_ENCRYPTED_BLOB
+  SET_ENCRYPTED_BLOB,
+  SET_ENTRY_DATE
 } from "../actionTypes";
 
 const defaultEncryptionState = { password: null, encryptedBlob: null };
@@ -50,6 +51,14 @@ const entries = (previousState = null, action) => {
         markdown: action.markdown
       };
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
+    case SET_ENTRY_DATE:
+      const originalEntry = previousState[action.id];
+      const entryWithNewDate = Object.assign({}, originalEntry, {
+        date: action.date
+      });
+      return Object.assign({}, previousState, {
+        [action.id]: entryWithNewDate
+      });
     case LOGOUT:
       return null;
     default:

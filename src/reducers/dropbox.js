@@ -6,7 +6,8 @@ import {
   MOCK_DROPBOX,
   EDIT_ENTRY,
   DELETE_ENTRY,
-  ADD_ENTRY
+  ADD_ENTRY,
+  SET_ENTRY_DATE
 } from "../actionTypes";
 
 const defaultDropboxSate = {
@@ -32,6 +33,7 @@ const dropbox = (state = defaultDropboxSate, action) => {
     case EDIT_ENTRY:
     case DELETE_ENTRY:
     case ADD_ENTRY:
+    case SET_ENTRY_DATE:
       // TODO: Find a more robust way to know when we are dirty.
       return Object.assign({}, state, { dirty: true });
     case MOCK_DROPBOX:

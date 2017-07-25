@@ -39,7 +39,8 @@ export {
   viewEntry,
   exportMarkdown,
   addEntryForToday,
-  editEntriesForDay
+  editEntriesForDay,
+  setEntryDate
 } from "./journal";
 
 export const editEntry = id => {

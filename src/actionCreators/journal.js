@@ -3,7 +3,12 @@ import getTime from "date-fns/get_time";
 
 import { getAsDataURI } from "../utils";
 import { getMarkdown, getEntriesForDay } from "../accessors";
-import { DELETE_ENTRY, EDIT_ENTRY, ADD_ENTRY } from "../actionTypes";
+import {
+  DELETE_ENTRY,
+  EDIT_ENTRY,
+  ADD_ENTRY,
+  SET_ENTRY_DATE
+} from "../actionTypes";
 
 import { downloadURI } from "../utils";
 import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
@@ -62,3 +67,10 @@ export const exportMarkdown = () => {
 };
 
 export const viewEntry = id => push(`/journal/entry/${id}`);
+
+export const setEntryDate = (id, date) => {
+  return (dispatch, getState) => {
+    dispatch({ type: SET_ENTRY_DATE, id, date });
+    dispatch(uploadToDropbox());
+  };
+};

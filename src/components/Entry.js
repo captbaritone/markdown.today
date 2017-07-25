@@ -17,7 +17,7 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) =>
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}
-      title={title}
+      title={loaded ? title : "Loading..."}
       iconElementLeft={
         <IconButton onClick={goHome}>
           <KeyboardArrowLeft />
