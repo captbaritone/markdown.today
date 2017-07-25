@@ -27,7 +27,7 @@ document.addEventListener(
     var reader = new FileReader();
     reader.onload = function(event) {
       var password = prompt("Please enter your journal's password");
-      var content = sjcl.decrypt(password, event.target.result);
+      var content = window.sjcl.decrypt(password, event.target.result);
       download("journal.md", content);
     };
     reader.readAsText(file);
