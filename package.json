@@ -78,7 +78,7 @@
     "build": "node scripts/build.js",
     "build-decoder": "html-inline -i decode/decode.html -o build/decode.html",
     "test": "node scripts/test.js --env=jsdom",
-    "ci-test": "node scripts/test.js --env=jsdom && npm run lint",
+    "ci-test": "npm run build && npm run test && npm run lint",
     "lint": "eslint .",
     "deploy": "ssh jordaneldredge.com sh < scripts/deploy.sh"
   },
