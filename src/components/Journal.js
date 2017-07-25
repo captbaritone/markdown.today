@@ -45,25 +45,44 @@ const connectJounral = connect(mapStateToProps, {
   hideSearchInput
 });
 
-const MainHeading = muiThemeable()(
-  connectJounral(props =>
-    <AppBar
-      title={"Markdown Today"}
-      titleStyle={{ textAlign: "center" }}
-      onLeftIconButtonTouchTap={props.toggleDrawer}
-      iconElementRight={
-        <span>
-          <IconButton tooltip="Search" onTouchTap={props.showSearchInput}>
-            <Search color={props.muiTheme.appBar.textColor} />
-          </IconButton>
-          <IconButton tooltip="New" onTouchTap={props.addEntryForToday}>
-            <AddBox color={props.muiTheme.appBar.textColor} />
-          </IconButton>
-        </span>
-      }
-    />
-  )
-);
+class MainHeading extends React.Component {
+  componentDidMount() {
+    window.document.addEventListener("keydown", this._handleKeyPress);
+  }
+  componentWillUnmount() {
+    window.document.removeEventListener("keydown", this._handleKeyPress);
+  }
+
+  _handleKeyPress = e => {
+    if (e.key === "/") {
+      this.props.showSearchInput();
+      e.preventDefault();
+    }
+  };
+
+  render() {
+    const { props } = this;
+    return (
+      <AppBar
+        title={"Markdown Today"}
+        titleStyle={{ textAlign: "center" }}
+        onLeftIconButtonTouchTap={props.toggleDrawer}
+        iconElementRight={
+          <span>
+            <IconButton tooltip="Search" onTouchTap={props.showSearchInput}>
+              {" "}<Search color={props.muiTheme.appBar.textColor} />{" "}
+            </IconButton>{" "}
+            <IconButton tooltip="New" onTouchTap={props.addEntryForToday}>
+              {" "}<AddBox color={props.muiTheme.appBar.textColor} />{" "}
+            </IconButton>{" "}
+          </span>
+        }
+      />
+    );
+  }
+}
+
+MainHeading = muiThemeable()(connectJounral(MainHeading));
 
 class SearchHeading extends React.Component {
   componentDidMount(prevProps) {
@@ -72,13 +91,32 @@ class SearchHeading extends React.Component {
   componentWillUnmount() {
     this.props.hideSearchInput();
   }
+  _handleChange = e => {
+    console.log(e.key);
+    switch (e.key) {
+      case "Enter":
+        // TODO: Open the selected entry
+        break;
+      case "ArrowDown":
+        // TODO: Move the selected entry down
+        break;
+      case "ArrowUp":
+        // TODO: Move the selected entry up
+        break;
+      case "Escape":
+        this.props.hideSearchInput();
+        break;
+      default:
+        this.props.setSearchQuery(e);
+    }
+  };
   render() {
     return (
       <AppBar
         title={
           <TextField
             value={this.props.searchQuery || ""}
-            onChange={this.props.setSearchQuery}
+            onKeyDown={this._handleChange}
             ref={node => (this.inputNode = node)}
             inputStyle={{
               color: this.props.muiTheme.appBar.textColor,
