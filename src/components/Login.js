@@ -11,7 +11,16 @@ const features = [
   "Stores journal as markdown",
   "Browser connects directly to Dropbox",
   "Optional in-browser AES encryption",
-  "Free and open source"
+  <span>
+    Free and{" "}
+    <a
+      style={{ color: darkWhite }}
+      target="_blank"
+      href="https://github.com/captbaritone/markdown.today"
+    >
+      open source
+    </a>
+  </span>
 ];
 
 const pageStyle = {
@@ -63,8 +72,8 @@ const Login = props =>
       <h1 style={h1Style}>Markdown Today</h1>
       <h2 style={h2Style}>Journal from any browser</h2>
       <ul style={ulStyle}>
-        {features.map(feature =>
-          <li key={feature} style={{ margin: "5px" }}>
+        {features.map((feature, i) =>
+          <li key={i} style={{ margin: "5px" }}>
             {feature}
           </li>
         )}
