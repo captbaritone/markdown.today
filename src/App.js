@@ -19,7 +19,7 @@ import Login from "./components/Login";
 import Auth from "./components/Auth";
 import Notifications from "./components/Notifications";
 import { downloadJournal } from "./actionCreators";
-import { getEntries, isLoggedIn } from "./accessors";
+import { getEntries, isLoggedIn, isDirty } from "./accessors";
 import { getStore } from "./store";
 
 const store = getStore();
@@ -38,6 +38,16 @@ function checkIfAuthed(nextState, replace) {
     replace({ pathname: "/journal/" });
   }
 }
+
+window.addEventListener("beforeunload", e => {
+  const message = "Some changes you made may not be saved.";
+  if (!isDirty(store.getState())) {
+    return;
+  }
+  // Browsers are werid so we do two kinds of return.
+  e.returnValue = message;
+  return message;
+});
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
