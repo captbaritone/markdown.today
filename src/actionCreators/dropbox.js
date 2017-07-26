@@ -16,7 +16,8 @@ import {
   DROPBOX_UPLOAD_COMPLETE,
   STARTING_DROPBOX_UPLOAD,
   SET_ENCRYPTED_BLOB,
-  SET_AUTH_TOKEN
+  SET_AUTH_TOKEN,
+  MARK_JOURNAL_DIRTY
 } from "../actionTypes";
 import { addNotification } from "./";
 import { fileIsEncrypted } from "../utils";
@@ -228,3 +229,5 @@ export const mockDropbox = () => {
 };
 
 export const setAuthToken = token => ({ type: SET_AUTH_TOKEN, token });
+
+export const markJournalDirty = () => ({ type: MARK_JOURNAL_DIRTY });

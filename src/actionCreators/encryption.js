@@ -1,5 +1,4 @@
 import { SET_ENCRYPTION_PASSWORD, SET_ENCRYPTED_BLOB } from "../actionTypes";
-import { uploadToDropbox } from "./dropbox";
 import { addNotification } from "./";
 
 // Set the encryption password we want to use.
@@ -12,7 +11,6 @@ export const changeEncryptionPassword = password => {
   return dispatch => {
     dispatch(setEncryptionPassword(password));
     dispatch(addNotification("Encryption password updated"));
-    dispatch(uploadToDropbox());
   };
 };
 
@@ -22,6 +20,5 @@ export const removeEncryption = password => {
     dispatch(setEncryptionPassword(null));
     dispatch({ type: SET_ENCRYPTED_BLOB, contents: null });
     dispatch(addNotification("Encryption removed"));
-    dispatch(uploadToDropbox());
   };
 };

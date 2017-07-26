@@ -23,7 +23,9 @@ export {
   authenticateToDropbox,
   mockDropbox,
   attemptToDecryptJournal,
-  setAuthToken
+  setAuthToken,
+  markJournalDirty,
+  debouncedUploadToDropbox
 } from "./dropbox";
 
 export {

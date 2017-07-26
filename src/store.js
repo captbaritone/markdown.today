@@ -6,6 +6,7 @@ import persistState from "redux-localstorage";
 
 import reducer from "./reducers";
 import { getAuthToken } from "./accessors";
+import dropboxMiddleware from "./dropboxMiddleware";
 
 export const getStore = () => {
   const slicer = paths => {
@@ -25,10 +26,13 @@ export const getStore = () => {
     reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__(),
-    // TODO: Consider raven-for-redux middleware
     compose(
       persistState("dropbox", { slicer }),
-      applyMiddleware(thunk, routerMiddleware(browserHistory))
+      applyMiddleware(
+        thunk,
+        routerMiddleware(browserHistory),
+        dropboxMiddleware
+      )
     )
   );
 };

@@ -4,6 +4,7 @@ import { filter, map, sortBy, get, first } from "lodash";
 
 export const getAuthToken = state => state.dropbox.authToken;
 
+export const getJournal = state => state.journal;
 export const getEntries = state => state.journal.entries;
 
 export const getEntriesAsArray = entries => {

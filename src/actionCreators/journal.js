@@ -11,7 +11,6 @@ import {
 } from "../actionTypes";
 
 import { downloadURI } from "../utils";
-import { uploadToDropbox, debouncedUploadToDropbox } from "./dropbox";
 import { editEntry, addNotification } from "./";
 
 const JOURNAL_FILENAME = "journal.md";
@@ -23,7 +22,6 @@ export const addEntry = dateObj => {
     const markdown = "";
     dispatch({ type: ADD_ENTRY, date, id, markdown });
     dispatch(editEntry(id));
-    dispatch(debouncedUploadToDropbox());
   };
 };
 
@@ -47,7 +45,6 @@ export const editEntriesForDay = date => {
 export const deleteEntry = id => {
   return (dispatch, getProps) => {
     dispatch({ type: DELETE_ENTRY, id });
-    dispatch(uploadToDropbox());
     dispatch(addNotification("Entry deleted."));
   };
 };
@@ -55,7 +52,6 @@ export const deleteEntry = id => {
 export const updateEntry = (id, markdown) => {
   return (dispatch, getState) => {
     dispatch({ type: EDIT_ENTRY, id, markdown });
-    dispatch(debouncedUploadToDropbox());
   };
 };
 
@@ -71,6 +67,5 @@ export const viewEntry = id => push(`/journal/entry/${id}`);
 export const setEntryDate = (id, date) => {
   return (dispatch, getState) => {
     dispatch({ type: SET_ENTRY_DATE, id, date });
-    dispatch(uploadToDropbox());
   };
 };
