@@ -1,5 +1,6 @@
 import { push } from "react-router-redux";
 import getTime from "date-fns/get_time";
+import format from "date-fns/format";
 
 import { getAsDataURI } from "../utils";
 import { getMarkdown, getEntriesForDay } from "../accessors";
@@ -67,5 +68,10 @@ export const viewEntry = id => push(`/journal/entry/${id}`);
 export const setEntryDate = (id, date) => {
   return (dispatch, getState) => {
     dispatch({ type: SET_ENTRY_DATE, id, date });
+    dispatch(
+      addNotification(
+        `Updated entry date to: ${format(date, "MMM. Do, YYYY")}.`
+      )
+    );
   };
 };
