@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 
 const wrapperStyle = {
@@ -20,8 +21,13 @@ const style = {
 };
 
 const autoFocusRef = input => input && input.focus();
+type Props = {
+  content: string,
+  onChange: () => void,
+  placeholder: string
+};
 
-const Editor = ({ content, onChange, placeholder }) =>
+const Editor = ({ content, onChange, placeholder }: Props) =>
   <div style={wrapperStyle}>
     <textarea
       onChange={onChange}
@@ -31,11 +37,5 @@ const Editor = ({ content, onChange, placeholder }) =>
       ref={autoFocusRef}
     />
   </div>;
-
-Editor.propTypes = {
-  content: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  placeholder: React.PropTypes.string
-};
 
 export default Editor;
