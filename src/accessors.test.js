@@ -1,3 +1,4 @@
+// @flow
 import { getStore } from "./store";
 import { getEntriesContainingString, getEntryById } from "./accessors";
 describe("getEntriesContainingString", () => {

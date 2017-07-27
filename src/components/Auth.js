@@ -6,6 +6,7 @@ import { parse } from "qs";
 import { setAuthToken } from "../actionCreators";
 
 class Auth extends React.Component {
+  props: Props;
   componentWillMount() {
     // This is essentially a 301 redirect. Dropbox will redirect to a URL that
     // loads this route. This route will never render, it simply does some work

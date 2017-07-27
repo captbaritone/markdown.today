@@ -1,2 +1,3 @@
 build/
 decode/sjcl.js
+flow-typed/

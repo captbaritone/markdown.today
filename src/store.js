@@ -1,3 +1,9 @@
+// @flow
+import type { ThunkOrActionType } from "./actionCreators";
+import type { ActionType } from "./actionTypes";
+import type { AppState } from "./reducers";
+import type { Store as ReduxStore } from "redux";
+
 import { browserHistory } from "react-router";
 import { routerMiddleware } from "react-router-redux";
 import { compose, createStore, applyMiddleware } from "redux";
@@ -8,7 +14,10 @@ import reducer from "./reducers";
 import { getAuthToken } from "./accessors";
 import dropboxMiddleware from "./dropboxMiddleware";
 
-export const getStore = () => {
+export type Dispatch = (action: ThunkOrActionType) => void;
+export type Store = ReduxStore<AppState, ActionType>;
+
+export const getStore = (): Store => {
   const slicer = paths => {
     return state => {
       return Object.assign(

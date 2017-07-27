@@ -1,11 +1,13 @@
-import {
-  DROPBOX_UPLOAD_COMPLETE,
-  STARTING_DROPBOX_UPLOAD,
-  LOGOUT,
-  SET_AUTH_TOKEN,
-  MOCK_DROPBOX,
-  MARK_JOURNAL_DIRTY
-} from "../actionTypes";
+// @flow
+
+import type { ActionType } from "../actionTypes";
+
+export type DropboxState = {
+  authToken: ?string,
+  uploading: boolean,
+  mock: boolean,
+  dirty: boolean
+};
 
 const defaultDropboxSate = {
   authToken: null,
@@ -14,23 +16,26 @@ const defaultDropboxSate = {
   dirty: false
 };
 
-const dropbox = (state = defaultDropboxSate, action) => {
+const dropbox = (
+  state: DropboxState = defaultDropboxSate,
+  action: ActionType
+) => {
   switch (action.type) {
-    case SET_AUTH_TOKEN:
+    case "SET_AUTH_TOKEN":
       return Object.assign({}, state, { authToken: action.token });
-    case LOGOUT:
+    case "LOGOUT":
       return Object.assign({}, state, { authToken: null, mock: false });
-    case STARTING_DROPBOX_UPLOAD:
+    case "STARTING_DROPBOX_UPLOAD":
       return Object.assign({}, state, { uploading: true });
-    case DROPBOX_UPLOAD_COMPLETE:
+    case "DROPBOX_UPLOAD_COMPLETE":
       return Object.assign({}, state, {
         uploading: false,
         dirty: false
       });
-    case MARK_JOURNAL_DIRTY:
+    case "MARK_JOURNAL_DIRTY":
       // TODO: Find a more robust way to know when we are dirty.
       return Object.assign({}, state, { dirty: true });
-    case MOCK_DROPBOX:
+    case "MOCK_DROPBOX":
       return Object.assign({}, state, { mock: true });
     default:
       return state;

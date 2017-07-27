@@ -1,3 +1,4 @@
+// @flow
 import * as TYPES from "./actionTypes";
 import { forEach } from "lodash";
 

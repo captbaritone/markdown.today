@@ -1,8 +1,27 @@
+// @flow
+export type ActionType =
+  | {| type: "SET_ENCRYPTION_PASSWORD", password: string |}
+  | {| type: "SET_ENCRYPTED_BLOB", contents: string |}
+  | {| type: "LOGOUT" |}
+  | {| type: "SET_FROM_MD", md: string |}
+  | {| type: "EDIT_ENTRY", id: number, markdown: string |}
+  | {| type: "SET_ENTRY_DATE", id: number, date: number |}
+  | {| type: "SET_SEARCH_QUERY", query: string |}
+  | {| type: "ADD_NOTIFICATION", notification: string |}
+  | {| type: "SET_AUTH_TOKEN", token: string |}
+  | {| type: "STARTING_DROPBOX_UPLOAD" |}
+  | {| type: "DROPBOX_UPLOAD_COMPLETE" |}
+  | {| type: "MARK_JOURNAL_DIRTY" |}
+  | {| type: "MOCK_DROPBOX" |}
+  | {| type: "ADD_ENTRY", date: number, id: number, markdown: string |}
+  | {| type: "DELETE_ENTRY", id: number |}
+  | {| type: "LOGOUT" |};
+
 export const SET_FROM_MD = "SET_FROM_MD";
 export const EDIT_ENTRY = "EDIT_ENTRY";
 export const DELETE_ENTRY = "DELETE_ENTRY";
 export const ADD_ENTRY = "ADD_ENTRY";
-export const TOGGLE_DRAWER = "TOGGLE_DRAWER";
+export const TOGGLjjjjjjE_DRAWER = "TOGGLE_DRAWER";
 export const SET_DRAWER_VISIBILITY = "SET_DRAWER_VISIBILITY";
 export const DROPBOX_UPLOAD_COMPLETE = "DROPBOX_UPLOAD_COMPLETE";
 export const STARTING_DROPBOX_UPLOAD = "STARTING_DROPBOX_UPLOAD";

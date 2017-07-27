@@ -1,3 +1,4 @@
+// @flow
 import {
   entriesFromMarkdown,
   isISODatetime,
