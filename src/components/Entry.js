@@ -1,3 +1,6 @@
+// @flow
+import type { AppState } from "../reducers";
+
 import React from "react";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
@@ -13,7 +16,15 @@ import { editEntry, goHome } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
 
-const Entry = ({ title, goHome, editEntry, loaded, markdown }) =>
+type Props = {
+  title: string,
+  goHome: () => void,
+  editEntry: () => void,
+  loaded: boolean,
+  markdown: string
+};
+
+const Entry = ({ title, goHome, editEntry, loaded, markdown }: Props) =>
   <div>
     <AppBar
       titleStyle={{ textAlign: "center" }}
@@ -42,7 +53,7 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }) =>
     </JournalContent>
   </div>;
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: AppState, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
   return {
     // TODO: What if the entry was deleted?
@@ -52,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch: *, ownProps) => ({
   goHome: () => dispatch(goHome()),
   editEntry: () => dispatch(editEntry(ownProps.routeParams.id))
 });

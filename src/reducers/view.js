@@ -7,7 +7,10 @@ export type ViewState = {
   +notifications: Array<string>,
   +showChangePassword: boolean,
   +showSetPassword: boolean,
-  +showRemovePassword: boolean
+  +showRemovePassword: boolean,
+  +notifications: Array<string>,
+  +showSearchInput: boolean,
+  +searchQuery: ?string
 };
 
 const defaultViewState = {

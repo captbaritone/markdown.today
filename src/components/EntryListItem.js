@@ -1,3 +1,7 @@
+// @flow
+import type { AppState } from "../reducers";
+import type { Entry } from "../reducers/journal";
+
 import React from "react";
 import { connect } from "react-redux";
 import MenuItem from "material-ui/MenuItem";
@@ -19,13 +23,21 @@ const iconButtonElement = (
   </IconButton>
 );
 
+type Props = {
+  entry: Entry,
+  editEntry: () => void,
+  deleteEntry: () => void,
+  viewEntry: () => void,
+  searchQuery: string
+};
+
 const EntryListItem = ({
   entry,
   editEntry,
   deleteEntry,
   viewEntry,
   searchQuery
-}) =>
+}: Props) =>
   <ListItem
     leftAvatar={<Avatar icon={<EventNote />} />}
     primaryText={format(entry.date, "dddd [the] Do, ha")}
@@ -52,12 +64,12 @@ const EntryListItem = ({
     onTouchTap={viewEntry}
   />;
 
-const mapStateToProps = (state, { id }) => ({
+const mapStateToProps = (state: AppState, { id }) => ({
   entry: getEntryById(state, id),
   searchQuery: state.view.searchQuery
 });
 
-const mapDispatchToProps = (dispatch, { id }) => ({
+const mapDispatchToProps = (dispatch: *, { id }) => ({
   viewEntry: () => dispatch(viewEntry(id)),
   editEntry: () => dispatch(editEntry(id)),
   deleteEntry: () => dispatch(deleteEntry(id))

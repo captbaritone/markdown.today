@@ -1,3 +1,6 @@
+// @flow
+import type { AppState } from "../reducers";
+
 import React from "react";
 import { connect } from "react-redux";
 import Dialog from "material-ui/Dialog";
@@ -15,29 +18,29 @@ const defaultState = {
   enteredNewPassword: "",
   enteredConfirmNewPassword: ""
 };
+
+type State = {
+  enteredCurrentPassword: string,
+  enteredNewPassword: string,
+  enteredConfirmNewPassword: string
+};
+
 class ChangePassword extends React.Component {
+  state: State;
   constructor(props) {
     super(props);
     this.state = defaultState;
-    this.handleCurrenPasswordChange = this.handleCurrenPasswordChange.bind(
-      this
-    );
-    this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
-    this.handleConfirmNewPasswordChange = this.handleConfirmNewPasswordChange.bind(
-      this
-    );
-    this.hideChangePassword = this.hideChangePassword.bind(this);
   }
 
-  handleCurrenPasswordChange(e) {
+  handleCurrenPasswordChange = e => {
     this.setState({ enteredCurrentPassword: e.target.value });
-  }
-  handleNewPasswordChange(e) {
+  };
+  handleNewPasswordChange = e => {
     this.setState({ enteredNewPassword: e.target.value });
-  }
-  handleConfirmNewPasswordChange(e) {
+  };
+  handleConfirmNewPasswordChange = e => {
     this.setState({ enteredConfirmNewPassword: e.target.value });
-  }
+  };
 
   hideChangePassword() {
     this.setState(defaultState);
@@ -116,12 +119,12 @@ class ChangePassword extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AppState) => ({
   open: shouldShowChangePassword(state),
   encryptionPassword: getEncryptionPassword(state)
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: *) => ({
   changeEncryptionPassword: newPassword => {
     dispatch(changeEncryptionPassword(newPassword));
     dispatch(hideChangePassword());
