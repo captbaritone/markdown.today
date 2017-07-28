@@ -32,13 +32,13 @@ const encryption = (
 
 export type Entry = {|
   // TODO: Ensure this matches the key
-  id: number,
-  date: number,
-  markdown: string
+  +id: number,
+  +date: number,
+  +markdown: string
 |};
 
 export type Entries = {
-  [string]: Entry
+  +[string]: Entry
 };
 
 const entries = (previousState = null, action: ActionType): ?Entries => {

@@ -3,10 +3,10 @@
 import type { ActionType } from "../actionTypes";
 
 export type DropboxState = {
-  authToken: ?string,
-  uploading: boolean,
-  mock: boolean,
-  dirty: boolean
+  +authToken: ?string,
+  +uploading: boolean,
+  +mock: boolean,
+  +dirty: boolean
 };
 
 const defaultDropboxSate = {

@@ -3,11 +3,11 @@
 import type { ActionType } from "../actionTypes";
 
 export type ViewState = {
-  showDrawer: boolean,
-  notifications: Array<string>,
-  showChangePassword: boolean,
-  showSetPassword: boolean,
-  showRemovePassword: boolean
+  +showDrawer: boolean,
+  +notifications: Array<string>,
+  +showChangePassword: boolean,
+  +showSetPassword: boolean,
+  +showRemovePassword: boolean
 };
 
 const defaultViewState = {
