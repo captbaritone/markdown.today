@@ -2,7 +2,7 @@
 
 import type { CombinedReducer } from "redux";
 import { combineReducers } from "redux";
-import invariant from "invariant";
+//import invariant from "invariant";
 import { entriesFromMarkdown } from "../utils";
 import type { ActionType } from "../actionTypes";
 
@@ -48,7 +48,7 @@ const entries = (previousState = null, action: ActionType): ?Entries => {
     case "SET_FROM_MD":
       return entriesFromMarkdown(action.md);
     case "EDIT_ENTRY":
-      invariant(previousState !== null);
+      //invariant(previousState !== null);
       return Object.assign({}, previousState, {
         [action.id]: Object.assign({}, previousState[action.id], {
           markdown: action.markdown
@@ -67,7 +67,7 @@ const entries = (previousState = null, action: ActionType): ?Entries => {
       };
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
     case "SET_ENTRY_DATE":
-      invariant(previousState !== null);
+      //invariant(previousState !== null);
       const originalEntry = previousState[action.id];
       const entryWithNewDate = Object.assign({}, originalEntry, {
         date: action.date
