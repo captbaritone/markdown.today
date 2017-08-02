@@ -12,6 +12,8 @@ export const getAuthToken = (state: AppState) => state.dropbox.authToken;
 export const getJournal = (state: AppState) => state.journal;
 export const getEntries = (state: AppState) => state.journal.entries;
 
+export const journalIsLoading = (state: AppState) => getEntries(state) === null;
+
 export const getEntriesAsArray = (entries: ?Entries) => {
   return entries && sortBy(map(entries), "date").reverse();
 };

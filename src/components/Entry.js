@@ -11,7 +11,7 @@ import EditIcon from "material-ui/svg-icons/image/edit";
 import format from "date-fns/format";
 import ReactMarkdown from "react-markdown";
 import JournalContent from "./JournalContent";
-import { getEntryById } from "../accessors";
+import { getEntryById, journalIsLoading } from "../accessors";
 import { editEntry, goHome } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
@@ -21,7 +21,8 @@ type Props = {
   goHome: () => void,
   editEntry: () => void,
   loaded: boolean,
-  markdown: string
+  markdown: string,
+  notFound: boolean
 };
 
 const Entry = ({ title, goHome, editEntry, loaded, markdown }: Props) =>
@@ -55,9 +56,11 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }: Props) =>
 
 const mapStateToProps = (state: AppState, ownProps) => {
   const entry = getEntryById(state, ownProps.routeParams.id);
+  const loaded = !journalIsLoading(state);
   return {
-    // TODO: What if the entry was deleted?
-    loaded: !!entry,
+    loaded,
+    // TODO: Actually show this in the UI.
+    notFound: loaded && entry === null,
     title: entry && format(entry.date, "MMM. Do, YYYY"),
     markdown: entry && entry.markdown
   };
