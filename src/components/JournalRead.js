@@ -5,6 +5,7 @@ import { CardText } from "material-ui/Card";
 import KeyboardArrowLeft from "material-ui/svg-icons/image/navigate-before";
 import IconButton from "material-ui/IconButton";
 import ReactMarkdown from "react-markdown";
+import { viewEntry } from "../actionCreators";
 
 import "github-markdown-css/github-markdown.css";
 
@@ -35,11 +36,23 @@ class Journal extends Component {
         <JournalContent isLoading={!this.props.entries}>
           {() =>
             <CardText>
-              <ReactMarkdown
-                className="markdown-body"
-                source={this.props.markdown}
-                escapeHtml={true}
-              />
+              <h1>My Journal</h1>
+              {this.props.entries.map(entry =>
+                <div key={entry.id}>
+                  <h2
+                    style={{ cursor: "pointer", textDecoration: "underline" }}
+                    onClick={() => this.props.viewEntry(entry.id)}
+                  >
+                    {/* TODO: Extract this, and the logic that makes the .md into a function. */}
+                    {new Date(entry.date).toISOString()}
+                  </h2>
+                  <ReactMarkdown
+                    className="markdown-body"
+                    source={entry.markdown}
+                    escapeHtml={true}
+                  />
+                </div>
+              )}
             </CardText>}
         </JournalContent>
       </div>
@@ -59,5 +72,6 @@ export default connect(mapStateToProps, {
   addEntryForToday,
   toggleDrawer,
   editEntriesForDay,
-  goHome
+  goHome,
+  viewEntry
 })(Journal);
