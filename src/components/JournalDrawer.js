@@ -9,6 +9,7 @@ import Save from "material-ui/svg-icons/content/save";
 import Lock from "material-ui/svg-icons/action/lock";
 import LockOpen from "material-ui/svg-icons/action/lock-open";
 import Divider from "material-ui/Divider";
+import GitHub from "react-icons/lib/go/mark-github";
 import {
   exportMarkdown,
   setDrawerVisibility,
@@ -89,7 +90,9 @@ const JournalDrawer = props =>
       Logout
     </MenuItem>
     <Divider />
-    <MenuItem onTouchTap={props.readAbout}>GitHub</MenuItem>
+    <MenuItem leftIcon={<GitHub />} onTouchTap={props.readAbout}>
+      GitHub
+    </MenuItem>
   </Drawer>;
 
 const mapStateToProps = state => ({
