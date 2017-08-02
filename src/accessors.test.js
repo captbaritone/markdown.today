@@ -10,6 +10,7 @@ describe("getEntriesContainingString", () => {
   });
   it("returns all entries for a null query", () => {
     const store = getStore();
+    store.dispatch({ type: "SET_FROM_MD", md: "" });
     store.dispatch({
       type: "ADD_ENTRY",
       date: 1,
@@ -22,6 +23,7 @@ describe("getEntriesContainingString", () => {
   });
   it("returns all entries for an empty query", () => {
     const store = getStore();
+    store.dispatch({ type: "SET_FROM_MD", md: "" });
     store.dispatch({
       type: "ADD_ENTRY",
       date: 1,
@@ -34,6 +36,7 @@ describe("getEntriesContainingString", () => {
   });
   it("returns entries containing a query", () => {
     const store = getStore();
+    store.dispatch({ type: "SET_FROM_MD", md: "" });
     store.dispatch({
       type: "ADD_ENTRY",
       date: 1,
@@ -52,6 +55,7 @@ describe("getEntriesContainingString", () => {
   });
   it("returns entries that match case insensitively", () => {
     const store = getStore();
+    store.dispatch({ type: "SET_FROM_MD", md: "" });
     store.dispatch({
       type: "ADD_ENTRY",
       date: 1,
