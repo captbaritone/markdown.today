@@ -19,7 +19,7 @@ export type Store = ReduxStore<AppState, ActionType>;
 
 export const getStore = (): Store => {
   const slicer = paths => {
-    return state => {
+    return (state: AppState) => {
       return Object.assign(
         {},
         {
