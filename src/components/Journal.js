@@ -11,7 +11,11 @@ import Subheader from "material-ui/Subheader";
 import TextField from "material-ui/TextField";
 import muiThemeable from "material-ui/styles/muiThemeable";
 
-import { getEntriesAsArray, getEntriesContainingString } from "../accessors";
+import {
+  getEntriesAsArray,
+  getEntriesContainingString,
+  journalIsLoading
+} from "../accessors";
 import {
   addEntryForToday,
   toggleDrawer,
@@ -23,6 +27,7 @@ import JournalContent from "./JournalContent";
 import { getHeading } from "../utils";
 
 const mapStateToProps = state => ({
+  loading: journalIsLoading(state),
   entries: getEntriesAsArray(
     getEntriesContainingString(state, state.view.searchQuery)
   ),
@@ -144,7 +149,7 @@ class Journal extends Component {
     return (
       <div>
         {this.props.shouldShowSearchInput ? <SearchHeading /> : <MainHeading />}
-        <JournalContent isLoading={!this.props.entries}>
+        <JournalContent isLoading={this.props.loading}>
           {/* TODO: Indicate when we are searching but there are no matches */}
           {() =>
             <List>
