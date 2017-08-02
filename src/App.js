@@ -33,6 +33,12 @@ function requireAuth(nextState, replace) {
   }
 }
 
+function checkIfAuthed(nextState, replace) {
+  if (isLoggedIn(store.getState())) {
+    replace({ pathname: "/journal/" });
+  }
+}
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -56,7 +62,7 @@ const Routes = props =>
       component={EditEntry}
       onEnter={requireAuth}
     />
-    <Route path="/" component={Login} />
+    <Route path="/" component={Login} onEnter={checkIfAuthed} />
     <Route path="/auth/" component={Auth} />
   </Router>;
 
