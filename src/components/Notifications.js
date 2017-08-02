@@ -1,5 +1,4 @@
 // @flow
-import type { Dispatch } from "../store";
 import type { AppState } from "../reducers";
 import React from "react";
 import { connect } from "react-redux";
