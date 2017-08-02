@@ -2,7 +2,6 @@
 
 import type { CombinedReducer } from "redux";
 import { combineReducers } from "redux";
-//import invariant from "invariant";
 import { entriesFromMarkdown } from "../utils";
 import type { ActionType } from "../actionTypes";
 
@@ -48,18 +47,29 @@ const entries = (previousState = null, action: ActionType): ?Entries => {
     case "SET_FROM_MD":
       return entriesFromMarkdown(action.md);
     case "EDIT_ENTRY":
-      //invariant(previousState !== null);
+      if (previousState == null) {
+        // this should never happen. we shouldn't let you edit an unloaded journal.
+        return previousState;
+      }
       return Object.assign({}, previousState, {
         [action.id]: Object.assign({}, previousState[action.id], {
           markdown: action.markdown
         })
       });
     case "DELETE_ENTRY":
+      if (previousState == null) {
+        // this should never happen. we shouldn't let you edit an unloaded journal.
+        return previousState;
+      }
       // TODO: Consider copying to a "trash" to enable "undelete".
       const newState = Object.assign({}, previousState);
       delete newState[action.id];
       return newState;
     case "ADD_ENTRY":
+      if (previousState == null) {
+        // this should never happen. we shouldn't let you edit an unloaded journal.
+        return previousState;
+      }
       const newEntry = {
         id: action.id,
         date: action.date,
@@ -67,7 +77,10 @@ const entries = (previousState = null, action: ActionType): ?Entries => {
       };
       return Object.assign({}, previousState, { [newEntry.id]: newEntry });
     case "SET_ENTRY_DATE":
-      //invariant(previousState !== null);
+      if (previousState == null) {
+        // this should never happen. we shouldn't let you edit an unloaded journal.
+        return previousState;
+      }
       const originalEntry = previousState[action.id];
       const entryWithNewDate = Object.assign({}, originalEntry, {
         date: action.date
