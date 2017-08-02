@@ -10,19 +10,18 @@ import { resolveFirstNotification } from "../actionCreators";
 
 type Props = {
   message: ?string,
-  resolveNotification: () => void
+  resolveFirstNotification: () => void
 };
 const Notifications = (props: Props) =>
   <Snackbar
     open={!!props.message}
     message={props.message}
     autoHideDuration={4000}
-    onRequestClose={props.resolveNotification}
+    onRequestClose={props.resolveFirstNotification}
   />;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resolveNotification: resolveFirstNotification
-});
+const mapDispatchToProps = { resolveFirstNotification };
+
 const mapStateToProps = (state: AppState) => ({
   message: nextNotification(state) || ""
 });
