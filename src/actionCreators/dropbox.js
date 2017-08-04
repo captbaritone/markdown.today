@@ -221,6 +221,25 @@ const _debouncedUploadToDropbox = debounce(_uploadToDropbox, 5000);
 
 export const debouncedUploadToDropbox = () => _debouncedUploadToDropbox;
 
+export const stashDecoder = () => {
+  return (dispatch, getState) => {
+    debugger;
+    const state = getState();
+    const dropbox = getDropboxClient(state);
+    dropbox
+      .filesSaveUrl({
+        path: "/decoder.html",
+        url: "https://markdown.today/built/decoder.html"
+      })
+      .then(result => {
+        console.log("Uploaded decoder", result);
+      })
+      .catch(error => {
+        dispatch(addNotification(`Error pushing decoder.html to Dropbox`));
+      });
+  };
+};
+
 export const mockDropbox = () => {
   return dispatch => {
     dispatch({ type: MOCK_DROPBOX });

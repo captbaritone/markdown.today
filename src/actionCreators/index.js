@@ -25,7 +25,8 @@ export {
   attemptToDecryptJournal,
   setAuthToken,
   markJournalDirty,
-  debouncedUploadToDropbox
+  debouncedUploadToDropbox,
+  stashDecoder
 } from "./dropbox";
 
 export {
