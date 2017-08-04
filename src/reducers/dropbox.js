@@ -39,7 +39,7 @@ const dropbox = (
       return Object.assign({}, state, { dirty: true });
     case "MOCK_DROPBOX":
       return Object.assign({}, state, { mock: true });
-    case "TRYING_TO_STASH_DECODER":
+    case "TRYING_TO_STASH_DECRYPTER":
       return Object.assign({}, state, { triedStashingDecoder: true });
     default:
       return state;

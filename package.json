@@ -79,8 +79,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js && npm run build-decoder",
-    "build-decoder": "html-inline -i decode/decode.html -o build/decode.html",
+    "build": "node scripts/build.js && npm run build-decrypt",
+    "build-decrypt": "html-inline -i decrypt/decrypt.html -o build/decrypt.html",
     "test": "node scripts/test.js --env=jsdom",
     "types": "flow",
     "ci-test": "npm run build && npm run test && npm run lint && npm run types",

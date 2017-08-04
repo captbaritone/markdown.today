@@ -42,7 +42,7 @@ Welcome to Markdown Today!`;
 
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
-const DECODER_PATH = `/decoder.html`;
+const DECRYPT_PATH = `/decrypt.html`;
 const MOCK_JOURNAL = `# My Journal
 
 ## 2017-02-24T02:05:17.338Z
@@ -228,14 +228,18 @@ const actuallyStashDecoder = () => {
     const dropbox = getDropboxClient(state);
     dropbox
       .filesSaveUrl({
-        path: DECODER_PATH,
-        url: "https://markdown.today/built/decoder.html"
+        path: DECRYPT_PATH,
+        url: "https://markdown.today/built/decrypt.html"
       })
       .then(result => {
-        dispatch(addNotification(`decoder.html was pushed to your Dropbox`));
+        dispatch(
+          addNotification(`Backup decryption tool pushed to your Dropbox`)
+        );
       })
       .catch(error => {
-        dispatch(addNotification(`Error pushing decoder.html to Dropbox`));
+        dispatch(
+          addNotification(`Error pushing backup decryption tool to Dropbox`)
+        );
       });
   };
 };
@@ -245,10 +249,10 @@ export const stashDecoder = () => {
   return (dispatch, getState) => {
     const state = getState();
     // We'll just try once per session.
-    dispatch({ type: "TRYING_TO_STASH_DECODER" });
+    dispatch({ type: "TRYING_TO_STASH_DECRYPTER" });
     const dropbox = getDropboxClient(state);
     dropbox
-      .filesGetMetadata({ path: DECODER_PATH })
+      .filesGetMetadata({ path: DECRYPT_PATH })
       .then(() => {
         // TODO: check if we need to update the decoder.
       })
@@ -256,7 +260,9 @@ export const stashDecoder = () => {
         if (errorIs404(response.error)) {
           dispatch(actuallyStashDecoder());
         } else {
-          dispatch(addNotification(`Error checking Dropbox for decoder.html`));
+          dispatch(
+            addNotification(`Error checking Dropbox for backup decryption tool`)
+          );
         }
       });
   };

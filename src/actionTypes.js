@@ -15,7 +15,7 @@ export type ActionType =
   | {| type: "MOCK_DROPBOX" |}
   | {| type: "ADD_ENTRY", date: number, id: number, markdown: string |}
   | {| type: "DELETE_ENTRY", id: number |}
-  | {| type: "TRYING_TO_STASH_DECODER" |}
+  | {| type: "TRYING_TO_STASH_DECRYPTER" |}
   | {| type: "LOGOUT" |};
 
 export const SET_FROM_MD = "SET_FROM_MD";
