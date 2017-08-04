@@ -79,7 +79,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && npm run build-decoder",
     "build-decoder": "html-inline -i decode/decode.html -o build/decode.html",
     "test": "node scripts/test.js --env=jsdom",
     "types": "flow",
@@ -88,12 +88,8 @@
     "deploy": "ssh jordaneldredge.com sh < scripts/deploy.sh"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
     ],
@@ -104,21 +100,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }
   },
   "babel": {
-    "plugins": [
-      "lodash"
-    ],
-    "presets": [
-      "react-app",
-      "flow"
-    ]
+    "plugins": ["lodash"],
+    "presets": ["react-app", "flow"]
   },
   "eslintConfig": {
     "extends": "react-app"
