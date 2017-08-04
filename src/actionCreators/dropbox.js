@@ -42,6 +42,7 @@ Welcome to Markdown Today!`;
 
 const JOURNAL_FILENAME = "journal.md";
 const JOURNAL_PATH = `/${JOURNAL_FILENAME}`;
+const DECODER_PATH = `/decoder.html`;
 const MOCK_JOURNAL = `# My Journal
 
 ## 2017-02-24T02:05:17.338Z
@@ -221,21 +222,42 @@ const _debouncedUploadToDropbox = debounce(_uploadToDropbox, 5000);
 
 export const debouncedUploadToDropbox = () => _debouncedUploadToDropbox;
 
-export const stashDecoder = () => {
+const actuallyStashDecoder = () => {
   return (dispatch, getState) => {
-    debugger;
     const state = getState();
     const dropbox = getDropboxClient(state);
     dropbox
       .filesSaveUrl({
-        path: "/decoder.html",
+        path: DECODER_PATH,
         url: "https://markdown.today/built/decoder.html"
       })
       .then(result => {
-        console.log("Uploaded decoder", result);
+        dispatch(addNotification(`decoder.html was pushed to your Dropbox`));
       })
       .catch(error => {
         dispatch(addNotification(`Error pushing decoder.html to Dropbox`));
+      });
+  };
+};
+
+// Stash the decoder, checking first to ensure that it's not already there.
+export const stashDecoder = () => {
+  return (dispatch, getState) => {
+    const state = getState();
+    // We'll just try once per session.
+    dispatch({ type: "TRYING_TO_STASH_DECODER" });
+    const dropbox = getDropboxClient(state);
+    dropbox
+      .filesGetMetadata({ path: DECODER_PATH })
+      .then(() => {
+        // TODO: check if we need to update the decoder.
+      })
+      .catch(response => {
+        if (errorIs404(response.error)) {
+          dispatch(actuallyStashDecoder());
+        } else {
+          dispatch(addNotification(`Error checking Dropbox for decoder.html`));
+        }
       });
   };
 };

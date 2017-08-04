@@ -6,20 +6,22 @@ export type DropboxState = {
   +authToken: ?string,
   +uploading: boolean,
   +mock: boolean,
-  +dirty: boolean
+  +dirty: boolean,
+  +triedStashingDecoder: boolean
 };
 
 const defaultDropboxSate = {
   authToken: null,
   uploading: false,
   mock: false,
-  dirty: false
+  dirty: false,
+  triedStashingDecoder: false
 };
 
 const dropbox = (
   state: DropboxState = defaultDropboxSate,
   action: ActionType
-) => {
+): DropboxState => {
   switch (action.type) {
     case "SET_AUTH_TOKEN":
       return Object.assign({}, state, { authToken: action.token });
@@ -37,6 +39,8 @@ const dropbox = (
       return Object.assign({}, state, { dirty: true });
     case "MOCK_DROPBOX":
       return Object.assign({}, state, { mock: true });
+    case "TRYING_TO_STASH_DECODER":
+      return Object.assign({}, state, { triedStashingDecoder: true });
     default:
       return state;
   }
