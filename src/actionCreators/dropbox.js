@@ -229,7 +229,7 @@ const actuallyStashDecoder = () => {
     dropbox
       .filesSaveUrl({
         path: DECRYPT_PATH,
-        url: "https://markdown.today/built/decrypt.html"
+        url: "https://markdown.today/decrypt.html"
       })
       .then(result => {
         dispatch(
