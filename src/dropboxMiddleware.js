@@ -31,7 +31,7 @@ const dropboxMiddleware = store => next => action => {
     isEncrypted(newState) &&
     isLoggedIn(newState)
   ) {
-    store.dispatch(stashDecoder());
+    //store.dispatch(stashDecoder());
   }
 
   return nextAction;
