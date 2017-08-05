@@ -31,12 +31,12 @@ const Entry = ({ title, goHome, editEntry, loaded, markdown }: Props) =>
       titleStyle={{ textAlign: "center" }}
       title={loaded ? title : "Loading..."}
       iconElementLeft={
-        <IconButton onClick={goHome}>
+        <IconButton onTouchTap={goHome}>
           <KeyboardArrowLeft />
         </IconButton>
       }
       iconElementRight={
-        <IconButton onClick={editEntry}>
+        <IconButton onTouchTap={editEntry}>
           <EditIcon />
         </IconButton>
       }
@@ -68,7 +68,10 @@ const mapStateToProps = (state: AppState, ownProps) => {
 
 const mapDispatchToProps = (dispatch: *, ownProps) => ({
   goHome: () => dispatch(goHome()),
-  editEntry: () => dispatch(editEntry(ownProps.routeParams.id))
+  editEntry: e => {
+    console.log("edit", e.target);
+    dispatch(editEntry(ownProps.routeParams.id));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Entry);
