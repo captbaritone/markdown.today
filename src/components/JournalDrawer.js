@@ -27,7 +27,8 @@ import {
   isEncrypted,
   shouldShowDrawer,
   isUploading,
-  isDirty
+  isDirty,
+  dropboxIsMocked
 } from "../accessors";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
@@ -42,26 +43,27 @@ const JournalDrawer = props =>
       iconElementLeft={<span />}
       onTouchTap={props.toggleDrawer}
     />
-    {/* TODO Make icon grey if saving/not dirty */}
-    <MenuItem
-      key="save"
-      leftIcon={
-        <Save
-          color={
-            !props.isDirty || props.isUploading
-              ? "rgba(0, 0, 0, 0.298039)"
-              : null
+    {props.areMocked
+      ? <MenuItem
+          key="save"
+          leftIcon={
+            <Save
+              color={
+                !props.isDirty || props.isUploading
+                  ? "rgba(0, 0, 0, 0.298039)"
+                  : null
+              }
+            />
           }
-        />
-      }
-      onClick={props.uploadToDropbox}
-      disabled={props.isUploading || !props.isDirty}
-    >
-      {/* TODO Nested ternary statements?? Are you crazy?? */}
-      {props.isUploading
-        ? "Saving..."
-        : !props.isDirty ? "All changes saved" : "Save"}
-    </MenuItem>
+          onClick={props.uploadToDropbox}
+          disabled={props.isUploading || !props.isDirty}
+        >
+          {/* TODO Nested ternary statements?? Are you crazy?? */}
+          {props.isUploading
+            ? "Saving..."
+            : !props.isDirty ? "All changes saved" : "Save"}
+        </MenuItem>
+      : null}
     <Divider />
     {props.isEncrypted &&
       <MenuItem
@@ -87,7 +89,7 @@ const JournalDrawer = props =>
     </MenuItem>
     <Divider />
     <MenuItem leftIcon={<ExitToApp />} onTouchTap={props.logout}>
-      Logout
+      {props.areMocked ? "Exit Demo" : "Logout"}
     </MenuItem>
     <Divider />
     <MenuItem leftIcon={<GitHub />} onTouchTap={props.readAbout}>
@@ -101,7 +103,8 @@ const mapStateToProps = state => ({
   isLogedIn: isLoggedIn(state),
   isEncrypted: isEncrypted(state),
   isUploading: isUploading(state),
-  isDirty: isDirty(state)
+  isDirty: isDirty(state),
+  areMocked: dropboxIsMocked(state)
 });
 
 const mapDispatchToProps = {

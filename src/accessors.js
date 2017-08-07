@@ -107,6 +107,8 @@ export const getDropboxFileContents = (state: AppState) => {
   return encrypt(getEncryptionPassword(state), md);
 };
 
+export const dropboxIsMocked = (state: AppState): boolean => state.dropbox.mock;
+
 export const nextNotification = (state: AppState) =>
   first(state.view.notifications);
 

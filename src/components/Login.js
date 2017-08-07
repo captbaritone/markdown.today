@@ -79,7 +79,7 @@ const Login = props =>
         )}
       </ul>
       <RaisedButton
-        label="Access Dropbox"
+        label="Login with Dropbox"
         labelPosition="before"
         style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
         onTouchTap={props.login}
@@ -89,15 +89,21 @@ const Login = props =>
       />
       <br />
       {process.env.NODE_ENV === "development" &&
-        <RaisedButton
-          label="Mock Dropbox"
-          labelPosition="before"
-          style={{ width: "80%", margin: "0 auto", maxWidth: "300px" }}
-          onTouchTap={props.mockDropbox}
-          labelStyle={{
-            color: lightBaseTheme.palette.primary1Color
+        <a
+          onClick={props.mockDropbox}
+          style={{
+            cursor: "pointer",
+            display: "block",
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: "#fff",
+            textDecoration: "underline",
+            fontSize: "14px",
+            marginTop: "2em"
           }}
-        />}
+        >
+          Try a Demo
+        </a>}
       <p
         style={{
           position: "fixed",

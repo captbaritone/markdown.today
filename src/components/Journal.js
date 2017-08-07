@@ -14,7 +14,8 @@ import muiThemeable from "material-ui/styles/muiThemeable";
 import {
   getEntriesAsArray,
   getEntriesContainingString,
-  journalIsLoading
+  journalIsLoading,
+  dropboxIsMocked
 } from "../accessors";
 import {
   addEntryForToday,
@@ -34,7 +35,8 @@ const mapStateToProps = state => ({
   // TODO: Move to acessor
   showDrawer: state.view.showDrawer,
   shouldShowSearchInput: state.view.showSearchInput,
-  searchQuery: state.view.searchQuery
+  searchQuery: state.view.searchQuery,
+  dropboxIsMocked: dropboxIsMocked(state)
 });
 
 const setSearchQuery = e => ({
@@ -69,7 +71,7 @@ class MainHeading extends React.Component {
     const { props } = this;
     return (
       <AppBar
-        title={"Markdown Today"}
+        title={"Markdown Today" + (props.dropboxIsMocked ? " (DEMO)" : "")}
         titleStyle={{ textAlign: "center" }}
         onLeftIconButtonTouchTap={props.toggleDrawer}
         iconElementRight={
