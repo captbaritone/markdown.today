@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import AddBox from "material-ui/svg-icons/content/add-box";
 import AppBar from "material-ui/AppBar";
@@ -9,6 +10,7 @@ import InfiniteCalendar, {
   withMultipleDates
 } from "react-infinite-calendar";
 import "react-infinite-calendar/styles.css"; // only needs to be imported once
+import muiThemeable from "material-ui/styles/muiThemeable";
 
 import { getJournalAsArray } from "../accessors";
 import {
@@ -23,6 +25,7 @@ const MultipleDatesCalendar = withMultipleDates(Calendar);
 
 class Journal extends Component {
   render() {
+    const { palette } = this.props.muiTheme;
     return (
       <div>
         <AppBar
@@ -39,6 +42,7 @@ class Journal extends Component {
           {() =>
             <InfiniteCalendar
               width="100%"
+              height={window.innerHeight - 64 - 49}
               Component={MultipleDatesCalendar}
               interpolateSelection={defaultMultipleDateInterpolation}
               selected={this.props.entries.map(entry => new Date(entry.date))}
@@ -46,6 +50,20 @@ class Journal extends Component {
                 showHeader: false
               }}
               onSelect={this.props.editEntriesForDay}
+              theme={{
+                floatingNav: {
+                  chevron: palette.alternateTextColor,
+                  color: palette.alternateTextColor,
+                  background: palette.textColor
+                },
+                selectionColor: palette.primary1Color,
+                textColor: {
+                  active: palette.alternateTextColor,
+                  default: palette.textColor
+                },
+                todayColor: palette.primary1Color,
+                weekdayColor: palette.primary1Color
+              }}
             />}
         </JournalContent>
       </div>
@@ -59,9 +77,14 @@ const mapStateToProps = state => ({
   showDrawer: state.view.showDrawer
 });
 
-export default connect(mapStateToProps, {
-  addEntry,
-  addEntryForToday,
-  toggleDrawer,
-  editEntriesForDay
-})(Journal);
+const enhance = compose(
+  connect(mapStateToProps, {
+    addEntry,
+    addEntryForToday,
+    toggleDrawer,
+    editEntriesForDay
+  }),
+  muiThemeable()
+);
+
+export default enhance(Journal);
