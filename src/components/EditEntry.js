@@ -1,4 +1,5 @@
 import React from "react";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import format from "date-fns/format";
@@ -104,6 +105,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 });
 
-export default muiThemeable()(
-  connect(mapStateToProps, mapDispatchToProps)(EditEntry)
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  muiThemeable()
 );
+export default enhance(EditEntry);

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import AddBox from "material-ui/svg-icons/content/add-box";
 import Search from "material-ui/svg-icons/action/search";
@@ -44,7 +45,7 @@ const setSearchQuery = e => ({
   query: e.target.value
 });
 
-const connectJounral = connect(mapStateToProps, {
+const connectJournal = connect(mapStateToProps, {
   addEntryForToday,
   toggleDrawer,
   setSearchQuery,
@@ -89,7 +90,9 @@ class MainHeading extends React.Component {
   }
 }
 
-MainHeading = muiThemeable()(connectJounral(MainHeading));
+const enhance = compose(connectJournal, muiThemeable());
+
+MainHeading = enhance(MainHeading);
 
 class SearchHeading extends React.Component {
   componentDidMount(prevProps) {
@@ -144,7 +147,7 @@ class SearchHeading extends React.Component {
   }
 }
 
-SearchHeading = muiThemeable()(connectJounral(SearchHeading));
+SearchHeading = enhance(SearchHeading);
 
 class Journal extends Component {
   render() {
@@ -173,4 +176,4 @@ class Journal extends Component {
   }
 }
 
-export default connectJounral(Journal);
+export default connectJournal(Journal);
