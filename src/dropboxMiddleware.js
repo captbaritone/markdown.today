@@ -6,8 +6,8 @@ import {
 } from "./accessors";
 import {
   markJournalDirty,
-  debouncedUploadToDropbox,
-  stashDecoder
+  debouncedUploadToDropbox
+  //stashDecoder
 } from "./actionCreators";
 
 // Watch for changes to the journal and write them to Dropbox.

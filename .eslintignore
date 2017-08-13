@@ -1,3 +1,4 @@
 build/
+decrypt/
 decode/sjcl.js
 flow-typed/
