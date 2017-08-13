@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import { connect } from "react-redux";
 import Dialog from "material-ui/Dialog";
@@ -12,13 +14,27 @@ import {
 } from "../actionCreators";
 import { needsEncryptionPassword, getEncryptedBlob } from "../accessors";
 
+type State = {
+  password: string,
+  isValid: boolean
+};
+
+type Props = {
+  encryptedBlob: ?string,
+  setEncryptionPassword: string => void,
+  attemptToDecryptJournal: () => void,
+  logout: () => void,
+  open: () => void
+};
+
 export class PasswordPrompt extends React.Component {
-  constructor(props) {
+  state: State;
+  constructor(props: Props) {
     super(props);
     this.state = { password: "", isValid: false };
-    this.updatePassword = this.updatePassword.bind(this);
-    this.checkValidity = this.checkValidity.bind(this);
-    this.decrypt = this.decrypt.bind(this);
+    (this: any).updatePassword = this.updatePassword.bind(this);
+    (this: any).checkValidity = this.checkValidity.bind(this);
+    (this: any).decrypt = this.decrypt.bind(this);
   }
 
   checkValidity() {
