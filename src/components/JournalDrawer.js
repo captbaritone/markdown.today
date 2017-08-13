@@ -10,6 +10,7 @@ import Lock from "material-ui/svg-icons/action/lock";
 import LockOpen from "material-ui/svg-icons/action/lock-open";
 import Divider from "material-ui/Divider";
 import GitHub from "react-icons/lib/go/mark-github";
+import LogoutPrompt from "./LogoutPrompt";
 import {
   exportMarkdown,
   setDrawerVisibility,
@@ -32,70 +33,101 @@ import {
 } from "../accessors";
 
 // TODO: Support loading indicator to the right of "Save to Dropbox"
-const JournalDrawer = props =>
-  <Drawer
-    open={props.showDrawer}
-    docked={false}
-    onRequestChange={props.setDrawerVisibility}
-  >
-    <AppBar
-      title="Options"
-      iconElementLeft={<span />}
-      onTouchTap={props.toggleDrawer}
-    />
-    {props.areMocked
-      ? <MenuItem
-          key="save"
-          leftIcon={
-            <Save
-              color={
-                !props.isDirty || props.isUploading
-                  ? "rgba(0, 0, 0, 0.298039)"
-                  : null
-              }
-            />
-          }
-          onClick={props.uploadToDropbox}
-          disabled={props.isUploading || !props.isDirty}
-        >
-          {/* TODO Nested ternary statements?? Are you crazy?? */}
-          {props.isUploading
-            ? "Saving..."
-            : !props.isDirty ? "All changes saved" : "Save"}
-        </MenuItem>
-      : null}
-    <Divider />
-    {props.isEncrypted &&
-      <MenuItem
-        key="update"
-        leftIcon={<Lock />}
-        onClick={props.showChangePassword}
+class JournalDrawer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      attemptingLogout: false
+    };
+    this.cancelLogoutAttempt = this.cancelLogoutAttempt.bind(this);
+    this.attemptLogout = this.attemptLogout.bind(this);
+  }
+
+  cancelLogoutAttempt() {
+    this.setState({ attemptingLogout: false });
+  }
+
+  attemptLogout() {
+    if (this.props.isDirty) {
+      this.setState({ attemptingLogout: true });
+    } else {
+      this.props.logout();
+    }
+  }
+
+  render() {
+    const { props } = this;
+    return (
+      <Drawer
+        open={props.showDrawer}
+        docked={false}
+        onRequestChange={props.setDrawerVisibility}
       >
-        Update Password
-      </MenuItem>}
-    {props.isEncrypted
-      ? <MenuItem
-          key="remove"
-          leftIcon={<LockOpen />}
-          onTouchTap={props.showRemovePassword}
-        >
-          Remove Encryption
+        <LogoutPrompt
+          open={this.state.attemptingLogout}
+          cancel={this.cancelLogoutAttempt}
+        />
+        <AppBar
+          title="Options"
+          iconElementLeft={<span />}
+          onTouchTap={props.toggleDrawer}
+        />
+        {props.areMocked
+          ? <MenuItem
+              key="save"
+              leftIcon={
+                <Save
+                  color={
+                    !props.isDirty || props.isUploading
+                      ? "rgba(0, 0, 0, 0.298039)"
+                      : null
+                  }
+                />
+              }
+              onClick={props.uploadToDropbox}
+              disabled={props.isUploading || !props.isDirty}
+            >
+              {/* TODO Nested ternary statements?? Are you crazy?? */}
+              {props.isUploading
+                ? "Saving..."
+                : !props.isDirty ? "All changes saved" : "Save"}
+            </MenuItem>
+          : null}
+        <Divider />
+        {props.isEncrypted &&
+          <MenuItem
+            key="update"
+            leftIcon={<Lock />}
+            onClick={props.showChangePassword}
+          >
+            Update Password
+          </MenuItem>}
+        {props.isEncrypted
+          ? <MenuItem
+              key="remove"
+              leftIcon={<LockOpen />}
+              onTouchTap={props.showRemovePassword}
+            >
+              Remove Encryption
+            </MenuItem>
+          : <MenuItem leftIcon={<Lock />} onTouchTap={props.showSetPassword}>
+              Encrypt
+            </MenuItem>}
+        <MenuItem leftIcon={<Download />} onTouchTap={props.exportMarkdown}>
+          Export (.md)
         </MenuItem>
-      : <MenuItem leftIcon={<Lock />} onTouchTap={props.showSetPassword}>
-          Encrypt
-        </MenuItem>}
-    <MenuItem leftIcon={<Download />} onTouchTap={props.exportMarkdown}>
-      Export (.md)
-    </MenuItem>
-    <Divider />
-    <MenuItem leftIcon={<ExitToApp />} onTouchTap={props.logout}>
-      {props.areMocked ? "Exit Demo" : "Logout"}
-    </MenuItem>
-    <Divider />
-    <MenuItem leftIcon={<GitHub />} onTouchTap={props.readAbout}>
-      GitHub
-    </MenuItem>
-  </Drawer>;
+        <Divider />
+        <MenuItem leftIcon={<ExitToApp />} onTouchTap={this.attemptLogout}>
+          {props.areMocked ? "Exit Demo" : "Logout"}
+        </MenuItem>
+        <Divider />
+        <MenuItem leftIcon={<GitHub />} onTouchTap={props.readAbout}>
+          GitHub
+        </MenuItem>
+      </Drawer>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   // TODO: Move to accessor

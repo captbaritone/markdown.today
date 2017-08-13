@@ -8,7 +8,8 @@ import {
   getAuthToken,
   getDropboxFileContents,
   getEncryptionPassword,
-  getEncryptedBlob
+  getEncryptedBlob,
+  isDirty
 } from "../accessors";
 import {
   MOCK_DROPBOX,
@@ -192,9 +193,11 @@ export const downloadJournal = () => {
 
 const _uploadToDropbox = (dispatch, getState) => {
   const state = getState();
-  // TODO: Find a robust way to short circut here if the journal is not dirty.
-  if (state.dropbox.mock) {
+  if (state.dropbox.mock || !isDirty(state)) {
     return;
+  }
+  if (!isLoggedIn(state)) {
+    return dispatch(addNotification(`Some changes were not saved to Dropbox.`));
   }
   dispatch({ type: STARTING_DROPBOX_UPLOAD });
   const dropbox = getDropboxClient(state);
