@@ -68,10 +68,7 @@ const mapStateToProps = (state: AppState, ownProps) => {
 
 const mapDispatchToProps = (dispatch: *, ownProps) => ({
   goHome: () => dispatch(goHome()),
-  editEntry: e => {
-    console.log("edit", e.target);
-    dispatch(editEntry(ownProps.routeParams.id));
-  }
+  editEntry: e => dispatch(editEntry(ownProps.routeParams.id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Entry);
