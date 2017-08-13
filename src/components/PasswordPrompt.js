@@ -16,7 +16,8 @@ import { needsEncryptionPassword, getEncryptedBlob } from "../accessors";
 
 type State = {
   password: string,
-  isValid: boolean
+  isValid: boolean,
+  hasSubmitted: boolean
 };
 
 type Props = {
@@ -31,7 +32,7 @@ export class PasswordPrompt extends React.Component {
   state: State;
   constructor(props: Props) {
     super(props);
-    this.state = { password: "", isValid: false };
+    this.state = { password: "", isValid: false, hasSubmitted: false };
     (this: any).updatePassword = this.updatePassword.bind(this);
     (this: any).checkValidity = this.checkValidity.bind(this);
     (this: any).decrypt = this.decrypt.bind(this);
@@ -47,14 +48,17 @@ export class PasswordPrompt extends React.Component {
     return isValid;
   }
 
-  updatePassword(e) {
-    const password = e.target.value;
-    this.setState({ password });
+  updatePassword(e: Event) {
+    if (e.target instanceof HTMLInputElement) {
+      const password = e.target.value;
+      this.setState({ password });
+    }
   }
 
-  decrypt(e) {
+  decrypt(e: Event) {
     e.preventDefault();
     if (!this.checkValidity()) {
+      this.setState({ hasSubmitted: true });
       return;
     }
     this.props.setEncryptionPassword(this.state.password);
@@ -62,7 +66,10 @@ export class PasswordPrompt extends React.Component {
   }
 
   render() {
-    // TODO: Consider a max width.
+    const errorText =
+      this.state.hasSubmitted && !this.checkValidity()
+        ? "Wrong password. Try again."
+        : null;
     // TODO: Focus input
     return (
       <Dialog
@@ -76,7 +83,6 @@ export class PasswordPrompt extends React.Component {
             onTouchTap={this.props.logout}
           />,
           <FlatButton
-            disabled={!this.checkValidity()}
             onTouchTap={this.decrypt}
             label="Decrypt"
             primary={true}
@@ -85,6 +91,7 @@ export class PasswordPrompt extends React.Component {
       >
         <form onSubmit={this.decrypt}>
           <TextField
+            errorText={errorText}
             hintText="Encryption Password"
             floatingLabelText="Password"
             type="password"
