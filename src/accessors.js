@@ -12,7 +12,19 @@ export const getAuthToken = (state: AppState) => state.dropbox.authToken;
 export const getJournal = (state: AppState) => state.journal;
 export const getEntries = (state: AppState) => state.journal.entries;
 
-export const journalIsLoading = (state: AppState) => getEntries(state) === null;
+export const getEncryptionPassword = (state: AppState) =>
+  getJournal(state).encryption.password;
+
+export const isEncrypted = (state: AppState) => !!getEncryptionPassword(state);
+
+export const getEncryptedBlob = (state: AppState) =>
+  getJournal(state).encryption.encryptedBlob;
+
+export const needsEncryptionPassword = (state: AppState) =>
+  !!getEncryptedBlob(state) && !getEncryptionPassword(state);
+
+export const journalIsLoading = (state: AppState) =>
+  getEntries(state) === null && getEncryptedBlob(state) == null;
 
 export const getEntriesAsArray = (entries: ?Entries) => {
   return entries && sortBy(map(entries), "date").reverse();
@@ -91,14 +103,6 @@ export const shouldShowSetPassword = (state: AppState) =>
   state.view.showSetPassword;
 export const shouldShowRemovePassword = (state: AppState) =>
   state.view.showRemovePassword;
-export const getEncryptionPassword = (state: AppState) =>
-  state.journal.encryption.password;
-export const isEncrypted = (state: AppState) => !!getEncryptionPassword(state);
-export const getEncryptedBlob = (state: AppState) =>
-  state.journal.encryption.encryptedBlob;
-export const needsEncryptionPassword = (state: AppState) =>
-  !!getEncryptedBlob(state) && !getEncryptionPassword(state);
-
 export const getDropboxFileContents = (state: AppState) => {
   const md = getMarkdown(state);
   if (!isEncrypted(state)) {
