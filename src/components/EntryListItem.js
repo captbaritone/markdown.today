@@ -15,7 +15,7 @@ import EventNote from "material-ui/svg-icons/notification/event-note";
 import format from "date-fns/format";
 import { deleteEntry, editEntry, viewEntry } from "../actionCreators";
 import { getEntryById } from "../accessors";
-import Highlighter from "react-highlight-words";
+import Highlighter from "./Highlighter";
 
 const iconButtonElement = (
   <IconButton touch={true} tooltipPosition="bottom-left">
@@ -51,12 +51,9 @@ const EntryListItem = ({
       searchQuery
         ? <span>
             {/* Wrapping <span> is needed so Material-ui can inject style. */}
-            {/* TODO: Trim the string so that you can always see the match. */}
-            <Highlighter
-              autoEscape={true}
-              searchWords={[searchQuery]}
-              textToHighlight={entry.markdown}
-            />
+            <Highlighter query={searchQuery}>
+              {entry.markdown}
+            </Highlighter>
           </span>
         : entry.markdown
     }
