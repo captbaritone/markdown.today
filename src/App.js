@@ -4,6 +4,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { Provider } from "react-redux";
 
+import About from "./components/About";
 import Journal from "./components/Journal";
 import JournalCalendar from "./components/JournalCalendar";
 import JournalRead from "./components/JournalRead";
@@ -73,6 +74,7 @@ const Routes = props =>
       onEnter={requireAuth}
     />
     <Route path="/" component={Login} onEnter={checkIfAuthed} />
+    <Route path="/about/" component={About} />
     <Route path="/auth/" component={Auth} />
   </Router>;
 
