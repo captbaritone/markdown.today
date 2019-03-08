@@ -45,6 +45,15 @@ const About = props =>
     </p>
     <h2>Encryption</h2>
     <p>Your journal should be private. </p>
+    <p>
+      Version{" "}
+      <a
+        href={`https://github.com/captbaritone/markdown.today/commit/${process
+          .env.COMMIT_HASH}`}
+      >
+        {process.env.COMMIT_HASH}
+      </a>
+    </p>
   </div>;
 
 export default About;

@@ -2,6 +2,10 @@
 // injected into the application via DefinePlugin in Webpack configuration.
 
 var REACT_APP = /^REACT_APP_/i;
+// get git info from command line
+let commitHash = require("child_process")
+  .execSync("git rev-parse --short HEAD")
+  .toString();
 
 function getClientEnvironment(publicUrl) {
   var processEnv = Object.keys(process.env)
@@ -19,7 +23,8 @@ function getClientEnvironment(publicUrl) {
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
-        PUBLIC_URL: JSON.stringify(publicUrl)
+        PUBLIC_URL: JSON.stringify(publicUrl),
+        COMMIT_HASH: JSON.stringify(commitHash)
       }
     );
   return { "process.env": processEnv };
